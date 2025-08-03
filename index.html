@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Afif D. Fradana - Portfolio</title>
+    
+    <meta name="description" content="Afif D. Fradana - Just a Random Guy who loves billiard, music, video games, travel, and exploring technology.">
+    <meta name="keywords" content="Afif Fradana, Portfolio, Developer, Music, Gaming, Travel">
+    <meta name="author" content="Afif D. Fradana">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="loading-overlay" class="loading-overlay fixed inset-0 bg-black z-50 flex items-center justify-center">
+        <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+    </div>
+
+    <canvas id="starfield" aria-hidden="true"></canvas>
+
+    <main class="min-h-screen w-full flex flex-col items-center justify-center p-4 relative z-10 py-12">
+        <div class="w-full max-w-md mx-auto glass-container p-6 md:p-8 text-center animated-element animate-fadeIn">
+            
+            <div class="flex flex-col items-center mb-6 relative animated-element animate-slideUp">
+                <div class="relative mb-4">
+                    <div class="pulse-ring animate-pulse-glow"></div>
+                    <img 
+                        class="w-28 h-28 rounded-full border-2 border-slate-400 object-cover shadow-2xl animate-float" 
+                        src="https://github.com/afif25fradana.png" 
+                        alt="Foto Profil Afif Fradana dari GitHub"
+                        onerror="this.onerror=null;this.src='https://placehold.co/112x112/000000/cbd5e1?text=AF';"
+                    >
+                </div>
+                <h1 class="text-2xl md:text-3xl font-bold text-white mb-1">Afif D. Fradana</h1>
+                <p class="text-sm text-slate-300">Just a Random Guy</p>
+                <div class="mt-4 flex flex-wrap justify-center gap-1">
+                    <span class="skill-badge rounded-full px-3 py-1">Billiard</span>
+                    <span class="skill-badge rounded-full px-3 py-1">Music</span>
+                    <span class="skill-badge rounded-full px-3 py-1">Video Game</span>
+                    <span class="skill-badge rounded-full px-3 py-1">Travel</span>
+                    <span class="skill-badge rounded-full px-3 py-1">Explore Tech</span>
+                </div>
+            </div>
+            
+            <div class="text-sm italic text-slate-300 mb-6 border-l-2 border-sky-500 pl-3 py-1 text-left animated-element animate-slideUp" style="animation-delay: 0.1s;">
+                "Let it Happen." <span class="text-slate-500">- Tame Impala</span>
+            </div>
+
+            <div class="space-y-3">
+                <div class="animated-element animate-slideUp" style="animation-delay: 0.2s;">
+                    <button id="music-button" class="link-button w-full flex items-center justify-center p-4 text-white font-semibold">
+                        <i id="music-icon" class="fas fa-play mr-3 transition-all duration-300"></i>
+                        <span id="music-text">PLAY MUSIC</span>
+                    </button>
+                </div>
+                <div class="animated-element animate-slideUp" style="animation-delay: 0.3s;">
+                    <a href="https://github.com/afif25fradana" target="_blank" rel="noopener noreferrer" class="link-button w-full flex items-center justify-center p-4 text-white font-semibold">
+                        <i class="fab fa-github mr-3"></i> GITHUB
+                    </a>
+                </div>
+                <div class="animated-element animate-slideUp" style="animation-delay: 0.4s;">
+                    <a href="https://www.instagram.com/afif_fradana/" target="_blank" rel="noopener noreferrer" class="link-button w-full flex items-center justify-center p-4 text-white font-semibold">
+                        <i class="fab fa-instagram mr-3"></i> INSTAGRAM
+                    </a>
+                </div>
+                <div class="animated-element animate-slideUp" style="animation-delay: 0.5s;">
+                    <a href="https://www.linkedin.com/in/afif-dzakwansyah-fradana-882691296" target="_blank" rel="noopener noreferrer" class="link-button w-full flex items-center justify-center p-4 text-white font-semibold">
+                        <i class="fab fa-linkedin-in mr-3"></i> LINKEDIN
+                    </a>
+                </div>
+                <div class="animated-element animate-slideUp" style="animation-delay: 0.6s;">
+                    <a href="https://t.me/Afif_Fradana" target="_blank" rel="noopener noreferrer" class="link-button w-full flex items-center justify-center p-4 text-white font-semibold">
+                        <i class="fab fa-telegram mr-3"></i> TELEGRAM
+                    </a>
+                </div>
+            </div>
+
+            <footer class="mt-8 pt-6 border-t border-slate-700 text-xs text-slate-500 flex justify-between items-center animated-element animate-slideUp" style="animation-delay: 0.7s;">
+                <p>&copy; <span id="current-year"></span> Afif Fradana</p>
+                <p>Made with <i class="fas fa-heart text-red-500 animate-pulse"></i></p>
+            </footer>
+        </div>
+    </main>
+    
+    <script src="script.js" defer></script>
+</body>
+</html>

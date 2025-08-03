@@ -1,0 +1,118 @@
+/* Konfigurasi kustom untuk Tailwind CSS */
+tailwind.config = {
+    theme: {
+        extend: {
+            animation: {
+                'float': 'float 6s ease-in-out infinite',
+                'pulse-glow': 'pulse-glow 3s ease-in-out infinite alternate',
+                'fadeIn': 'fadeIn 0.8s ease-out forwards',
+                'slideUp': 'slideUp 0.6s ease-out forwards',
+            },
+            keyframes: {
+                float: {
+                    '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                    '33%': { transform: 'translateY(-8px) rotate(1deg)' },
+                    '66%': { transform: 'translateY(-4px) rotate(-1deg)' }
+                },
+                'pulse-glow': {
+                    'from': { boxShadow: '0 0 5px rgba(59, 130, 246, 0.5), 0 0 10px rgba(59, 130, 246, 0.3)' },
+                    'to': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.8), 0 0 30px rgba(59, 130, 246, 0.5)' }
+                },
+                fadeIn: { 'from': { opacity: '0', transform: 'translateY(20px)' }, 'to': { opacity: '1', transform: 'translateY(0)' } },
+                slideUp: { 'from': { opacity: '0', transform: 'translateY(30px)' }, 'to': { opacity: '1', transform: 'translateY(0)' } },
+            }
+        }
+    }
+}
+
+/* Variabel Warna & Font Dasar */
+:root {
+    --bg-primary: #000000;
+    --bg-glass: rgba(10, 10, 10, 0.15); /* Panel dibuat lebih transparan */
+    --border-glass: rgba(255, 255, 255, 0.1);
+    --text-primary: #f1f5f9;
+    --accent-blue: #3b82f6;
+    --accent-glow: rgba(59, 130, 246, 0.5);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+#starfield {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;
+}
+
+/* Panel Kaca Transparan */
+.glass-container {
+    background: var(--bg-glass);
+    backdrop-filter: blur(8px); /* Blur sedikit dikurangi agar bintang lebih terlihat */
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--border-glass);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); /* Bayangan diperhalus */
+}
+
+.link-button {
+    transition: all 0.3s;
+    border: 1px solid var(--border-glass);
+    background: rgba(20, 20, 20, 0.3);
+    position: relative; overflow: hidden; border-radius: 12px;
+}
+
+.link-button:hover {
+    background: rgba(40, 40, 40, 0.6);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.25);
+    border-color: var(--accent-glow);
+}
+
+.link-button::before {
+    content: ''; position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.6s;
+}
+
+.link-button:hover::before { left: 100%; }
+
+.pulse-ring {
+    position: absolute; top: -8px; left: -8px; right: -8px; bottom: -8px;
+    border: 2px solid var(--accent-glow);
+    border-radius: 50%;
+}
+
+.skill-badge {
+    background: linear-gradient(135deg, rgba(30, 64, 175, 0.3), rgba(59, 130, 246, 0.2));
+    color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.4);
+    transition: all 0.3s;
+}
+
+.skill-badge:hover {
+    background: linear-gradient(135deg, rgba(30, 64, 175, 0.5), rgba(59, 130, 246, 0.4));
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.music-active {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(37, 99, 235, 0.5)) !important;
+    animation: pulse-glow 2s ease-in-out infinite;
+    border-color: var(--accent-blue) !important;
+}
+
+/* Utility & Accessibility */
+.animated-element { opacity: 0; }
+.loading-overlay { transition: opacity 0.5s ease-out; }
+.loading-overlay.hidden { opacity: 0; pointer-events: none; }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
