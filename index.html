@@ -56,26 +56,33 @@
     <canvas id="starfield" aria-hidden="true"></canvas>
 
     <main class="min-h-screen w-full flex flex-col items-center justify-center p-4 relative z-10 py-12">
+        <!-- Kontainer Utama untuk Layout 3 Kolom -->
         <div class="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-start justify-center gap-8">
 
+            <!-- ======================================================= -->
+            <!-- ===================== KOLOM KIRI ====================== -->
+            <!-- ======================================================= -->
             <div class="w-full lg:w-[28%] animated-element animate-fadeIn" style="animation-delay: 0.8s;">
                 <div class="glass-container p-6 md:p-8 tab-system">
+                    <!-- Navigasi Tab Kiri -->
                     <div class="nav-tabs">
                         <button class="tab-button active" data-tab="music">🎵 Music</button>
                         <button class="tab-button" data-tab="travel">✈️ Travel</button>
                     </div>
 
+                    <!-- Konten Tab Music -->
                     <div id="music" class="tab-content active">
                         <div class="personal-section">
                             <h3 class="section-title"><i class="fab fa-spotify text-green-500"></i> Currently Listening</h3>
-                            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/music/spotify-current.png" alt="My Current Spotify Playlist" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/3b82f6?text=🎵+Spotify'">
+                            <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755364121/1755352189673_hqzt5g.png" alt="My Current Spotify Playlist" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/3b82f6?text=🎵+Spotify'">
                         </div>
                         <div class="personal-section">
                             <h3 class="section-title"><i class="fas fa-heart text-red-500"></i> All-Time Favorites</h3>
-                            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/music/favorite-artists.png" alt="My Favorite Artists" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/ef4444?text=❤️+Artists'">
+                            <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755364222/1732092780916_r32im9.png" alt="My Favorite Artists" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/ef4444?text=❤️+Artists'">
                         </div>
                     </div>
 
+                    <!-- Konten Tab Travel -->
                     <div id="travel" class="tab-content">
                         <div class="personal-section">
                             <h3 class="section-title"><i class="fas fa-map-marked-alt text-green-500"></i> Places I've Been</h3>
@@ -90,6 +97,9 @@
                 </div>
             </div>
 
+            <!-- ======================================================= -->
+            <!-- ==================== KOLOM TENGAH ===================== -->
+            <!-- ======================================================= -->
             <div class="w-full lg:w-[44%] order-first lg:order-none animated-element animate-fadeIn">
                 <div class="w-full max-w-md mx-auto glass-container p-6 md:p-8 text-center">
                     <div class="flex flex-col items-center mb-6 relative animated-element animate-slideUp">
@@ -134,32 +144,62 @@
                 </div>
             </div>
             
+            <!-- ======================================================= -->
+            <!-- ===================== KOLOM KANAN ===================== -->
+            <!-- ======================================================= -->
             <div class="w-full lg:w-[28%] animated-element animate-fadeIn" style="animation-delay: 0.8s;">
                 <div class="glass-container p-6 md:p-8 tab-system">
+                    <!-- Navigasi Tab Kanan -->
                     <div class="nav-tabs">
-                        <button class="tab-button active" data-tab="games">🎮 Games</button>
+                        <button class="tab-button active" data-tab="steam">🎮 Steam</button>
+                        <button class="tab-button" data-tab="mobile">📱 Mobile</button>
                         <button class="tab-button" data-tab="tech">💻 Tech</button>
                     </div>
 
-                    <div id="games" class="tab-content active">
+                    <!-- Konten Tab Steam -->
+                    <div id="steam" class="tab-content active">
                         <div class="personal-section">
                             <h3 class="section-title"><i class="fab fa-steam text-blue-400"></i> Steam Library</h3>
-                            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/steam-library.png" alt="My Steam Library" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/3b82f6?text=🎮+Steam'">
-                            <p class="text-sm text-slate-400 mt-3">Currently playing: WRC 4, Hades...</p>
+                            <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755363435/Screenshot_398_zpr4tp.png" alt="My Steam Library - Main" class="screenshot-img mb-4" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/3b82f6?text=🎮+Steam+Main'">
+                            <div class="grid grid-cols-2 gap-3">
+                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755363473/Screenshot_400_bwsaz5.png" alt="Game Screenshot 1" class="screenshot-img" loading="lazy">
+                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755363473/Screenshot_401_ezqjfy.png" alt="Game Screenshot 2" class="screenshot-img" loading="lazy">
+                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755363473/Screenshot_402_kjcky2.png" alt="Game Screenshot 3" class="screenshot-img" loading="lazy">
+                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755363439/Screenshot_399_zg9ytt.png" alt="Game Screenshot 4" class="screenshot-img" loading="lazy">
+                            </div>
+                            <p class="text-sm text-slate-400 mt-4">Currently playing: WRC 4, Hades...</p>
+                        </div>
+                    </div>
+
+                    <!-- Konten Tab Mobile -->
+                    <div id="mobile" class="tab-content">
+                        <div class="personal-section">
+                            <h3 class="section-title"><i class="fas fa-gamepad text-purple-500"></i> Arknights</h3>
+                            <div class="grid grid-cols-2 gap-3">
+                                <img src="https://placehold.co/200x355/1a1a1a/a78bfa?text=Arknights+SS1" alt="Arknights Screenshot 1" class="screenshot-img" loading="lazy">
+                                <img src="https://placehold.co/200x355/1a1a1a/a78bfa?text=Arknights+SS2" alt="Arknights Screenshot 2" class="screenshot-img" loading="lazy">
+                            </div>
                         </div>
                         <div class="personal-section">
-                            <h3 class="section-title"><i class="fas fa-mobile-alt text-purple-500"></i> Mobile Games</h3>
-                            <div class="mini-gallery">
-                                <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/mobile-game-1.png" alt="Mobile Game 1" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/150x150/1a1a1a/8b5cf6?text=📱'">
-                                <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/mobile-game-2.png" alt="Mobile Game 2" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/150x150/1a1a1a/8b5cf6?text=🕹️'">
+                            <h3 class="section-title"><i class="fas fa-gamepad text-purple-500"></i> Game Lain</h3>
+                            <div class="grid grid-cols-2 gap-3">
+                                <img src="https://placehold.co/200x355/1a1a1a/a78bfa?text=Game+Lain+SS1" alt="Game Lain Screenshot 1" class="screenshot-img" loading="lazy">
+                                <img src="https://placehold.co/200x355/1a1a1a/a78bfa?text=Game+Lain+SS2" alt="Game Lain Screenshot 2" class="screenshot-img" loading="lazy">
                             </div>
                         </div>
                     </div>
 
+                    <!-- Konten Tab Tech -->
                     <div id="tech" class="tab-content">
                          <div class="personal-section">
                             <h3 class="section-title"><i class="fab fa-linux text-gray-400"></i> My Linux Ricing</h3>
-                            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/tech/linux-ricing.png" alt="My Linux Ricing Setup" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/6b7280?text=🐧+Linux'">
+                            <!-- Grid 2x2 untuk Ricing -->
+                            <div class="grid grid-cols-2 gap-3">
+                                <img src="https://github.com/afif25fradana/dump-screenshot/blob/a88fcfb6f3fc2292cf4deefda64301df91d8256f/KDE/Screenshot_20250729_222620.png" alt="Linux Ricing 1" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/200x150/1a1a1a/6b7280?text=Rice+1'">
+                                <img src="https://github.com/afif25fradana/dump-screenshot/blob/a88fcfb6f3fc2292cf4deefda64301df91d8256f/KDE/Screenshot_20250731_093054.png" alt="Linux Ricing 2" class="screenshot-img" loading="lazy">
+                                <img src="https://github.com/afif25fradana/dump-screenshot/blob/a88fcfb6f3fc2292cf4deefda64301df91d8256f/Hyprland/250727_12h50m03s_screenshot.png" alt="Linux Ricing 3" class="screenshot-img" loading="lazy">
+                                <img src="https://github.com/afif25fradana/dump-screenshot/blob/a88fcfb6f3fc2292cf4deefda64301df91d8256f/Hyprland/250727_12h52m22s_screenshot.png" alt="Linux Ricing 4" class="screenshot-img" loading="lazy">
+                            </div>
                         </div>
                         <div class="personal-section">
                             <h3 class="section-title"><i class="fas fa-tools text-orange-500"></i> Tech Stack</h3>
