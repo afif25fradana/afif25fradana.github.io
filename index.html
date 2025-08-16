@@ -56,6 +56,7 @@
     <canvas id="starfield" aria-hidden="true"></canvas>
 
     <main class="min-h-screen w-full flex flex-col items-center justify-center p-4 relative z-10 py-12">
+        <!-- Profile Section -->
         <div class="w-full max-w-md mx-auto glass-container p-6 md:p-8 text-center animated-element animate-fadeIn">
             
             <div class="flex flex-col items-center mb-6 relative animated-element animate-slideUp">
@@ -116,6 +117,142 @@
                 <p>&copy; <span id="current-year"></span> Afif Fradana</p>
                 <p>Made with <i class="fas fa-heart text-red-500 animate-pulse"></i></p>
             </footer>
+        </div>
+
+        <!-- Personal Interests Section -->
+        <div class="w-full max-w-4xl mx-auto glass-container p-6 md:p-8 animated-element animate-fadeIn mt-8" style="animation-delay: 0.8s;">
+            
+            <!-- Navigation Tabs -->
+            <div class="nav-tabs">
+                <button class="tab-button active" data-tab="music">🎵 Music</button>
+                <button class="tab-button" data-tab="games">🎮 Games</button>
+                <button class="tab-button" data-tab="billiard">🎱 Billiard</button>
+                <button class="tab-button" data-tab="travel">✈️ Travel</button>
+                <button class="tab-button" data-tab="tech">💻 Tech</button>
+            </div>
+
+            <!-- Music Tab -->
+            <div id="music" class="tab-content active">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="personal-section">
+                        <h3 class="section-title">
+                            <i class="fab fa-spotify text-green-500"></i>
+                            Currently Listening
+                        </h3>
+                        <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/music/spotify-current.png" 
+                             alt="My Current Spotify Playlist" 
+                             class="screenshot-img"
+                             onerror="this.src='https://placehold.co/400x300/1a1a1a/3b82f6?text=🎵+Spotify+Screenshot'">
+                        <p class="text-sm text-slate-400 mt-3">Last updated: December 2024</p>
+                    </div>
+                    
+                    <div class="personal-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-heart text-red-500"></i>
+                            All-Time Favorites
+                        </h3>
+                        <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/music/favorite-artists.png" 
+                             alt="My Favorite Artists" 
+                             class="screenshot-img"
+                             onerror="this.src='https://placehold.co/400x300/1a1a1a/ef4444?text=❤️+Favorite+Artists'">
+                        <p class="text-sm text-slate-400 mt-3">Tame Impala, Arctic Monkeys, Mac DeMarco...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Games Tab -->
+            <div id="games" class="tab-content">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="personal-section">
+                        <h3 class="section-title">
+                            <i class="fab fa-steam text-blue-400"></i>
+                            Steam Library
+                        </h3>
+                        <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/steam-library.png" 
+                             alt="My Steam Library" 
+                             class="screenshot-img"
+                             onerror="this.src='https://placehold.co/400x300/1a1a1a/3b82f6?text=🎮+Steam+Library'">
+                        <p class="text-sm text-slate-400 mt-3">Currently playing: CS2, Apex Legends</p>
+                    </div>
+                    
+                    <div class="personal-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-mobile-alt text-purple-500"></i>
+                            Mobile Games
+                        </h3>
+                        <div class="mini-gallery">
+                            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/mobile-game-1.png" 
+                                 alt="Mobile Game 1" class="screenshot-img"
+                                 onerror="this.src='https://placehold.co/150x150/1a1a1a/8b5cf6?text=📱'">
+                            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/mobile-game-2.png" 
+                                 alt="Mobile Game 2" class="screenshot-img"
+                                 onerror="this.src='https://placehold.co/150x150/1a1a1a/8b5cf6?text=🕹️'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Billiard Tab -->
+            <div id="billiard" class="tab-content">
+                <div class="personal-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-trophy text-yellow-500"></i>
+                        My Gear & Setup
+                    </h3>
+                    <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/billiard/tournaments.png" 
+                         alt="Billiard Gear Setup" class="screenshot-img"
+                         onerror="this.src='https://placehold.co/600x400/1a1a1a/eab308?text=🎱+My+Gear'">
+                </div>
+            </div>
+
+            <!-- Travel Tab -->
+            <div id="travel" class="tab-content">
+                <div class="personal-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-map-marked-alt text-green-500"></i>
+                        Places I've Been
+                    </h3>
+                    <div class="mini-gallery">
+                        <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/bali.jpg" 
+                             alt="Bali Trip" class="screenshot-img"
+                             onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏝️+Bali'">
+                        <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/jogja.jpg" 
+                             alt="Jogja Trip" class="screenshot-img"
+                             onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏛️+Jogja'">
+                        <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/bandung.jpg" 
+                             alt="Bandung Trip" class="screenshot-img"
+                             onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏔️+Bandung'">
+                        <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/jakarta.jpg" 
+                             alt="Jakarta Trip" class="screenshot-img"
+                             onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏙️+Jakarta'">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tech Tab -->
+            <div id="tech" class="tab-content">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="personal-section">
+                        <h3 class="section-title">
+                            <i class="fab fa-linux text-gray-400"></i>
+                            My Linux Ricing
+                        </h3>
+                        <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/tech/linux-ricing.png" 
+                             alt="My Linux Ricing Setup" class="screenshot-img"
+                             onerror="this.src='https://placehold.co/400x300/1a1a1a/6b7280?text=🐧+Linux+Setup'">
+                    </div>
+                    
+                    <div class="personal-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-tools text-orange-500"></i>
+                            Tech Stack
+                        </h3>
+                        <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/tech/tech-stack.png" 
+                             alt="My Tech Stack" class="screenshot-img"
+                             onerror="this.src='https://placehold.co/400x300/1a1a1a/f97316?text=🛠️+Tech+Stack'">
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
     
