@@ -59,10 +59,15 @@ body {
     border-radius: 50%;
 }
 
+/* === PERBAIKAN DI SINI === */
 .skill-badge {
     background: linear-gradient(135deg, rgba(30, 64, 175, 0.3), rgba(59, 130, 246, 0.2));
-    color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.4);
+    color: #93c5fd; 
+    border: 1px solid rgba(59, 130, 246, 0.4);
     transition: all 0.3s;
+    /* Tambahkan dua baris ini untuk menengahkan teks */
+    display: inline-flex;
+    align-items: center;
 }
 
 .skill-badge:hover {
