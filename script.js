@@ -10,6 +10,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500);
     });
 
+    // --- FUNGSI TAB ---
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const targetTab = button.getAttribute('data-tab');
+            
+            // Hapus kelas 'active' dari semua tombol dan konten
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Tambahkan kelas 'active' ke tombol yang diklik dan konten yang sesuai
+            button.classList.add('active');
+            document.getElementById(targetTab).classList.add('active');
+        });
+    });
+
     // --- STARFIELD ANIMATION ---
     const canvas = document.getElementById('starfield');
     const ctx = canvas.getContext('2d');
