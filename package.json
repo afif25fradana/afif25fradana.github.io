@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tw:init": "tailwindcss init -y",
-    "build:css": "tailwindcss -i ./input.css -o ./dist/output.css --watch"
+    "build:css": "tailwindcss -i ./input.css -o ./dist/output.css",
+    "watch:css": "tailwindcss -i ./input.css -o ./dist/output.css --watch"
   },
   "keywords": [],
   "author": "",
