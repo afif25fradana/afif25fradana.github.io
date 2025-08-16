@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Hapus kelas 'active' dari semua tombol dan konten
             tabButtons.forEach(btn => btn.classList.remove('active'));
+
             tabContents.forEach(content => content.classList.remove('active'));
             
             // Tambahkan kelas 'active' ke tombol yang diklik dan konten yang sesuai
@@ -44,7 +45,16 @@ document.addEventListener('DOMContentLoaded', () => {
         createStars();
         createShootingStars();
     }
-    window.addEventListener('resize', resizeCanvas);
+
+    function debounce(func, delay) {
+        let timeoutId;
+        return function(...args) {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => func.apply(this, args), delay);
+        };
+    }
+
+    window.addEventListener('resize', debounce(resizeCanvas, 100)); // 100ms delay
     resizeCanvas();
 
     function createStars() {
@@ -113,10 +123,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let isPlaying = false, isAudioContextStarted = false, loop;
     const synth = new Tone.PolySynth(Tone.Synth, {
         volume: -18,
-        oscillator: { type: 'sine' },
+        oscillator: { type: 'triangle' },
         envelope: { attack: 0.02, decay: 0.1, sustain: 0.3, release: 0.4 }
     }).toDestination();
-    const reverb = new Tone.Reverb({ decay: 2.5, wet: 0.4 }).toDestination();
+    const reverb = new Tone.Reverb({ decay: 2.0, wet: 0.3 }).toDestination();
     synth.connect(reverb);
     const delay = new Tone.PingPongDelay({ delayTime: "8n", feedback: 0.3, wet: 0.25 }).toDestination();
     synth.connect(delay);
@@ -151,10 +161,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     musicButton.addEventListener('click', () => {
+
         if (!isAudioContextStarted) {
             Tone.start().then(() => {
                 isAudioContextStarted = true;
                 startMusic();
+
+
+
             });
         } else {
             isPlaying ? stopMusic() : startMusic();

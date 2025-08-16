@@ -65,7 +65,8 @@
                     <img 
                         class="w-28 h-28 rounded-full border-2 border-slate-400 object-cover shadow-2xl animate-float" 
                         src="https://github.com/afif25fradana.png" 
-                        alt="Foto Profil Afif Fradana dari GitHub"
+                        alt="Foto Profil Afif Fradana dari GitHub" loading="lazy"
+                        
                         onerror="this.onerror=null;this.src='https://placehold.co/112x112/000000/cbd5e1?text=AF';"
                     >
                 </div>
@@ -113,6 +114,25 @@
                 </div>
             </div>
 
+            <!-- Personal Interests Section -->
+            <div class="w-full max-w-4xl mx-auto glass-container p-6 md:p-8 animated-element animate-fadeIn mt-8" style="animation-delay: 0.8s;">
+            
+                <!-- Navigation Tabs -->
+                <div class="nav-tabs">
+                    <button class="tab-button active" data-tab="music">🎵 Music</button>
+                    <button class="tab-button" data-tab="travel">✈️ Travel</button>
+                    <button class="tab-button" data-tab="steam">🎮 Steam</button>
+                    <button class="tab-button" data-tab="travel">✈️ Travel</button>
+                    <button class="tab-button" data-tab="tech">💻 Tech</button>
+                </div>
+
+                <!-- Music Tab -->
+                <div id="music" class="tab-content active">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="personal-section">
+                            <h3 class="section-title">
+                                <i class="fab fa-youtube text-red-500"></i>
+
             <footer class="mt-8 pt-6 border-t border-slate-700 text-xs text-slate-500 flex justify-between items-center animated-element animate-slideUp" style="animation-delay: 0.7s;">
                 <p>&copy; <span id="current-year"></span> Afif Fradana</p>
                 <p>Made with <i class="fas fa-heart text-red-500 animate-pulse"></i></p>
@@ -120,28 +140,24 @@
         </div>
 
         <!-- Personal Interests Section -->
-        <div class="w-full max-w-4xl mx-auto glass-container p-6 md:p-8 animated-element animate-fadeIn mt-8" style="animation-delay: 0.8s;">
-            
-            <!-- Navigation Tabs -->
-            <div class="nav-tabs">
-                <button class="tab-button active" data-tab="music">🎵 Music</button>
-                <button class="tab-button" data-tab="games">🎮 Games</button>
-                <button class="tab-button" data-tab="billiard">🎱 Billiard</button>
-                <button class="tab-button" data-tab="travel">✈️ Travel</button>
-                <button class="tab-button" data-tab="tech">💻 Tech</button>
-            </div>
+                                Currently Listening
+                            </h3>
+                            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/music/spotify-current.png" 
+                                alt="My Current Spotify Playlist" 
+                                class="screenshot-img" loading="lazy"
+                               
+                                onerror="this.src='https://placehold.co/400x300/1a1a1a/3b82f6?text=🎵+Spotify+Screenshot'">
+                            <p class="text-sm text-slate-400 mt-3">Last updated: December 2024</p>
+                        </div>
+                        
+                        <div class="personal-section">
+                            <h3 class="section-title">
 
-            <!-- Music Tab -->
-            <div id="music" class="tab-content active">
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="personal-section">
-                        <h3 class="section-title">
-                            <i class="fab fa-youtube text-red-500"></i>
-                            Currently Listening
-                        </h3>
+
                         <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/music/spotify-current.png" 
                              alt="My Current Spotify Playlist" 
-                             class="screenshot-img"
+                             class="screenshot-img" loading="lazy"
+                            
                              onerror="this.src='https://placehold.co/400x300/1a1a1a/3b82f6?text=🎵+Spotify+Screenshot'">
                         <p class="text-sm text-slate-400 mt-3">Last updated: December 2024</p>
                     </div>
@@ -153,14 +169,17 @@
                         </h3>
                         <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/music/favorite-artists.png" 
                              alt="My Favorite Artists" 
-                             class="screenshot-img"
+                             class="screenshot-img" loading="lazy"
+                            
                              onerror="this.src='https://placehold.co/400x300/1a1a1a/ef4444?text=❤️+Favorite+Artists'">
                         <p class="text-sm text-slate-400 mt-3">Tame Impala, CVLTE, Wisp...</p>
                     </div>
                 </div>
             </div>
 
+
             <!-- Games Tab -->
+
             <div id="games" class="tab-content">
                 <div class="grid md:grid-cols-2 gap-6">
                     <div class="personal-section">
@@ -170,7 +189,8 @@
                         </h3>
                         <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/steam-library.png" 
                              alt="My Steam Library" 
-                             class="screenshot-img"
+                             class="screenshot-img" loading="lazy"
+                            
                              onerror="this.src='https://placehold.co/400x300/1a1a1a/3b82f6?text=🎮+Steam+Library'">
                         <p class="text-sm text-slate-400 mt-3">Currently playing: WRC 4, Hades...</p>
                     </div>
@@ -182,29 +202,47 @@
                         </h3>
                         <div class="mini-gallery">
                             <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/mobile-game-1.png" 
-                                 alt="Mobile Game 1" class="screenshot-img"
+                                 alt="Mobile Game 1" class="screenshot-img" loading="lazy"
                                  onerror="this.src='https://placehold.co/150x150/1a1a1a/8b5cf6?text=📱'">
                             <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/mobile-game-2.png" 
-                                 alt="Mobile Game 2" class="screenshot-img"
+                                 alt="Mobile Game 2" class="screenshot-img" loading="lazy"
                                  onerror="this.src='https://placehold.co/150x150/1a1a1a/8b5cf6?text=🕹️'">
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Billiard Tab -->
-            <div id="billiard" class="tab-content">
-                <div class="personal-section">
-                    <h3 class="section-title">
-                        <i class="fas fa-trophy text-yellow-500"></i>
-                        Just Regular Player
-                    </h3>
-                    <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/billiard/tournaments.png" 
-                         alt="Billiard Gear Setup" class="screenshot-img"
-                         onerror="this.src='https://placehold.co/600x400/1a1a1a/eab308?text=🎱+My+Gear'">
-                </div>
-            </div>
 
+
+<!-- Steam Tab -->
+<div id="steam" class="tab-content">
+    <div class="personal-section">
+        <h3 class="section-title">
+            <i class="fab fa-steam text-blue-400"></i>
+            Steam Library
+        </h3>        
+        <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/e4/e49c41358820106999e5942c5795ef754f26355d_full.jpg" 
+            alt="Steam Profile" 
+            class="screenshot-img mb-4" loading="lazy"
+            onerror="this.src='https://placehold.co/400x300/1a1a1a/3b82f6?text=👤+Steam+Profile'">
+
+        <div class="grid grid-cols-2 gap-4">
+            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/steam-library.png" 
+                alt="My Steam Library 1" class="screenshot-img" loading="lazy"
+                onerror="this.src='https://placehold.co/200x150/1a1a1a/3b82f6?text=🎮+Game+1'">
+            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/steam-library.png" 
+                alt="My Steam Library 2" class="screenshot-img" loading="lazy"
+                onerror="this.src='https://placehold.co/200x150/1a1a1a/3b82f6?text=🎮+Game+2'">
+            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/steam-library.png" 
+                alt="My Steam Library 3" class="screenshot-img" loading="lazy"
+                onerror="this.src='https://placehold.co/200x150/1a1a1a/3b82f6?text=🎮+Game+3'">
+            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/steam-library.png" 
+                alt="My Steam Library 4" class="screenshot-img" loading="lazy"
+                onerror="this.src='https://placehold.co/200x150/1a1a1a/3b82f6?text=🎮+Game+4'">
+        </div>
+
+        <p class="text-sm text-slate-400 mt-3">Currently playing: WRC 4, Hades...</p>
+    </div>
             <!-- Travel Tab -->
             <div id="travel" class="tab-content">
                 <div class="personal-section">
@@ -212,19 +250,20 @@
                         <i class="fas fa-map-marked-alt text-green-500"></i>
                         Places I've Been
                     </h3>
+                
                     <div class="mini-gallery">
-                        <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/bali.jpg" 
-                             alt="Bali Trip" class="screenshot-img"
-                             onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏝️+Bali'">
                         <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/jogja.jpg" 
-                             alt="Jogja Trip" class="screenshot-img"
+                             alt="Jogja Trip" class="screenshot-img" loading="lazy"
                              onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏛️+Jogja'">
-                        <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/bandung.jpg" 
-                             alt="Bandung Trip" class="screenshot-img"
-                             onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏔️+Bandung'">
-                        <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/jakarta.jpg" 
-                             alt="Jakarta Trip" class="screenshot-img"
-                             onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏙️+Jakarta'">
+                         <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/jogja.jpg" 
+                             alt="Jogja Trip" class="screenshot-img" loading="lazy"
+                             onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏛️+Jogja'">
+                         <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/jogja.jpg" 
+                             alt="Jogja Trip" class="screenshot-img" loading="lazy"
+                             onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏛️+Jogja'">
+                         <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/jogja.jpg" 
+                             alt="Jogja Trip" class="screenshot-img" loading="lazy"
+                             onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏛️+Jogja'">
                     </div>
                 </div>
             </div>
@@ -239,7 +278,8 @@
                         </h3>
                         <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/tech/linux-ricing.png" 
                              alt="My Linux Ricing Setup" class="screenshot-img"
-                             onerror="this.src='https://placehold.co/400x300/1a1a1a/6b7280?text=🐧+Linux+Setup'">
+                             onerror="this.src='https://placehold.co/400x300/1a1a1a/6b7280?text=🐧+Linux+Setup'" loading="lazy">
+                        
                     </div>
                     
                     <div class="personal-section">
@@ -249,7 +289,8 @@
                         </h3>
                         <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/tech/tech-stack.png" 
                              alt="My Tech Stack" class="screenshot-img"
-                             onerror="this.src='https://placehold.co/400x300/1a1a1a/f97316?text=🛠️+Tech+Stack'">
+                             onerror="this.src='https://placehold.co/400x300/1a1a1a/f97316?text=🛠️+Tech+Stack'" loading="lazy">
+                        
                     </div>
                 </div>
             </div>
@@ -260,3 +301,13 @@
 </body>
 </html>
 
+
+                                All-Time Favorites
+                            </h3>
+                            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/music/favorite-artists.png" 
+                                 alt="My Favorite Artists" 
+                                 class="screenshot-img" loading="lazy"
+                               
+                                 onerror="this.src='https://placehold.co/400x300/1a1a1a/ef4444?text=❤️+Favorite+Artists'">
+                            <p class="text-sm text-slate-400 mt-3">Tame Impala, CVLTE, Wisp...</p>
+                        </div>
