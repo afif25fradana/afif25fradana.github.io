@@ -56,258 +56,122 @@
     <canvas id="starfield" aria-hidden="true"></canvas>
 
     <main class="min-h-screen w-full flex flex-col items-center justify-center p-4 relative z-10 py-12">
-        <!-- Profile Section -->
-        <div class="w-full max-w-md mx-auto glass-container p-6 md:p-8 text-center animated-element animate-fadeIn">
-            
-            <div class="flex flex-col items-center mb-6 relative animated-element animate-slideUp">
-                <div class="relative mb-4">
-                    <div class="pulse-ring animate-pulse-glow"></div>
-                    <img 
-                        class="w-28 h-28 rounded-full border-2 border-slate-400 object-cover shadow-2xl animate-float" 
-                        src="https://github.com/afif25fradana.png" 
-                        alt="Foto Profil Afif Fradana dari GitHub" loading="lazy"
-                        
-                        onerror="this.onerror=null;this.src='https://placehold.co/112x112/000000/cbd5e1?text=AF';"
-                    >
-                </div>
-                <h1 class="text-2xl md:text-3xl font-bold text-white mb-1">Afif D. Fradana</h1>
-                <p class="text-sm text-slate-300">Just a Random Guy</p>
-                <div class="mt-4 flex flex-wrap justify-center gap-1">
-                    <span class="skill-badge rounded-full px-3 py-1">Billiard</span>
-                    <span class="skill-badge rounded-full px-3 py-1">Music</span>
-                    <span class="skill-badge rounded-full px-3 py-1">Video Game</span>
-                    <span class="skill-badge rounded-full px-3 py-1">Travel</span>
-                    <span class="skill-badge rounded-full px-3 py-1">Explore Tech</span>
-                </div>
-            </div>
-            
-            <div class="text-sm italic text-slate-300 mb-6 border-l-2 border-sky-500 pl-3 py-1 text-left animated-element animate-slideUp" style="animation-delay: 0.1s;">
-                "Let it Happen." <span class="text-slate-500">- Tame Impala</span>
-            </div>
+        <div class="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-start justify-center gap-8">
 
-            <div class="space-y-3">
-                <div class="animated-element animate-slideUp" style="animation-delay: 0.2s;">
-                    <button id="music-button" class="link-button w-full flex items-center justify-center p-4 text-white font-semibold">
-                        <i id="music-icon" class="fas fa-play mr-3 transition-all duration-300"></i>
-                        <span id="music-text">PLAY MUSIC</span>
-                    </button>
-                </div>
-                <div class="animated-element animate-slideUp" style="animation-delay: 0.3s;">
-                    <a href="https://github.com/afif25fradana" target="_blank" rel="noopener noreferrer" class="link-button w-full flex items-center justify-center p-4 text-white font-semibold">
-                        <i class="fab fa-github mr-3"></i> GITHUB
-                    </a>
-                </div>
-                <div class="animated-element animate-slideUp" style="animation-delay: 0.4s;">
-                    <a href="https://www.instagram.com/afif_fradana/" target="_blank" rel="noopener noreferrer" class="link-button w-full flex items-center justify-center p-4 text-white font-semibold">
-                        <i class="fab fa-instagram mr-3"></i> INSTAGRAM
-                    </a>
-                </div>
-                <div class="animated-element animate-slideUp" style="animation-delay: 0.5s;">
-                    <a href="https://www.linkedin.com/in/afif-dzakwansyah-fradana-882691296" target="_blank" rel="noopener noreferrer" class="link-button w-full flex items-center justify-center p-4 text-white font-semibold">
-                        <i class="fab fa-linkedin-in mr-3"></i> LINKEDIN
-                    </a>
-                </div>
-                <div class="animated-element animate-slideUp" style="animation-delay: 0.6s;">
-                    <a href="https://t.me/Afif_Fradana" target="_blank" rel="noopener noreferrer" class="link-button w-full flex items-center justify-center p-4 text-white font-semibold">
-                        <i class="fab fa-telegram mr-3"></i> TELEGRAM
-                    </a>
-                </div>
-            </div>
+            <div class="w-full lg:w-[28%] animated-element animate-fadeIn" style="animation-delay: 0.8s;">
+                <div class="glass-container p-6 md:p-8 tab-system">
+                    <div class="nav-tabs">
+                        <button class="tab-button active" data-tab="music">🎵 Music</button>
+                        <button class="tab-button" data-tab="travel">✈️ Travel</button>
+                    </div>
 
-            <!-- Personal Interests Section -->
-            <div class="w-full max-w-4xl mx-auto glass-container p-6 md:p-8 animated-element animate-fadeIn mt-8" style="animation-delay: 0.8s;">
-            
-                <!-- Navigation Tabs -->
-                <div class="nav-tabs">
-                    <button class="tab-button active" data-tab="music">🎵 Music</button>
-                    <button class="tab-button" data-tab="travel">✈️ Travel</button>
-                    <button class="tab-button" data-tab="steam">🎮 Steam</button>
-                    <button class="tab-button" data-tab="travel">✈️ Travel</button>
-                    <button class="tab-button" data-tab="tech">💻 Tech</button>
-                </div>
-
-                <!-- Music Tab -->
-                <div id="music" class="tab-content active">
-                    <div class="grid md:grid-cols-2 gap-6">
+                    <div id="music" class="tab-content active">
                         <div class="personal-section">
-                            <h3 class="section-title">
-                                <i class="fab fa-youtube text-red-500"></i>
-
-            <footer class="mt-8 pt-6 border-t border-slate-700 text-xs text-slate-500 flex justify-between items-center animated-element animate-slideUp" style="animation-delay: 0.7s;">
-                <p>&copy; <span id="current-year"></span> Afif Fradana</p>
-                <p>Made with <i class="fas fa-heart text-red-500 animate-pulse"></i></p>
-            </footer>
-        </div>
-
-        <!-- Personal Interests Section -->
-                                Currently Listening
-                            </h3>
-                            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/music/spotify-current.png" 
-                                alt="My Current Spotify Playlist" 
-                                class="screenshot-img" loading="lazy"
-                               
-                                onerror="this.src='https://placehold.co/400x300/1a1a1a/3b82f6?text=🎵+Spotify+Screenshot'">
-                            <p class="text-sm text-slate-400 mt-3">Last updated: December 2024</p>
+                            <h3 class="section-title"><i class="fab fa-spotify text-green-500"></i> Currently Listening</h3>
+                            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/music/spotify-current.png" alt="My Current Spotify Playlist" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/3b82f6?text=🎵+Spotify'">
                         </div>
-                        
                         <div class="personal-section">
-                            <h3 class="section-title">
-
-
-                        <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/music/spotify-current.png" 
-                             alt="My Current Spotify Playlist" 
-                             class="screenshot-img" loading="lazy"
-                            
-                             onerror="this.src='https://placehold.co/400x300/1a1a1a/3b82f6?text=🎵+Spotify+Screenshot'">
-                        <p class="text-sm text-slate-400 mt-3">Last updated: December 2024</p>
+                            <h3 class="section-title"><i class="fas fa-heart text-red-500"></i> All-Time Favorites</h3>
+                            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/music/favorite-artists.png" alt="My Favorite Artists" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/ef4444?text=❤️+Artists'">
+                        </div>
                     </div>
-                    
-                    <div class="personal-section">
-                        <h3 class="section-title">
-                            <i class="fas fa-heart text-red-500"></i>
-                            All-Time Favorites
-                        </h3>
-                        <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/music/favorite-artists.png" 
-                             alt="My Favorite Artists" 
-                             class="screenshot-img" loading="lazy"
-                            
-                             onerror="this.src='https://placehold.co/400x300/1a1a1a/ef4444?text=❤️+Favorite+Artists'">
-                        <p class="text-sm text-slate-400 mt-3">Tame Impala, CVLTE, Wisp...</p>
-                    </div>
-                </div>
-            </div>
 
-
-            <!-- Games Tab -->
-
-            <div id="games" class="tab-content">
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="personal-section">
-                        <h3 class="section-title">
-                            <i class="fab fa-steam text-blue-400"></i>
-                            Steam Library
-                        </h3>
-                        <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/steam-library.png" 
-                             alt="My Steam Library" 
-                             class="screenshot-img" loading="lazy"
-                            
-                             onerror="this.src='https://placehold.co/400x300/1a1a1a/3b82f6?text=🎮+Steam+Library'">
-                        <p class="text-sm text-slate-400 mt-3">Currently playing: WRC 4, Hades...</p>
-                    </div>
-                    
-                    <div class="personal-section">
-                        <h3 class="section-title">
-                            <i class="fas fa-mobile-alt text-purple-500"></i>
-                            Mobile Games
-                        </h3>
-                        <div class="mini-gallery">
-                            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/mobile-game-1.png" 
-                                 alt="Mobile Game 1" class="screenshot-img" loading="lazy"
-                                 onerror="this.src='https://placehold.co/150x150/1a1a1a/8b5cf6?text=📱'">
-                            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/mobile-game-2.png" 
-                                 alt="Mobile Game 2" class="screenshot-img" loading="lazy"
-                                 onerror="this.src='https://placehold.co/150x150/1a1a1a/8b5cf6?text=🕹️'">
+                    <div id="travel" class="tab-content">
+                        <div class="personal-section">
+                            <h3 class="section-title"><i class="fas fa-map-marked-alt text-green-500"></i> Places I've Been</h3>
+                            <div class="mini-gallery">
+                                <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/bali.jpg" alt="Bali Trip" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏝️+Bali'">
+                                <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/jogja.jpg" alt="Jogja Trip" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏛️+Jogja'">
+                                <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/bandung.jpg" alt="Bandung Trip" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏔️+Bandung'">
+                                <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/jakarta.jpg" alt="Jakarta Trip" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏙️+Jakarta'">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <div class="w-full lg:w-[44%] order-first lg:order-none animated-element animate-fadeIn">
+                <div class="w-full max-w-md mx-auto glass-container p-6 md:p-8 text-center">
+                    <div class="flex flex-col items-center mb-6 relative animated-element animate-slideUp">
+                        <div class="relative mb-4">
+                            <div class="pulse-ring animate-pulse-glow"></div>
+                            <img class="w-28 h-28 rounded-full border-2 border-slate-400 object-cover shadow-2xl animate-float" src="https://github.com/afif25fradana.png" alt="Foto Profil Afif Fradana" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/112x112/000000/cbd5e1?text=AF';">
+                        </div>
+                        <h1 class="text-2xl md:text-3xl font-bold text-white mb-1">Afif D. Fradana</h1>
+                        <p class="text-sm text-slate-300">Just a Random Guy</p>
+                        <div class="mt-4 flex flex-wrap justify-center gap-1">
+                            <span class="skill-badge rounded-full px-3 py-1">Billiard</span>
+                            <span class="skill-badge rounded-full px-3 py-1">Music</span>
+                            <span class="skill-badge rounded-full px-3 py-1">Video Game</span>
+                            <span class="skill-badge rounded-full px-3 py-1">Travel</span>
+                            <span class="skill-badge rounded-full px-3 py-1">Explore Tech</span>
+                        </div>
+                    </div>
+                    <div class="text-sm italic text-slate-300 mb-6 border-l-2 border-sky-500 pl-3 py-1 text-left animated-element animate-slideUp" style="animation-delay: 0.1s;">
+                        "Let it Happen." <span class="text-slate-500">- Tame Impala</span>
+                    </div>
+                    <div class="space-y-3">
+                         <div class="animated-element animate-slideUp" style="animation-delay: 0.2s;">
+                            <button id="music-button" class="link-button w-full flex items-center justify-center p-4 text-white font-semibold"><i id="music-icon" class="fas fa-play mr-3"></i><span id="music-text">PLAY AMBIENT MUSIC</span></button>
+                        </div>
+                        <div class="animated-element animate-slideUp" style="animation-delay: 0.3s;">
+                            <a href="https://github.com/afif25fradana" target="_blank" rel="noopener noreferrer" class="link-button w-full flex items-center justify-center p-4"><i class="fab fa-github mr-3"></i> GITHUB</a>
+                        </div>
+                        <div class="animated-element animate-slideUp" style="animation-delay: 0.4s;">
+                            <a href="https://www.instagram.com/afif_fradana/" target="_blank" rel="noopener noreferrer" class="link-button w-full flex items-center justify-center p-4"><i class="fab fa-instagram mr-3"></i> INSTAGRAM</a>
+                        </div>
+                        <div class="animated-element animate-slideUp" style="animation-delay: 0.5s;">
+                            <a href="https://www.linkedin.com/in/afif-dzakwansyah-fradana-882691296" target="_blank" rel="noopener noreferrer" class="link-button w-full flex items-center justify-center p-4"><i class="fab fa-linkedin-in mr-3"></i> LINKEDIN</a>
+                        </div>
+                        <div class="animated-element animate-slideUp" style="animation-delay: 0.6s;">
+                            <a href="https://t.me/Afif_Fradana" target="_blank" rel="noopener noreferrer" class="link-button w-full flex items-center justify-center p-4"><i class="fab fa-telegram mr-3"></i> TELEGRAM</a>
+                        </div>
+                    </div>
+                    <footer class="mt-8 pt-6 border-t border-slate-700 text-xs text-slate-500 flex justify-between items-center animated-element animate-slideUp" style="animation-delay: 0.7s;">
+                        <p>&copy; <span id="current-year"></span> Afif Fradana</p>
+                        <p>Made with <i class="fas fa-heart text-red-500 animate-pulse"></i></p>
+                    </footer>
+                </div>
+            </div>
+            
+            <div class="w-full lg:w-[28%] animated-element animate-fadeIn" style="animation-delay: 0.8s;">
+                <div class="glass-container p-6 md:p-8 tab-system">
+                    <div class="nav-tabs">
+                        <button class="tab-button active" data-tab="games">🎮 Games</button>
+                        <button class="tab-button" data-tab="tech">💻 Tech</button>
+                    </div>
 
+                    <div id="games" class="tab-content active">
+                        <div class="personal-section">
+                            <h3 class="section-title"><i class="fab fa-steam text-blue-400"></i> Steam Library</h3>
+                            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/steam-library.png" alt="My Steam Library" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/3b82f6?text=🎮+Steam'">
+                            <p class="text-sm text-slate-400 mt-3">Currently playing: WRC 4, Hades...</p>
+                        </div>
+                        <div class="personal-section">
+                            <h3 class="section-title"><i class="fas fa-mobile-alt text-purple-500"></i> Mobile Games</h3>
+                            <div class="mini-gallery">
+                                <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/mobile-game-1.png" alt="Mobile Game 1" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/150x150/1a1a1a/8b5cf6?text=📱'">
+                                <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/mobile-game-2.png" alt="Mobile Game 2" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/150x150/1a1a1a/8b5cf6?text=🕹️'">
+                            </div>
+                        </div>
+                    </div>
 
-<!-- Steam Tab -->
-<div id="steam" class="tab-content">
-    <div class="personal-section">
-        <h3 class="section-title">
-            <i class="fab fa-steam text-blue-400"></i>
-            Steam Library
-        </h3>        
-        <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/e4/e49c41358820106999e5942c5795ef754f26355d_full.jpg" 
-            alt="Steam Profile" 
-            class="screenshot-img mb-4" loading="lazy"
-            onerror="this.src='https://placehold.co/400x300/1a1a1a/3b82f6?text=👤+Steam+Profile'">
-
-        <div class="grid grid-cols-2 gap-4">
-            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/steam-library.png" 
-                alt="My Steam Library 1" class="screenshot-img" loading="lazy"
-                onerror="this.src='https://placehold.co/200x150/1a1a1a/3b82f6?text=🎮+Game+1'">
-            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/steam-library.png" 
-                alt="My Steam Library 2" class="screenshot-img" loading="lazy"
-                onerror="this.src='https://placehold.co/200x150/1a1a1a/3b82f6?text=🎮+Game+2'">
-            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/steam-library.png" 
-                alt="My Steam Library 3" class="screenshot-img" loading="lazy"
-                onerror="this.src='https://placehold.co/200x150/1a1a1a/3b82f6?text=🎮+Game+3'">
-            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/games/steam-library.png" 
-                alt="My Steam Library 4" class="screenshot-img" loading="lazy"
-                onerror="this.src='https://placehold.co/200x150/1a1a1a/3b82f6?text=🎮+Game+4'">
-        </div>
-
-        <p class="text-sm text-slate-400 mt-3">Currently playing: WRC 4, Hades...</p>
-    </div>
-            <!-- Travel Tab -->
-            <div id="travel" class="tab-content">
-                <div class="personal-section">
-                    <h3 class="section-title">
-                        <i class="fas fa-map-marked-alt text-green-500"></i>
-                        Places I've Been
-                    </h3>
-                
-                    <div class="mini-gallery">
-                        <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/jogja.jpg" 
-                             alt="Jogja Trip" class="screenshot-img" loading="lazy"
-                             onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏛️+Jogja'">
-                         <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/jogja.jpg" 
-                             alt="Jogja Trip" class="screenshot-img" loading="lazy"
-                             onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏛️+Jogja'">
-                         <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/jogja.jpg" 
-                             alt="Jogja Trip" class="screenshot-img" loading="lazy"
-                             onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏛️+Jogja'">
-                         <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/jogja.jpg" 
-                             alt="Jogja Trip" class="screenshot-img" loading="lazy"
-                             onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏛️+Jogja'">
+                    <div id="tech" class="tab-content">
+                         <div class="personal-section">
+                            <h3 class="section-title"><i class="fab fa-linux text-gray-400"></i> My Linux Ricing</h3>
+                            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/tech/linux-ricing.png" alt="My Linux Ricing Setup" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/6b7280?text=🐧+Linux'">
+                        </div>
+                        <div class="personal-section">
+                            <h3 class="section-title"><i class="fas fa-tools text-orange-500"></i> Tech Stack</h3>
+                            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/tech/tech-stack.png" alt="My Tech Stack" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/f97316?text=🛠️+Tech'">
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Tech Tab -->
-            <div id="tech" class="tab-content">
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="personal-section">
-                        <h3 class="section-title">
-                            <i class="fab fa-linux text-gray-400"></i>
-                            My Linux Ricing
-                        </h3>
-                        <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/tech/linux-ricing.png" 
-                             alt="My Linux Ricing Setup" class="screenshot-img"
-                             onerror="this.src='https://placehold.co/400x300/1a1a1a/6b7280?text=🐧+Linux+Setup'" loading="lazy">
-                        
-                    </div>
-                    
-                    <div class="personal-section">
-                        <h3 class="section-title">
-                            <i class="fas fa-tools text-orange-500"></i>
-                            Tech Stack
-                        </h3>
-                        <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/tech/tech-stack.png" 
-                             alt="My Tech Stack" class="screenshot-img"
-                             onerror="this.src='https://placehold.co/400x300/1a1a1a/f97316?text=🛠️+Tech+Stack'" loading="lazy">
-                        
-                    </div>
-                </div>
-            </div>
         </div>
     </main>
     
     <script src="script.js" defer></script>
 </body>
 </html>
-
-
-                                All-Time Favorites
-                            </h3>
-                            <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/music/favorite-artists.png" 
-                                 alt="My Favorite Artists" 
-                                 class="screenshot-img" loading="lazy"
-                               
-                                 onerror="this.src='https://placehold.co/400x300/1a1a1a/ef4444?text=❤️+Favorite+Artists'">
-                            <p class="text-sm text-slate-400 mt-3">Tame Impala, CVLTE, Wisp...</p>
-                        </div>

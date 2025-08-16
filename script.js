@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Set tahun sekarang untuk footer
-    document.getElementById('current-year').textContent = new Date().getFullYear();
+    const currentYearEl = document.getElementById('current-year');
+    if(currentYearEl) {
+        currentYearEl.textContent = new Date().getFullYear();
+    }
     
     // Sembunyikan loading overlay setelah halaman selesai dimuat
     const loadingOverlay = document.getElementById('loading-overlay');
@@ -10,22 +13,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500);
     });
 
-    // --- FUNGSI TAB ---
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabContents = document.querySelectorAll('.tab-content');
-    
-    tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const targetTab = button.getAttribute('data-tab');
-            
-            // Hapus kelas 'active' dari semua tombol dan konten
-            tabButtons.forEach(btn => btn.classList.remove('active'));
+    // --- FUNGSI TAB (UPDATED TO HANDLE MULTIPLE TAB SYSTEMS) ---
+    const tabSystems = document.querySelectorAll('.tab-system');
 
-            tabContents.forEach(content => content.classList.remove('active'));
-            
-            // Tambahkan kelas 'active' ke tombol yang diklik dan konten yang sesuai
-            button.classList.add('active');
-            document.getElementById(targetTab).classList.add('active');
+    tabSystems.forEach(system => {
+        const tabButtons = system.querySelectorAll('.tab-button');
+        const tabContents = system.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.getAttribute('data-tab');
+
+                // Deactivate tabs and content only within this system
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Activate the clicked tab and corresponding content
+                button.classList.add('active');
+                system.querySelector(`#${targetTab}`).classList.add('active');
+            });
         });
     });
 
@@ -54,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    window.addEventListener('resize', debounce(resizeCanvas, 100)); // 100ms delay
+    window.addEventListener('resize', debounce(resizeCanvas, 100));
     resizeCanvas();
 
     function createStars() {
@@ -85,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function draw() {
+        if (!ctx) return;
         ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
@@ -121,6 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const musicText = document.getElementById('music-text');
     const musicIcon = document.getElementById('music-icon');
     let isPlaying = false, isAudioContextStarted = false, loop;
+    
     const synth = new Tone.PolySynth(Tone.Synth, {
         volume: -18,
         oscillator: { type: 'triangle' },
@@ -130,6 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     synth.connect(reverb);
     const delay = new Tone.PingPongDelay({ delayTime: "8n", feedback: 0.3, wet: 0.25 }).toDestination();
     synth.connect(delay);
+
     const melody = [
         { notes: ['C4', 'E4', 'G4'], duration: '4n' }, { notes: ['A4'], duration: '8n' },
         { notes: ['G4'], duration: '8n' }, { notes: ['E4'], duration: '4n' },
@@ -160,20 +169,18 @@ document.addEventListener('DOMContentLoaded', () => {
         isPlaying = false;
     }
 
-    musicButton.addEventListener('click', () => {
-
-        if (!isAudioContextStarted) {
-            Tone.start().then(() => {
-                isAudioContextStarted = true;
-                startMusic();
-
-
-
-            });
-        } else {
-            isPlaying ? stopMusic() : startMusic();
-        }
-    });
+    if(musicButton) {
+        musicButton.addEventListener('click', () => {
+            if (!isAudioContextStarted) {
+                Tone.start().then(() => {
+                    isAudioContextStarted = true;
+                    startMusic();
+                });
+            } else {
+                isPlaying ? stopMusic() : startMusic();
+            }
+        });
+    }
 
     // Optimasi: Hentikan animasi saat tab tidak aktif
     document.addEventListener('visibilitychange', () => {
