@@ -13,34 +13,40 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500);
     });
 
-    // --- FUNGSI TAB (REVISED AND CORRECTED) ---
-    const tabSystems = document.querySelectorAll('.tab-system');
+    // --- FUNGSI TAB (REVISED FOR ACCESSIBILITY) ---
+    const allTabButtons = document.querySelectorAll('.tab-button[role="tab"]');
 
-    tabSystems.forEach(system => {
-        const tabButtons = system.querySelectorAll('.tab-button');
-        
-        tabButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const targetTabId = button.getAttribute('data-tab');
-                
-                // 1. Cari konten yang aktif SEKARANG di dalam sistem ini dan sembunyikan
-                const currentActiveContent = system.querySelector('.tab-content.active');
-                if (currentActiveContent) {
-                    currentActiveContent.classList.remove('active');
-                }
+    allTabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const parentNav = button.closest('.nav-tabs');
+            if (!parentNav) return; // Safety check
 
-                // 2. Nonaktifkan semua tombol di dalam sistem ini
-                tabButtons.forEach(btn => btn.classList.remove('active'));
-                
-                // 3. Aktifkan tombol yang diklik
-                button.classList.add('active');
-                
-                // 4. Cari konten yang dituju berdasarkan ID dan tampilkan
-                const newActiveContent = system.querySelector(`#${targetTabId}`);
-                if (newActiveContent) {
-                    newActiveContent.classList.add('active');
-                }
+            const grandParentContainer = parentNav.parentElement;
+
+            // 1. Deactivate all buttons in this tab group
+            const siblingButtons = parentNav.querySelectorAll('.tab-button');
+            siblingButtons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-selected', 'false');
             });
+
+            // 2. Hide all panels in this tab group
+            const siblingPanels = grandParentContainer.querySelectorAll('.tab-content[role="tabpanel"]');
+            siblingPanels.forEach(panel => {
+                panel.classList.remove('active');
+                panel.hidden = true;
+            });
+
+            // 3. Activate the clicked button
+            button.classList.add('active');
+            button.setAttribute('aria-selected', 'true');
+
+            // 4. Show the target panel using aria-controls
+            const targetPanel = document.getElementById(button.getAttribute('aria-controls'));
+            if (targetPanel) {
+                targetPanel.classList.add('active');
+                targetPanel.hidden = false;
+            }
         });
     });
 

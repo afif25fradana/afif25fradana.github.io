@@ -62,31 +62,29 @@
 
             <!-- KOLOM KIRI -->
             <aside class="w-full lg:w-[28%] animated-element animate-fadeIn" style="animation-delay: 0.8s;">
-                <div class="glass-container p-6 md:p-8 tab-system">
-                    <nav class="nav-tabs">
-                        <button class="tab-button active" data-tab="music">🎵 Music</button>
-                        <button class="tab-button" data-tab="travel">✈️ Travel</button>
+                <div class="glass-container p-6 md:p-8">
+                    <nav class="nav-tabs" role="tablist" aria-label="Personal Interests">
+                        <button class="tab-button active" role="tab" aria-selected="true" aria-controls="music-panel" data-tab="music">🎵 Music</button>
+                        <button class="tab-button" role="tab" aria-selected="false" aria-controls="travel-panel" data-tab="travel">✈️ Travel</button>
                     </nav>
 
-                    <div id="music" class="tab-content active">
+                    <div id="music-panel" role="tabpanel" class="tab-content active">
                         <section class="personal-section">
                             <h3 class="section-title"><i class="fab fa-youtube text-red-600" aria-hidden="true"></i> Currently Listening</h3>
-                            <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755364121/1755352189673_hqzt5g.png" alt="My Current YouTube Music Playlist" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/ff0000?text=🎵+YT+Music'">
+                            <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755364121/1755352189673_hqzt5g.png" alt="My Current YouTube Music Playlist" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/ff0000?text=🎵+YT+Music'">
                         </section>
                         <section class="personal-section">
                             <h3 class="section-title"><i class="fas fa-heart text-red-500" aria-hidden="true"></i> All-Time Favorites</h3>
-                            <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755364222/1732092780916_r32im9.png" alt="My Favorite Artists" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/ef4444?text=❤️+Artists'">
+                            <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755364222/1732092780916_r32im9.png" alt="My Favorite Artists" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/ef4444?text=❤️+Artists'">
                         </section>
                     </div>
 
-                    <div id="travel" class="tab-content">
+                    <div id="travel-panel" role="tabpanel" class="tab-content" hidden>
                         <div class="personal-section">
                             <h3 class="section-title"><i class="fas fa-map-marked-alt text-green-500" aria-hidden="true"></i> Places I've Been</h3>
                             <div class="mini-gallery">
-                                <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/bali.jpg" alt="Travel photo in Bali" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏝️+Bali'">
-                                <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/jogja.jpg" alt="Travel photo in Jogja" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏛️+Jogja'">
-                                <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/bandung.jpg" alt="Travel photo in Bandung" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏔️+Bandung'">
-                                <img src="https://raw.githubusercontent.com/afif25fradana/dump-screenshot/main/travel/jakarta.jpg" alt="Travel photo in Jakarta" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=🏙️+Jakarta'">
+                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_200/v1755376530/IMG_2692_xioc1y.jpg" alt="Travel photo in Surakarta" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=Surakarta'">
+                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_200/v1755376859/IMG_20230629_225100_791_tczoei.jpg" alt="Travel photo in Jogja" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/200x200/1a1a1a/10b981?text=Jogja'">
                             </div>
                         </div>
                     </div>
@@ -139,61 +137,54 @@
             
             <!-- KOLOM KANAN -->
             <aside class="w-full lg:w-[28%] animated-element animate-fadeIn" style="animation-delay: 0.8s;">
-                <div class="glass-container p-6 md:p-8 tab-system">
-                    <nav class="nav-tabs">
-                        <button class="tab-button active" data-tab="steam">🎮 Steam</button>
-                        <button class="tab-button" data-tab="mobile">📱 Mobile</button>
-                        <button class="tab-button" data-tab="tech">💻 Tech</button>
+                <div class="glass-container p-6 md:p-8">
+                    <nav class="nav-tabs" role="tablist" aria-label="Hobbies and Tech">
+                        <button class="tab-button active" role="tab" aria-selected="true" aria-controls="steam-panel" data-tab="steam">🎮 Steam</button>
+                        <button class="tab-button" role="tab" aria-selected="false" aria-controls="mobile-panel" data-tab="mobile">📱 Mobile</button>
+                        <button class="tab-button" role="tab" aria-selected="false" aria-controls="tech-panel" data-tab="tech">💻 Tech</button>
                     </nav>
 
-                    <div id="steam" class="tab-content active">
+                    <div id="steam-panel" role="tabpanel" class="tab-content active">
                         <section class="personal-section">
                             <h3 class="section-title"><i class="fab fa-steam text-blue-400" aria-hidden="true"></i> Steam Library</h3>
                             <div class="space-y-4">
-                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755363435/Screenshot_398_zpr4tp.png" alt="My Steam Library - Main" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/3b82f6?text=🎮+Steam+Main'">
-                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755363473/Screenshot_400_bwsaz5.png" alt="Screenshot of WRC 4 game on Steam" class="screenshot-img" loading="lazy">
-                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755363473/Screenshot_401_ezqjfy.png" alt="Screenshot of Hades game on Steam" class="screenshot-img" loading="lazy">
-                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755363473/Screenshot_402_kjcky2.png" alt="Screenshot of Euro Truck Simulator 2 game on Steam" class="screenshot-img" loading="lazy">
-                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755363439/Screenshot_399_zg9ytt.png" alt="Screenshot of other games on Steam" class="screenshot-img" loading="lazy">
+                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755363435/Screenshot_398_zpr4tp.png" alt="My Steam Library - Main" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/3b82f6?text=🎮+Steam+Main'">
+                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755363473/Screenshot_400_bwsaz5.png" alt="Screenshot of WRC 4 game on Steam" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x225/1a1a1a/3b82f6?text=WRC+4'">
+                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755363473/Screenshot_401_ezqjfy.png" alt="Screenshot of Hades game on Steam" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x225/1a1a1a/3b82f6?text=Hades'">
+                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755363473/Screenshot_402_kjcky2.png" alt="Screenshot of Euro Truck Simulator 2 game on Steam" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x225/1a1a1a/3b82f6?text=ETS2'">
+                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755363439/Screenshot_399_zg9ytt.png" alt="My Steam Library - Other Games" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/3b82f6?text=🎮+Steam+Other'">
                             </div>
                         </section>
                     </div>
 
-                    <div id="mobile" class="tab-content">
+                    <div id="mobile-panel" role="tabpanel" class="tab-content" hidden>
                         <section class="personal-section">
                             <h3 class="section-title"><i class="fas fa-gamepad text-purple-500" aria-hidden="true"></i> Arknights</h3>
                             <div class="space-y-4">
-                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755366051/img_share-2025-05-12_02_46_48_uks8et.png" alt="Arknights game screenshot 1" class="screenshot-img" loading="lazy">
-                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755366120/Screenshot_51_lori2s.png" alt="Arknights game screenshot 2" class="screenshot-img" loading="lazy">
-                            </div>
-                        </section>
-                        <section class="personal-section">
-                            <h3 class="section-title"><i class="fas fa-gamepad text-purple-500" aria-hidden="true"></i> Other Games</h3>
-                            <div class="space-y-4">
-                                <img src="https://placehold.co/200x355/1a1a1a/a78bfa?text=Other+Game+SS1" alt="Other Game Screenshot 1" class="screenshot-img" loading="lazy">
-                                <img src="https://placehold.co/200x355/1a1a1a/a78bfa?text=Other+Game+SS2" alt="Other Game Screenshot 2" class="screenshot-img" loading="lazy">
+                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755366051/img_share-2025-05-12_02_46_48_uks8et.png" alt="Arknights game screenshot 1" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x185/1a1a1a/a855f7?text=Arknights+1'">
+                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755366120/Screenshot_51_lori2s.png" alt="Arknights game screenshot 2" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x185/1a1a1a/a855f7?text=Arknights+2'">
                             </div>
                         </section>
                     </div>
 
-                    <div id="tech" class="tab-content">
+                    <div id="tech-panel" role="tabpanel" class="tab-content" hidden>
                          <section class="personal-section">
                             <h3 class="section-title"><i class="fab fa-linux text-gray-400" aria-hidden="true"></i> My Linux Ricing</h3>
                             <div class="space-y-4">
-                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755364559/Screenshot_20250731_092322_uamet9.png" alt="Linux Ricing 1" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/6b7280?text=Rice+1'">
-                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755364561/Screenshot_20250731_093054_jnsyxk.png" alt="Linux Ricing 2" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/6b7280?text=Rice+2'">
-                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755364549/250727_12h50m03s_screenshot_tnr1yz.png" alt="Linux Ricing 3" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/6b7280?text=Rice+3'">
-                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755364553/250727_12h52m22s_screenshot_vvfjl7.png" alt="Linux Ricing 4" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x300/1a1a1a/6b7280?text=Rice+4'">
+                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755364559/Screenshot_20250731_092322_uamet9.png" alt="Linux Ricing 1" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x225/1a1a1a/6b7280?text=Rice+1'">
+                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755364561/Screenshot_20250731_093054_jnsyxk.png" alt="Linux Ricing 2" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x225/1a1a1a/6b7280?text=Rice+2'">
+                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755364549/250727_12h50m03s_screenshot_tnr1yz.png" alt="Linux Ricing 3" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x225/1a1a1a/6b7280?text=Rice+3'">
+                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755364553/250727_12h52m22s_screenshot_vvfjl7.png" alt="Linux Ricing 4" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x225/1a1a1a/6b7280?text=Rice+4'">
                             </div>
                         </section>
                         <section class="personal-section">
                             <h3 class="section-title"><i class="fab fa-windows text-blue-400" aria-hidden="true"></i> My Windows Ricing</h3>
                             <div class="space-y-4">
-                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755366186/Screenshot_404_cdwtui.png" alt="Windows desktop with dark theme customization" class="screenshot-img" loading="lazy">
-                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755366181/Screenshot_403_jk9loc.png" alt="Customized Windows file explorer" class="screenshot-img" loading="lazy">
-                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755366190/Screenshot_57_sgzxh7.png" alt="Windows desktop with widgets" class="screenshot-img" loading="lazy">
-                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755366194/Screenshot_87_hxh4z5.png" alt="Windows desktop with Rainmeter" class="screenshot-img" loading="lazy">
-                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755366176/Screenshot_139_ysxlfk.png" alt="Another customized Windows desktop" class="screenshot-img" loading="lazy">
+                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755366186/Screenshot_404_cdwtui.png" alt="Windows desktop with dark theme customization" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x225/1a1a1a/3b82f6?text=Win+Rice+1'">
+                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755366181/Screenshot_403_jk9loc.png" alt="Customized Windows file explorer" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x225/1a1a1a/3b82f6?text=Win+Rice+2'">
+                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755366190/Screenshot_57_sgzxh7.png" alt="Windows desktop with widgets" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x225/1a1a1a/3b82f6?text=Win+Rice+3'">
+                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755366194/Screenshot_87_hxh4z5.png" alt="Windows desktop with Rainmeter" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x225/1a1a1a/3b82f6?text=Win+Rice+4'">
+                                <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755366176/Screenshot_139_ysxlfk.png" alt="Another customized Windows desktop" class="screenshot-img" loading="lazy" onerror="this.src='https://placehold.co/400x225/1a1a1a/3b82f6?text=Win+Rice+5'">
                             </div>
                         </section>
                     </div>
