@@ -13,24 +13,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500);
     });
 
-    // --- FUNGSI TAB (UPDATED TO HANDLE MULTIPLE TAB SYSTEMS) ---
+    // --- FUNGSI TAB (REVISED AND CORRECTED) ---
     const tabSystems = document.querySelectorAll('.tab-system');
 
     tabSystems.forEach(system => {
         const tabButtons = system.querySelectorAll('.tab-button');
-        const tabContents = system.querySelectorAll('.tab-content');
-
+        
         tabButtons.forEach(button => {
             button.addEventListener('click', () => {
-                const targetTab = button.getAttribute('data-tab');
-
-                // Deactivate tabs and content only within this system
-                tabButtons.forEach(btn => btn.classList.remove('active'));
-                tabContents.forEach(content => content.classList.remove('active'));
+                const targetTabId = button.getAttribute('data-tab');
                 
-                // Activate the clicked tab and corresponding content
+                // 1. Cari konten yang aktif SEKARANG di dalam sistem ini dan sembunyikan
+                const currentActiveContent = system.querySelector('.tab-content.active');
+                if (currentActiveContent) {
+                    currentActiveContent.classList.remove('active');
+                }
+
+                // 2. Nonaktifkan semua tombol di dalam sistem ini
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // 3. Aktifkan tombol yang diklik
                 button.classList.add('active');
-                system.querySelector(`#${targetTab}`).classList.add('active');
+                
+                // 4. Cari konten yang dituju berdasarkan ID dan tampilkan
+                const newActiveContent = system.querySelector(`#${targetTabId}`);
+                if (newActiveContent) {
+                    newActiveContent.classList.add('active');
+                }
             });
         });
     });
@@ -125,51 +134,54 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- MUSIC PLAYER ---
     const musicButton = document.getElementById('music-button');
-    const musicText = document.getElementById('music-text');
-    const musicIcon = document.getElementById('music-icon');
-    let isPlaying = false, isAudioContextStarted = false, loop;
-    
-    const synth = new Tone.PolySynth(Tone.Synth, {
-        volume: -18,
-        oscillator: { type: 'triangle' },
-        envelope: { attack: 0.02, decay: 0.1, sustain: 0.3, release: 0.4 }
-    }).toDestination();
-    const reverb = new Tone.Reverb({ decay: 2.0, wet: 0.3 }).toDestination();
-    synth.connect(reverb);
-    const delay = new Tone.PingPongDelay({ delayTime: "8n", feedback: 0.3, wet: 0.25 }).toDestination();
-    synth.connect(delay);
-
-    const melody = [
-        { notes: ['C4', 'E4', 'G4'], duration: '4n' }, { notes: ['A4'], duration: '8n' },
-        { notes: ['G4'], duration: '8n' }, { notes: ['E4'], duration: '4n' },
-        { notes: ['C4'], duration: '4n' }, { notes: ['F4', 'A4'], duration: '4n' },
-        { notes: ['C5'], duration: '4n' }, { notes: ['A4'], duration: '4n' }
-    ];
-    
-    function startMusic() {
-        let step = 0;
-        loop = new Tone.Loop(time => {
-            const note = melody[step % melody.length];
-            synth.triggerAttackRelease(note.notes, note.duration, time);
-            step++;
-        }, "4n").start(0);
-        Tone.Transport.start();
-        musicText.textContent = 'STOP AMBIENT MUSIC';
-        musicIcon.classList.replace('fa-play', 'fa-pause');
-        musicButton.classList.add('music-active');
-        isPlaying = true;
-    }
-
-    function stopMusic() {
-        if (loop) loop.stop(0).dispose();
-        Tone.Transport.stop();
-        musicText.textContent = 'PLAY AMBIENT MUSIC';
-        musicIcon.classList.replace('fa-pause', 'fa-play');
-        musicButton.classList.remove('music-active');
-        isPlaying = false;
-    }
-
     if(musicButton) {
+        const musicText = document.getElementById('music-text');
+        const musicIcon = document.getElementById('music-icon');
+        let isPlaying = false, isAudioContextStarted = false, loop;
+        
+        const synth = new Tone.PolySynth(Tone.Synth, {
+            volume: -18,
+            oscillator: { type: 'triangle' },
+            envelope: { attack: 0.02, decay: 0.1, sustain: 0.3, release: 0.4 }
+        }).toDestination();
+        const reverb = new Tone.Reverb({ decay: 2.0, wet: 0.3 }).toDestination();
+        synth.connect(reverb);
+        const delay = new Tone.PingPongDelay({ delayTime: "8n", feedback: 0.3, wet: 0.25 }).toDestination();
+        synth.connect(delay);
+
+        const melody = [
+            { notes: ['C4', 'E4', 'G4'], duration: '4n' }, { notes: ['A4'], duration: '8n' },
+            { notes: ['G4'], duration: '8n' }, { notes: ['E4'], duration: '4n' },
+            { notes: ['C4'], duration: '4n' }, { notes: ['F4', 'A4'], duration: '4n' },
+            { notes: ['C5'], duration: '4n' }, { notes: ['A4'], duration: '4n' }
+        ];
+        
+        function startMusic() {
+            let step = 0;
+            loop = new Tone.Loop(time => {
+                const note = melody[step % melody.length];
+                synth.triggerAttackRelease(note.notes, note.duration, time);
+                step++;
+            }, "4n").start(0);
+            Tone.Transport.start();
+            musicText.textContent = 'STOP AMBIENT MUSIC';
+            musicIcon.classList.replace('fa-play', 'fa-pause');
+            musicButton.classList.add('music-active');
+            isPlaying = true;
+        }
+
+        function stopMusic() {
+            if (loop) {
+                loop.stop(0);
+                loop.dispose();
+            }
+            Tone.Transport.stop();
+            musicText.textContent = 'PLAY AMBIENT MUSIC';
+            musicIcon.classList.replace('fa-pause', 'fa-play');
+            musicButton.classList.remove('music-active');
+            isPlaying = false;
+        }
+
         musicButton.addEventListener('click', () => {
             if (!isAudioContextStarted) {
                 Tone.start().then(() => {
@@ -180,16 +192,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 isPlaying ? stopMusic() : startMusic();
             }
         });
+        
+        // Optimasi: Hentikan animasi saat tab tidak aktif
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                if (animationId) cancelAnimationFrame(animationId);
+                animationId = null;
+                if (isPlaying) stopMusic();
+            } else {
+                if (!animationId) draw();
+            }
+        });
     }
-
-    // Optimasi: Hentikan animasi saat tab tidak aktif
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            if (animationId) cancelAnimationFrame(animationId);
-            animationId = null;
-            if (isPlaying) stopMusic();
-        } else {
-            if (!animationId) draw();
-        }
-    });
 });
