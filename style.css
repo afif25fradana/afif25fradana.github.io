@@ -14,6 +14,7 @@ body {
     color: var(--text-primary);
     overflow-x: hidden;
     min-height: 100vh;
+    padding-top: 80px; /* Add padding for fixed header */
 }
 
 #starfield {
@@ -28,6 +29,14 @@ body {
     border: 1px solid var(--border-glass);
     border-radius: 24px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); 
+}
+
+.glass-container-nav {
+    background: rgba(10, 10, 10, 0.3); /* Slightly more opaque for nav */
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-glass);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .link-button {
@@ -49,6 +58,7 @@ body {
     width: 100%; height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
     transition: left 0.6s;
+    pointer-events: none;
 }
 
 .link-button:hover::before { left: 100%; }
@@ -80,49 +90,43 @@ body {
     border-color: var(--accent-blue) !important;
 }
 
-/* === KEYFRAMES === */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+/* Navigation Links */
+.nav-link {
+    color: var(--text-primary);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-blue);
+    transition: width 0.3s ease-out;
 }
 
-@keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 20px var(--accent-glow); }
-    50% { box-shadow: 0 0 30px var(--accent-glow), 0 0 40px var(--accent-glow); }
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
 }
 
-@keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+.nav-link:hover,
+.nav-link.active {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: #93c5fd;
 }
 
-/* FIX UTAMA: Ubah animated-element agar tidak hilang */
-.animated-element { 
-    opacity: 1 !important; /* PAKSA TERLIHAT */
-    transform: translateY(0) !important; /* PAKSA POSISI NORMAL */
-}
-
-/* Animasi khusus yang aman */
-.animate-fadeIn {
-    animation: fadeIn 1s ease-out;
-}
-
-.animate-slideUp {
-    animation: slideUp 0.8s ease-out;
-}
-
-.animate-float {
-    animation: float 3s ease-in-out infinite;
-}
-
-.animate-pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
-}
+/* === KEYFRAMES (Managed by Tailwind CSS) === */
+/* The .animated-element rule was removed to fix a click-through issue. */
+/* Animations are now defined in tailwind.config.js */
 
 .loading-overlay { 
     transition: opacity 0.5s ease-out; 
@@ -176,6 +180,19 @@ body {
 .screenshot-img:hover {
     transform: scale(1.02);
     box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+}
+
+.repo-card {
+    background: rgba(15, 15, 15, 0.4);
+    border: 1px solid var(--border-glass);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.repo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(59, 130, 246, 0.2);
 }
 
 .nav-tabs {
@@ -236,4 +253,48 @@ body {
         font-size: 0.75rem;
         padding: 0.5rem 0.75rem;
     }
+
+    body {
+        padding-top: 100px; /* Adjust padding for smaller screens */
+    }
+
+    .glass-container-nav {
+        padding: 0.75rem 1rem;
+    }
+
+    .nav-link {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* New Styles for Sections */
+section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Back to Top Button */
+#back-to-top {
+    transform-origin: bottom right;
+}
+
+#back-to-top.show {
+    opacity: 1;
+    scale: 1;
+}
+
+/* Add a clear outline on keyboard focus for better accessibility */
+.link-button:focus-visible,
+.nav-link:focus-visible,
+#back-to-top:focus-visible {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 2px;
+    box-shadow: 0 0 15px var(--accent-glow); /* Optional: adds a nice glow effect */
 }

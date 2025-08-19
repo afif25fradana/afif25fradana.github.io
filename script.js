@@ -50,6 +50,91 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // --- SMOOTH SCROLLING FOR NAVIGATION ---
+    document.querySelectorAll('nav a.nav-link').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+
+            // Update active class for navigation links
+            document.querySelectorAll('nav a.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            this.classList.add('active');
+        });
+    });
+
+    // Set initial active nav link based on current hash or default to #hero
+    const initialHash = window.location.hash || '#hero';
+    const initialNavLink = document.querySelector(`nav a.nav-link[href="${initialHash}"]`);
+    if (initialNavLink) {
+        initialNavLink.classList.add('active');
+    }
+
+    // --- BACK TO TOP BUTTON ---
+    const backToTopButton = document.getElementById('back-to-top');
+    if (backToTopButton) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) { // Show button after scrolling 300px
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // --- GITHUB REPOSITORIES FETCHING ---
+    const githubReposContainer = document.getElementById('github-repos');
+    const githubUsername = 'afif25fradana'; // Replace with your GitHub username
+
+    async function fetchGitHubRepos() {
+        try {
+            const response = await fetch(`https://api.github.com/users/${githubUsername}/repos?sort=updated&direction=desc`);
+            if (!response.ok) {
+                throw new Error(`GitHub API error: ${response.statusText}`);
+            }
+            const repos = await response.json();
+            
+            githubReposContainer.innerHTML = ''; // Clear placeholder
+
+            if (repos.length === 0) {
+                githubReposContainer.innerHTML = '<p class="text-slate-400 text-center col-span-full">No public repositories found.</p>';
+                return;
+            }
+
+            repos.forEach(repo => {
+                const repoCard = `
+                    <div class="repo-card glass-container p-6 text-slate-300">
+                        <h3 class="text-xl font-semibold text-white mb-2">${repo.name}</h3>
+                        <p class="text-sm mb-4">${repo.description || 'No description provided.'}</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            ${repo.language ? `<span class="skill-badge">${repo.language}</span>` : ''}
+                            ${repo.topics ? repo.topics.map(topic => `<span class="skill-badge">${topic}</span>`).join('') : ''}
+                        </div>
+                        <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300 transition-colors duration-300">View Project <i class="fas fa-external-link-alt ml-1"></i></a>
+                    </div>
+                `;
+                githubReposContainer.innerHTML += repoCard;
+            });
+
+        } catch (error) {
+            console.error('Failed to fetch GitHub repositories:', error);
+            githubReposContainer.innerHTML = '<p class="text-red-400 text-center col-span-full">Failed to load repositories. Please try again later.</p>';
+        }
+    }
+
+    // Call the function to fetch repos when the page loads
+    fetchGitHubRepos();
+
     // --- STARFIELD ANIMATION ---
     const canvas = document.getElementById('starfield');
     const ctx = canvas.getContext('2d');
@@ -210,4 +295,37 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // --- SECTION VISIBILITY ANIMATION (Intersection Observer) ---
+    const sections = document.querySelectorAll('section');
+
+    const observerOptions = {
+        root: null, // viewport
+        rootMargin: '0px',
+        threshold: 0.1 // 10% of the section must be visible
+    };
+
+    const sectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // Update active nav link
+                const id = entry.target.id;
+                document.querySelectorAll('nav a.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                const correspondingLink = document.querySelector(`nav a.nav-link[href="#${id}"]`);
+                if (correspondingLink) {
+                    correspondingLink.classList.add('active');
+                }
+            } else {
+                // Optional: Remove 'visible' class if you want animation to replay on scroll back
+                // entry.target.classList.remove('visible');
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => {
+        sectionObserver.observe(section);
+    });
 });
