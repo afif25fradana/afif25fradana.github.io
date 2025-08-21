@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const GITHUB_USERNAME = 'afif25fradana';
+
     // Set tahun sekarang untuk footer
     const currentYearEl = document.getElementById('current-year');
     if(currentYearEl) {
@@ -58,11 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- GITHUB REPOSITORIES FETCHING ---
     const githubReposContainer = document.getElementById('github-repos');
-    const githubUsername = 'afif25fradana'; // Replace with your GitHub username
 
     async function fetchGitHubRepos() {
         try {
-            const response = await fetch(`https://api.github.com/users/${githubUsername}/repos?sort=updated&direction=desc`);
+            const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&direction=desc`);
             if (!response.ok) {
                 throw new Error(`GitHub API error: ${response.statusText}`);
             }
