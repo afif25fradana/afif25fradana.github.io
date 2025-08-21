@@ -195,65 +195,7 @@ body {
     box-shadow: 0 12px 30px rgba(59, 130, 246, 0.2);
 }
 
-.nav-tabs {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-}
-
-.tab-button {
-    padding: 0.5rem 1rem;
-    background: rgba(20, 20, 20, 0.5);
-    border: 1px solid var(--border-glass);
-    border-radius: 12px;
-    color: var(--text-primary);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.875rem;
-    font-weight: 500;
-}
-
-.tab-button:hover, .tab-button.active {
-    background: rgba(59, 130, 246, 0.3);
-    border-color: var(--accent-blue);
-    transform: translateY(-1px);
-}
-
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
-    display: block;
-    animation: fadeIn 0.5s ease-out;
-}
-
-.mini-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1rem;
-}
-
-.mini-gallery .screenshot-img {
-    aspect-ratio: 1;
-    object-fit: cover;
-}
-
 @media (max-width: 768px) {
-    .mini-gallery {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .nav-tabs {
-        justify-content: center;
-    }
-    
-    .tab-button {
-        font-size: 0.75rem;
-        padding: 0.5rem 0.75rem;
-    }
-
     body {
         padding-top: 100px; /* Adjust padding for smaller screens */
     }

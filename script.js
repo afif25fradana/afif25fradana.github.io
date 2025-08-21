@@ -13,42 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500);
     });
 
-    // --- FUNGSI TAB (REVISED FOR ACCESSIBILITY) ---
-    const allTabButtons = document.querySelectorAll('.tab-button[role="tab"]');
-
-    allTabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const parentNav = button.closest('.nav-tabs');
-            if (!parentNav) return; // Safety check
-
-            const grandParentContainer = parentNav.parentElement;
-
-            // 1. Deactivate all buttons in this tab group
-            const siblingButtons = parentNav.querySelectorAll('.tab-button');
-            siblingButtons.forEach(btn => {
-                btn.classList.remove('active');
-                btn.setAttribute('aria-selected', 'false');
-            });
-
-            // 2. Hide all panels in this tab group
-            const siblingPanels = grandParentContainer.querySelectorAll('.tab-content[role="tabpanel"]');
-            siblingPanels.forEach(panel => {
-                panel.classList.remove('active');
-                panel.hidden = true;
-            });
-
-            // 3. Activate the clicked button
-            button.classList.add('active');
-            button.setAttribute('aria-selected', 'true');
-
-            // 4. Show the target panel using aria-controls
-            const targetPanel = document.getElementById(button.getAttribute('aria-controls'));
-            if (targetPanel) {
-                targetPanel.classList.add('active');
-                targetPanel.hidden = false;
-            }
-        });
-    });
 
     // --- SMOOTH SCROLLING FOR NAVIGATION ---
     document.querySelectorAll('nav a.nav-link').forEach(anchor => {
