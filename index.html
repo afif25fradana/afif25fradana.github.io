@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Afif D. Fradana - Portfolio</title>
+
+    <meta name="description" content="Afif D. Fradana - Just a Random Guy who loves music, video games, travel, and exploring technology. Check out my Steam library, music taste, and ricing setups!">
+    <meta name="keywords" content="Afif Fradana, Portfolio, Developer, Music, Gaming, Travel, Tech, Linux Ricing, Windows Ricing">
+    <meta name="author" content="Afif D. Fradana">
+
+    <!-- SEO & Meta Tags -->
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://afif25fradana.github.io/">
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://afif25fradana.github.io/">
+    <meta property="og:title" content="Afif D. Fradana - Portfolio">
+    <meta property="og:description" content="Just a Random Guy who loves music, video games, travel, and exploring technology. Check out my Steam library, music taste, and ricing setups!">
+    <meta property="og:image" content="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755417407/Screenshot_411_-1_kajpfx.webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Afif Fradana's Portfolio">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://afif25fradana.github.io/">
+    <meta name="twitter:title" content="Afif D. Fradana - Portfolio">
+    <meta name="twitter:description" content="Just a Random Guy who loves music, video games, travel, and exploring technology. Check out my Steam library, music taste, and ricing setups!">
+    <meta name="twitter:image" content="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755417407/Screenshot_411_-1_kajpfx.webp">
+
+    <!-- Favicon (Eksternal) -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755417406/Screenshot_4111_eegwa3.webp">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755417406/Screenshot_4111_eegwa3.webp">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/dta7ppwxj/image/upload/v1755417406/Screenshot_4111_eegwa3.webp">
+
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://res.cloudinary.com">
+    <link rel="preconnect" href="https://raw.githubusercontent.com">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS (Hasil Build) & Custom CSS -->
+    <link rel="stylesheet" href="dist/output.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="loading-overlay" class="loading-overlay fixed inset-0 bg-black z-50 flex items-center justify-center">
+        <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+    </div>
+
+    <canvas id="starfield" aria-hidden="true"></canvas>
+
+    <header class="fixed top-0 left-0 w-full z-40 py-4 px-6 glass-container-nav">
+        <nav class="flex justify-center items-center max-w-7xl mx-auto">
+            <ul class="flex flex-wrap justify-center space-x-2 md:space-x-6">
+                <li><a href="#hero" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#resume" class="nav-link">Resume</a></li>
+                <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+                <li><a href="#hobbies" class="nav-link">Hobbies</a></li>
+                <li><a href="#socials" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="w-full relative z-10 py-12">
+        <!-- HERO SECTION -->
+        <section id="hero" class="min-h-screen flex flex-col items-center justify-center text-center p-4">
+            <div class="w-full max-w-md mx-auto glass-container p-6 md:p-8 animated-element animate-fadeIn">
+                <div class="flex flex-col items-center mb-6 relative animated-element animate-slideUp">
+                    <div class="relative mb-4">
+                        <div class="pulse-ring animate-pulse-glow" aria-hidden="true"></div>
+                        <img class="w-28 h-28 rounded-full border-2 border-slate-400 object-cover shadow-2xl animate-float" src="https://github.com/afif25fradana.png" alt="Afif Fradana's profile picture" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/112x112/000000/cbd5e1?text=AF';">
+                    </div>
+                    <h1 class="text-2xl md:text-3xl font-bold text-white mb-1">Afif D. Fradana</h1>
+                    <p class="text-sm text-slate-300">Just a Random Guy</p>
+                </div>
+                <div class="text-sm italic text-slate-300 mb-6 border-l-2 border-sky-500 pl-3 py-1 text-left animated-element animate-slideUp custom-delay-1">
+                    "Let it Happen." <span class="text-slate-500">- Tame Impala</span>
+                </div>
+                <div class="space-y-3">
+                    <div class="animated-element animate-slideUp custom-delay-2">
+                        <button id="music-button" type="button" class="link-button w-full flex items-center justify-center p-4 text-white font-semibold" aria-label="Play or stop ambient music"><i id="music-icon" class="fas fa-play mr-3" aria-hidden="true"></i><span id="music-text">PLAY AMBIENT MUSIC</span></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT ME SECTION -->
+        <section id="about" class="py-20 px-4">
+            <div class="w-full max-w-4xl mx-auto glass-container p-6 md:p-8 animated-element animate-fadeIn">
+                <h2 class="text-3xl font-bold text-white mb-6 text-center">About Me</h2>
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="md:w-1/3">
+                        <img src="https://github.com/afif25fradana.png" alt="Afif Fradana" class="rounded-full w-48 h-48 mx-auto border-2 border-slate-400 object-cover shadow-2xl" loading="lazy">
+                    </div>
+                    <div class="md:w-2/3 text-slate-300 text-center md:text-left">
+                        <p class="mb-4">
+                            Hi! I'm Afif, a final-year Accounting student at UMS, but my true passion lies in technology, Linux, and coding. I love exploring new distros, customizing desktops, and automating setups to make my workflow smoother.
+                        </p>
+                        <p class="mb-4">
+                            Besides tech, I have a huge love for music—especially hyperpop, glitchcore, and experimental electronic. I also enjoy anime, photography editing, and tinkering with my leopard geckos.
+                        </p>
+                        <p>
+                            This website is my personal space to share my projects, experiments, and everything I'm curious about. Dive in and explore what I’ve been working on!
+                        </p>
+                        <div class="mt-6 flex flex-wrap justify-center md:justify-start gap-2">
+                            <span class="skill-badge rounded-full px-3 py-1">Linux &amp; Ricing</span>
+                            <span class="skill-badge rounded-full px-3 py-1">Coding &amp; Automation</span>
+                            <span class="skill-badge rounded-full px-3 py-1">Music &amp; Sound</span>
+                            <span class="skill-badge rounded-full px-3 py-1">Anime &amp; Photography</span>
+                            <span class="skill-badge rounded-full px-3 py-1">Pet Care</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- RESUME SECTION -->
+        <section id="resume" class="py-20 px-4">
+            <div class="w-full max-w-4xl mx-auto glass-container p-6 md:p-8 animated-element animate-fadeIn">
+                <h2 class="text-3xl font-bold text-white mb-6 text-center">Resume</h2>
+                <div class="text-slate-300 space-y-6">
+                    <!-- Education -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-2">Education</h3>
+                        <div class="border-l-2 border-sky-500 pl-4">
+                            <p class="font-medium text-lg">Universitas Muhammadiyah Surakarta</p>
+                            <p class="text-sm italic">Bachelor of Accounting (2021 - Present)</p>
+                            <p class="text-sm">Currently pursuing a Bachelor's degree in Accounting.</p>
+                        </div>
+                    </div>
+                    <!-- Experience -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-2">Project Experience</h3>
+
+                        <div class="border-l-2 border-sky-500 pl-4 mb-6">
+                            <p class="font-medium text-lg">Creator &amp; Maintainer - Linux Health Check Suite</p>
+                            <p class="text-sm italic">Personal Project (2025 - Present)</p>
+                            <ul class="list-disc list-inside ml-4 mt-2 text-slate-300">
+                                <li>Architected and developed a multi-platform diagnostic suite for Arch and Debian-based Linux systems using Bash scripting.</li>
+                                <li>Engineered a parallel execution engine to run multiple checks simultaneously, significantly reducing report generation time.</li>
+                                <li>Created user-friendly installer and uninstaller scripts (`install.sh`, `uninstall.sh`) for both local and system-wide deployment.</li>
+                                <li>Implemented a weighted health scoring system, smart dependency detection, and a customizable configuration file (`~/.config`) for flexible user control.</li>
+                                <li>Published and maintained the project on GitHub under the MIT License, managing versioning and comprehensive documentation.</li>
+                            </ul>
+                        </div>
+
+                        <div class="border-l-2 border-sky-500 pl-4">
+                            <p class="font-medium text-lg">Creator &amp; Developer - Luna Voice Assistant</p>
+                            <p class="text-sm italic">Personal Project (2025 - Present)</p>
+                            <ul class="list-disc list-inside ml-4 mt-2 text-slate-300">
+                                <li>Designed and implemented a modular, offline-capable voice assistant with a clear separation between GUI, Audio, and AI layers.</li>
+                                <li>Integrated a custom Ollama model (`luna-gemma3`) for advanced chat and code execution, routed by a smart intent-classification AI.</li>
+                                <li>Utilized `faster-whisper` with Voice Activity Detection (VAD) for high-accuracy speech-to-text and `piper` for natural voice output.</li>
+                                <li>Engineered key security features, including a command blacklist, and built a responsive GUI using CustomTkinter for an intuitive user experience.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-2">Skills</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-badge">HTML</span>
+                            <span class="skill-badge">CSS</span>
+                            <span class="skill-badge">JavaScript</span>
+                            <span class="skill-badge">Python</span>
+                            <span class="skill-badge">Git</span>
+                            <span class="skill-badge">Tailwind CSS</span>
+                            <span class="skill-badge">Linux</span>
+                            <span class="skill-badge">Windows</span>
+                            <span class="skill-badge">Microsoft Office</span>
+                            <span class="skill-badge">Data Entry</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PORTFOLIO/PROJECTS SECTION -->
+        <section id="portfolio" class="py-20 px-4">
+            <div class="w-full max-w-7xl mx-auto glass-container p-6 md:p-8 animated-element animate-fadeIn">
+                <h2 class="text-3xl font-bold text-white mb-6 text-center">My Projects</h2>
+                <div id="github-repos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- GitHub repositories will be loaded here by JavaScript -->
+                    <div class="repo-card glass-container p-6 text-slate-300">
+                        <h3 class="text-xl font-semibold text-white mb-2">Project Title</h3>
+                        <p class="text-sm mb-4">A short description of the project.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="skill-badge">Tech 1</span>
+                            <span class="skill-badge">Tech 2</span>
+                        </div>
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300 transition-colors duration-300">View Project <i class="fas fa-external-link-alt ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOBBIES SECTION -->
+        <section id="hobbies" class="py-20 px-4">
+            <div class="w-full max-w-7xl mx-auto">
+                <h2 class="text-3xl font-bold text-white mb-12 text-center">My Hobbies</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Music -->
+                    <div class="glass-container p-6 md:p-8 animated-element animate-fadeIn custom-delay-2">
+                        <h3 class="section-title"><i class="fas fa-music text-red-500" aria-hidden="true"></i> Music</h3>
+                        <div class="space-y-4">
+                            <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755364121/1755352189673_hqzt5g.png" alt="My Current YouTube Music Playlist" class="screenshot-img" loading="lazy">
+                            <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755364222/1732092780916_r32im9.png" alt="My All-Time Favorite Artists" class="screenshot-img" loading="lazy">
+                        </div>
+                    </div>
+                    <!-- Gaming -->
+                    <div class="glass-container p-6 md:p-8 animated-element animate-fadeIn custom-delay-4">
+                        <h3 class="section-title"><i class="fab fa-steam text-blue-400" aria-hidden="true"></i> Gaming</h3>
+                        <div class="space-y-4">
+                            <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755363435/Screenshot_398_zpr4tp.png" alt="My Steam Library" class="screenshot-img" loading="lazy">
+                            <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755363473/Screenshot_401_ezqjfy.png" alt="Hades game" class="screenshot-img" loading="lazy">
+                        </div>
+                    </div>
+                    <!-- Tech -->
+                    <div class="glass-container p-6 md:p-8 animated-element animate-fadeIn custom-delay-6">
+                        <h3 class="section-title"><i class="fab fa-linux text-gray-400" aria-hidden="true"></i> Tech &amp; Ricing</h3>
+                        <div class="space-y-4">
+                            <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755364559/Screenshot_20250731_092322_uamet9.png" alt="Linux Ricing" class="screenshot-img" loading="lazy">
+                            <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755366186/Screenshot_404_cdwtui.png" alt="Windows Ricing" class="screenshot-img" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOCIALS SECTION -->
+        <section id="socials" class="py-20 px-4 text-center">
+            <div class="w-full max-w-md mx-auto glass-container p-6 md:p-8 animated-element animate-fadeIn">
+                <h2 class="text-3xl font-bold text-white mb-6">Connect With Me</h2>
+                <div class="space-y-3">
+                    <a href="https://github.com/afif25fradana" target="_blank" rel="noopener noreferrer" class="link-button w-full flex items-center justify-center p-4" aria-label="Visit my GitHub profile"><i class="fab fa-github mr-3" aria-hidden="true"></i> GITHUB</a>
+                    <a href="https://www.instagram.com/afif_fradana/" target="_blank" rel="noopener noreferrer" class="link-button w-full flex items-center justify-center p-4" aria-label="Visit my Instagram profile"><i class="fab fa-instagram mr-3" aria-hidden="true"></i> INSTAGRAM</a>
+                    <a href="https://www.linkedin.com/in/afif-dzakwansyah-fradana-882691296" target="_blank" rel="noopener noreferrer" class="link-button w-full flex items-center justify-center p-4" aria-label="Visit my LinkedIn profile"><i class="fab fa-linkedin-in mr-3" aria-hidden="true"></i> LINKEDIN</a>
+                    <a href="https://t.me/Afif_Fradana" target="_blank" rel="noopener noreferrer" class="link-button w-full flex items-center justify-center p-4" aria-label="Contact me on Telegram"><i class="fab fa-telegram mr-3" aria-hidden="true"></i> TELEGRAM</a>
+                </div>
+            </div>
+        </section>
+
+        <footer class="w-full text-center py-8 border-t border-slate-700 text-xs text-slate-500">
+            <p>&copy; <span id="current-year"></span> Afif Fradana | Made with <i class="fas fa-heart text-red-500 animate-pulse" aria-hidden="true"></i></p>
+        </footer>
+    </main>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" type="button" class="fixed bottom-6 right-6 bg-sky-600 text-white p-3 rounded-full shadow-lg hover:bg-sky-700 transition-all duration-300 z-50 opacity-0 scale-0" aria-label="Back to top">
+        <i class="fas fa-arrow-up" aria-hidden="true"></i>
+    </button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+    <script src="config.js"></script>
+    <script src="script.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+/* Variabel Warna & Font Dasar */
+:root {
+    --bg-primary: #000000;
+    --bg-glass: rgba(10, 10, 10, 0.15); 
+    --border-glass: rgba(255, 255, 255, 0.1);
+    --text-primary: #f1f5f9;
+    --accent-blue: #3b82f6;
+    --accent-glow: rgba(59, 130, 246, 0.5);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    min-height: 100vh;
+    padding-top: 80px; /* Add padding for fixed header */
+}
+
+#starfield {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;
+}
+
+/* Panel Kaca Transparan */
+.glass-container {
+    background: var(--bg-glass);
+    backdrop-filter: blur(8px); 
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--border-glass);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); 
+}
+
+.glass-container-nav {
+    background: rgba(10, 10, 10, 0.3); /* Slightly more opaque for nav */
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-glass);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.link-button {
+    transition: all 0.3s;
+    border: 1px solid var(--border-glass);
+    background: rgba(20, 20, 20, 0.3);
+    position: relative; overflow: hidden; border-radius: 12px;
+}
+
+.link-button:hover {
+    background: rgba(40, 40, 40, 0.6);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.25);
+    border-color: var(--accent-glow);
+}
+
+.link-button::before {
+    content: ''; position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.6s;
+    pointer-events: none;
+}
+
+.link-button:hover::before { left: 100%; }
+
+.pulse-ring {
+    position: absolute; top: -8px; left: -8px; right: -8px; bottom: -8px;
+    border: 2px solid var(--accent-glow);
+    border-radius: 50%;
+}
+
+.skill-badge {
+    background: linear-gradient(135deg, rgba(30, 64, 175, 0.3), rgba(59, 130, 246, 0.2));
+    color: #93c5fd; 
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+}
+
+.skill-badge:hover {
+    background: linear-gradient(135deg, rgba(30, 64, 175, 0.5), rgba(59, 130, 246, 0.4));
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.music-active {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(37, 99, 235, 0.5)) !important;
+    animation: pulse-glow 2s ease-in-out infinite;
+    border-color: var(--accent-blue) !important;
+}
+
+/* Navigation Links */
+.nav-link {
+    color: var(--text-primary);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-blue);
+    transition: width 0.3s ease-out;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: #93c5fd;
+}
+
+/* === KEYFRAMES (Managed by Tailwind CSS) === */
+/* The .animated-element rule was removed to fix a click-through issue. */
+/* Animations are now defined in tailwind.config.js */
+
+.loading-overlay { 
+    transition: opacity 0.5s ease-out; 
+}
+
+.loading-overlay.hidden { 
+    opacity: 0; 
+    pointer-events: none; 
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* --- STYLING UNTUK PERSONAL SECTION --- */
+
+.personal-section {
+    background: rgba(15, 15, 15, 0.4);
+    border: 1px solid var(--border-glass);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.personal-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+}
+
+.section-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.screenshot-img {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid var(--border-glass);
+    transition: all 0.3s ease;
+}
+
+.screenshot-img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+}
+
+.repo-card {
+    background: rgba(15, 15, 15, 0.4);
+    border: 1px solid var(--border-glass);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.repo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(59, 130, 246, 0.2);
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 100px; /* Adjust padding for smaller screens */
+    }
+
+    .glass-container-nav {
+        padding: 0.75rem 1rem;
+    }
+
+    .nav-link {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* New Styles for Sections */
+section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Back to Top Button */
+#back-to-top {
+    transform-origin: bottom right;
+}
+
+#back-to-top.show {
+    opacity: 1;
+    scale: 1;
+}
+
+/* Custom animation delays */
+.custom-delay-1 {
+    animation-delay: 0.1s;
+}
+
+.custom-delay-2 {
+    animation-delay: 0.2s;
+}
+
+.custom-delay-4 {
+    animation-delay: 0.4s;
+}
+
+.custom-delay-6 {
+    animation-delay: 0.6s;
+}
+
+/* Add a clear outline on keyboard focus for better accessibility */
+.link-button:focus-visible,
+.nav-link:focus-visible,
+#back-to-top:focus-visible {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 2px;
+    box-shadow: 0 0 15px var(--accent-glow); /* Optional: adds a nice glow effect */
+}
