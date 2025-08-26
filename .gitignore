@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+.npm/
+.pnpm-store/
+
+# Build outputs
+dist/
+
+# Logs
+*.log
+
+# Environment files
+.env*
+!.env.example
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS generated files
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+
+# Configuration files that might contain sensitive information
+config.local.js
