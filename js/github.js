@@ -22,13 +22,16 @@ export class GitHubFetcher {
         if (!this.container) return;
 
         try {
+            // Show loading state
+            this.showLoadingState();
+            
             const response = await this.fetchWithRetry();
             if (!response.ok) {
                 throw new Error(`GitHub API error: ${response.statusText}`);
             }
             const repos = await response.json();
             
-            // Clear placeholder
+            // Clear container
             while (this.container.firstChild) {
                 this.container.removeChild(this.container.firstChild);
             }
@@ -44,6 +47,29 @@ export class GitHubFetcher {
             Utils.handleApiError(error, 'GitHub Repositories');
             this.displayErrorMessage();
         }
+    }
+
+    /**
+     * Show loading state in the container
+     */
+    showLoadingState() {
+        if (!this.container) return;
+        
+        // Clear container
+        while (this.container.firstChild) {
+            this.container.removeChild(this.container.firstChild);
+        }
+        
+        // Add loading indicator
+        const loadingElement = document.createElement('div');
+        loadingElement.className = 'repo-card glass-container p-6 text-slate-300 col-span-full';
+        loadingElement.innerHTML = `
+            <div class="flex justify-center items-center h-full">
+                <div class="loading-spinner"></div>
+                <span class="ml-3">Loading projects...</span>
+            </div>
+        `;
+        this.container.appendChild(loadingElement);
     }
 
     /**
@@ -104,10 +130,24 @@ export class GitHubFetcher {
             this.container.removeChild(this.container.firstChild);
         }
         
-        const errorElement = document.createElement('p');
-        errorElement.className = 'text-red-400 text-center col-span-full';
-        errorElement.textContent = 'Failed to load repositories. Please try again later.';
+        const errorElement = document.createElement('div');
+        errorElement.className = 'repo-card glass-container p-6 text-slate-300 col-span-full';
+        errorElement.innerHTML = `
+            <div class="text-center">
+                <p class="text-red-400 mb-4">Failed to load repositories. Please try again later.</p>
+                <button id="retry-button" class="link-button px-4 py-2">Retry</button>
+            </div>
+        `;
         this.container.appendChild(errorElement);
+        
+        // Add event listener to retry button
+        const retryButton = document.getElementById('retry-button');
+        if (retryButton) {
+            retryButton.addEventListener('click', () => {
+                this.retryCount = 0; // Reset retry count
+                this.fetchRepos();
+            });
+        }
     }
 
     /**
@@ -120,6 +160,12 @@ export class GitHubFetcher {
         
         // Filter out forked repositories if desired (optional enhancement)
         const filteredRepos = repos.filter(repo => !repo.fork);
+        
+        // If no repos after filtering, show message
+        if (filteredRepos.length === 0) {
+            this.displayNoReposMessage();
+            return;
+        }
         
         filteredRepos.forEach(repo => {
             const repoCard = document.createElement('div');
@@ -170,6 +216,11 @@ export class GitHubFetcher {
             
             fragment.appendChild(repoCard);
         });
+        
+        // Clear container before appending new content
+        while (this.container.firstChild) {
+            this.container.removeChild(this.container.firstChild);
+        }
         
         this.container.appendChild(fragment);
     }

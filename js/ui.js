@@ -13,6 +13,7 @@ export class UI {
         this.setupSectionVisibility();
         this.setFooterYear();
         this.setupLoadingOverlay();
+        this.setupSmoothScrolling();
     }
 
     /**
@@ -123,6 +124,26 @@ export class UI {
 
         sections.forEach(section => {
             sectionObserver.observe(section);
+        });
+    }
+
+    /**
+     * Set up smooth scrolling for all links
+     */
+    setupSmoothScrolling() {
+        // This is already handled in setupNavigation, but we can add additional smooth scrolling
+        // for any other anchor links that might be added dynamically
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a[href^="#"]');
+            if (link) {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            }
         });
     }
 }
