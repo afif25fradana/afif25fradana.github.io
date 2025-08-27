@@ -1,5 +1,12 @@
 // UI-related functionality
+
+/**
+ * Class for managing UI elements and interactions
+ */
 export class UI {
+    /**
+     * Create a UI manager
+     */
     constructor() {
         this.setupNavigation();
         this.setupBackToTop();
@@ -8,6 +15,9 @@ export class UI {
         this.setupLoadingOverlay();
     }
 
+    /**
+     * Set the current year in the footer
+     */
     setFooterYear() {
         const currentYearEl = document.getElementById('current-year');
         if(currentYearEl) {
@@ -15,6 +25,9 @@ export class UI {
         }
     }
 
+    /**
+     * Set up the loading overlay
+     */
     setupLoadingOverlay() {
         const loadingOverlay = document.getElementById('loading-overlay');
         window.addEventListener('load', () => {
@@ -26,6 +39,9 @@ export class UI {
         });
     }
 
+    /**
+     * Set up navigation links
+     */
     setupNavigation() {
         document.querySelectorAll('nav a.nav-link').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -53,6 +69,9 @@ export class UI {
         }
     }
 
+    /**
+     * Set up the back to top button
+     */
     setupBackToTop() {
         const backToTopButton = document.getElementById('back-to-top');
         if (backToTopButton) {
@@ -73,6 +92,9 @@ export class UI {
         }
     }
 
+    /**
+     * Set up section visibility based on scroll position
+     */
     setupSectionVisibility() {
         const sections = document.querySelectorAll('section');
 
@@ -82,7 +104,7 @@ export class UI {
             threshold: window.CONFIG.UI.SECTION_INTERSECTION_THRESHOLD || 0.1 // 10% of the section must be visible
         };
 
-        const sectionObserver = new IntersectionObserver((entries, observer) => {
+        const sectionObserver = new IntersectionObserver((entries, _observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');

@@ -3,20 +3,20 @@ import { GitHubFetcher } from './github.js';
 import { MusicPlayer } from './music.js';
 import { Starfield } from './starfield.js';
 import { UI } from './ui.js';
-import { Utils } from './utils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize all components
-    const ui = new UI();
+    new UI();
     const githubFetcher = new GitHubFetcher();
-    const musicPlayer = new MusicPlayer();
-    const starfield = new Starfield();
+    new MusicPlayer();
+    new Starfield();
     
     // Fetch GitHub repositories
     githubFetcher.fetchRepos();
     
     // Pause/resume starfield animation when tab visibility changes
     document.addEventListener('visibilitychange', () => {
+        const starfield = new Starfield();
         if (document.hidden) {
             starfield.pause();
         } else {

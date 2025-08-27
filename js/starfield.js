@@ -1,7 +1,13 @@
 // Starfield animation functionality
 import { Utils } from './utils.js';
 
+/**
+ * Class for creating and managing a starfield animation
+ */
 export class Starfield {
+    /**
+     * Create a Starfield
+     */
     constructor() {
         this.canvas = document.getElementById('starfield');
         this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
@@ -17,12 +23,18 @@ export class Starfield {
         }
     }
 
+    /**
+     * Initialize the starfield
+     */
     init() {
         this.resizeCanvas();
         this.setupEventListeners();
         this.draw();
     }
 
+    /**
+     * Resize the canvas to match window dimensions
+     */
     resizeCanvas() {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
@@ -30,11 +42,17 @@ export class Starfield {
         this.createShootingStars();
     }
 
+    /**
+     * Set up event listeners for window resize
+     */
     setupEventListeners() {
         const debouncedResize = Utils.debounce(() => this.resizeCanvas(), 100);
         window.addEventListener('resize', debouncedResize);
     }
 
+    /**
+     * Create stars for the starfield
+     */
     createStars() {
         this.stars = [];
         for (let i = 0; i < this.numStars; i++) {
@@ -47,6 +65,10 @@ export class Starfield {
         }
     }
 
+    /**
+     * Create a shooting star
+     * @returns {Object} Shooting star object
+     */
     createShootingStar() {
         return {
             x: Math.random() * this.canvas.width + this.canvas.width / 2, y: Math.random() * this.canvas.height / 2,
@@ -55,6 +77,9 @@ export class Starfield {
         };
     }
 
+    /**
+     * Create shooting stars for the starfield
+     */
     createShootingStars() {
         this.shootingStars = [];
         for (let i = 0; i < this.numShootingStars; i++) {
@@ -62,6 +87,9 @@ export class Starfield {
         }
     }
 
+    /**
+     * Draw the starfield animation
+     */
     draw() {
         if (!this.ctx) return;
         
@@ -96,6 +124,9 @@ export class Starfield {
         this.animationId = requestAnimationFrame(() => this.draw());
     }
 
+    /**
+     * Pause the starfield animation
+     */
     pause() {
         if (this.animationId) {
             cancelAnimationFrame(this.animationId);
@@ -103,6 +134,9 @@ export class Starfield {
         }
     }
 
+    /**
+     * Resume the starfield animation
+     */
     resume() {
         if (!this.animationId) {
             this.draw();

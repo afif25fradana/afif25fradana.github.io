@@ -60,4 +60,4 @@ I'm always open to suggestions and improvements! If you have an idea or spot som
 
 ## License 📜
 
-(I'll add my license info here soon!)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
