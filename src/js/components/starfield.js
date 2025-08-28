@@ -1,5 +1,6 @@
 // Starfield animation functionality
 import { Utils } from './utils.js';
+import { DeviceDetector } from './device-detector.js'; // Import device detection utility
 
 /**
  * Class for creating and managing a starfield animation
@@ -16,21 +17,13 @@ export class Starfield {
         this.shootingStars = [];
         
         // Reduce number of stars and shooting stars on mobile devices for better performance
-        this.isMobile = this.isMobileDevice();
+        this.isMobile = DeviceDetector.isMobileDevice();
         this.numStars = this.isMobile ? 50 : (window.CONFIG.ANIMATION.STARFIELD.NUM_STARS || 150);
         this.numShootingStars = this.isMobile ? 1 : (window.CONFIG.ANIMATION.STARFIELD.NUM_SHOOTING_STARS || 2);
         
         if (this.canvas && this.ctx) {
             this.init();
         }
-    }
-
-    /**
-     * Detect if user is on a mobile device
-     * @returns {boolean} - True if user is on mobile device
-     */
-    isMobileDevice() {
-        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
 
     /**

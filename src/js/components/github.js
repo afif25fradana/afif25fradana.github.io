@@ -1,5 +1,6 @@
 // GitHub repository fetching functionality
 import { Utils } from './utils.js';
+import { CacheManager } from './cache-manager.js'; // Import cache management utility
 
 /**
  * Class for fetching and displaying GitHub repositories
@@ -12,9 +13,8 @@ export class GitHubFetcher {
         this.container = document.getElementById('github-repos');
         this.retryCount = 0;
         this.maxRetries = 3;
-        // Cache settings for GitHub repository data
-        this.CACHE_KEY = 'github_repos';
-        this.CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
+        // Initialize cache manager
+        this.cacheManager = new CacheManager('github_repos', 10 * 60 * 1000); // 10 minutes
     }
 
     /**
@@ -25,7 +25,7 @@ export class GitHubFetcher {
         if (!this.container) return;
 
         // Try to get cached data first
-        const cachedData = this.getCachedRepos();
+        const cachedData = this.cacheManager.get('repos');
         if (cachedData) {
             // Clear container
             while (this.container.firstChild) {
@@ -52,7 +52,7 @@ export class GitHubFetcher {
             const repos = await response.json();
             
             // Cache the data
-            this.cacheRepos(repos);
+            this.cacheManager.set('repos', repos);
             
             // Only update UI if we didn't already render cached data
             if (!cachedData) {
@@ -267,48 +267,5 @@ export class GitHubFetcher {
         }
         
         this.container.appendChild(fragment);
-    }
-
-    /**
-     * Cache repositories data in localStorage
-     * @param {Array} repos - Array of repository objects
-     */
-    cacheRepos(repos) {
-        try {
-            const cacheData = {
-                data: repos,
-                timestamp: Date.now()
-            };
-            localStorage.setItem(this.CACHE_KEY, JSON.stringify(cacheData));
-        } catch (error) {
-            // Silently fail if localStorage is not available or quota is exceeded
-            console.warn('Failed to cache GitHub repositories:', error);
-        }
-    }
-
-    /**
-     * Get cached repositories data from localStorage
-     * @returns {Array|null} Array of repository objects or null if not available
-     */
-    getCachedRepos() {
-        try {
-            const cached = localStorage.getItem(this.CACHE_KEY);
-            if (!cached) return null;
-            
-            const cacheData = JSON.parse(cached);
-            
-            // Check if cache is still valid
-            if (Date.now() - cacheData.timestamp > this.CACHE_DURATION) {
-                // Remove expired cache
-                localStorage.removeItem(this.CACHE_KEY);
-                return null;
-            }
-            
-            return cacheData.data;
-        } catch (error) {
-            // Silently fail if parsing fails
-            console.warn('Failed to get cached GitHub repositories:', error);
-            return null;
-        }
     }
 }

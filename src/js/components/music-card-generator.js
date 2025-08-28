@@ -1,138 +1,8 @@
-// Ambient music player functionality
-import { Utils } from './utils.js'; // Import Utils for error handling
-
-/**
- * Class for controlling ambient music playback using Tone.js
- */
-export class MusicPlayer {
-    /**
-     * Create a MusicPlayer
-     */
-    constructor() {
-        this.button = document.getElementById('music-button');
-        this.musicText = document.getElementById('music-text');
-        this.musicIcon = document.getElementById('music-icon');
-        this.isPlaying = false;
-        this.isAudioContextStarted = false;
-        this.loop = null;
-        
-        if (this.button) {
-            this.initSynth();
-            this.setupEventListeners();
-        }
-    }
-
-    /**
-     * Detect if user is on a mobile device
-     * @returns {boolean} - True if user is on mobile device
-     */
-    isMobileDevice() {
-        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    }
-
-    /**
-     * Initialize Tone.js synthesizer with effects
-     */
-    initSynth() {
-        try {
-            this.synth = new Tone.PolySynth(Tone.Synth, {
-                volume: -18,
-                oscillator: { type: 'triangle' },
-                envelope: { attack: 0.02, decay: 0.1, sustain: 0.3, release: 0.4 }
-            }).toDestination();
-            
-            this.reverb = new Tone.Reverb({ decay: 2.0, wet: 0.3 }).toDestination();
-            this.synth.connect(this.reverb);
-            
-            this.delay = new Tone.PingPongDelay({ delayTime: '8n', feedback: 0.3, wet: 0.25 }).toDestination();
-            this.synth.connect(this.delay);
-
-            this.melody = [
-                { notes: ['C4', 'E4', 'G4'], duration: '4n' }, { notes: ['A4'], duration: '8n' },
-                { notes: ['G4'], duration: '8n' }, { notes: ['E4'], duration: '4n' },
-                { notes: ['C4'], duration: '4n' }, { notes: ['F4', 'A4'], duration: '4n' },
-                { notes: ['C5'], duration: '4n' }, { notes: ['A4'], duration: '4n' }
-            ];
-        } catch (error) {
-            console.error('Failed to initialize Tone.js synthesizer:', error);
-            // Fallback or disable music player
-            if (this.button) {
-                this.button.disabled = true;
-                this.musicText.textContent = 'Music not available';
-            }
-        }
-    }
-
-    /**
-     * Set up event listeners for the music button
-     */
-    setupEventListeners() {
-        this.button.addEventListener('click', () => {
-            // On mobile devices, show a warning about audio limitations
-            if (this.isMobileDevice() && !this.isAudioContextStarted) {
-                // Check if the user is on a mobile device and hasn't started audio yet
-                console.log('On mobile devices, audio may be limited due to browser policies.');
-            }
-            
-            if (!this.isAudioContextStarted) {
-                Tone.start().then(() => {
-                    this.isAudioContextStarted = true;
-                    this.startMusic();
-                });
-            } else {
-                this.isPlaying ? this.stopMusic() : this.startMusic();
-            }
-        });
-        
-        // Optimasi: Hentikan animasi saat tab tidak aktif
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                if (this.isPlaying) this.stopMusic();
-            }
-        });
-        
-        // On mobile devices, stop music when the page is not visible to save resources
-        if (this.isMobileDevice()) {
-            document.addEventListener('visibilitychange', () => {
-                if (document.hidden && this.isPlaying) {
-                    this.stopMusic();
-                }
-            });
-        }
-    }
-
-    /**
-     * Start playing the ambient melody
-     */
-    startMusic() {
-        let step = 0;
-        this.loop = new Tone.Loop(time => {
-            const note = this.melody[step % this.melody.length];
-            this.synth.triggerAttackRelease(note.notes, note.duration, time);
-            step++;
-        }, '4n').start(0);
-        Tone.Transport.start();
-        this.musicText.textContent = 'STOP AMBIENT MUSIC';
-        this.musicIcon.classList.replace('fa-play', 'fa-pause');
-        this.button.classList.add('music-active');
-        this.isPlaying = true;
-    }
-
-    /**
-     * Stop playing the ambient melody
-     */
-    stopMusic() {
-        if (this.loop) {
-            this.loop.stop(0);
-            this.loop.dispose();
-        }
-        Tone.Transport.stop();
-        this.musicText.textContent = 'PLAY AMBIENT MUSIC';
-        this.musicIcon.classList.replace('fa-pause', 'fa-play');
-        this.button.classList.remove('music-active');
-        this.isPlaying = false;
-    }
-}
+// Music card generation functionality
+import { Utils } from '../components/utils.js'; // Import Utils for error handling
+import { DeviceDetector } from './device-detector.js'; // Import device detection utility
+import { CacheManager } from './cache-manager.js'; // Import cache management utility
+import { DataValidator } from './data-validator.js'; // Import data validation utility
 
 /**
  * Class for generating and rendering music cards from YouTube links.
@@ -150,9 +20,8 @@ export class MusicCardGenerator {
             'https://noembed.com/embed?url='        // Fallback
         ];
         
-        // Cache settings for music metadata
-        this.CACHE_PREFIX = 'music_data';
-        this.CACHE_DURATION = 15 * 60 * 1000; // 15 minutes
+        // Initialize cache manager
+        this.cacheManager = new CacheManager('music_data', 15 * 60 * 1000); // 15 minutes
     }
 
     /**
@@ -161,7 +30,7 @@ export class MusicCardGenerator {
     async init() {
         // Load music data from JSON file
         try {
-            const response = await fetch('music-data.json');
+            const response = await fetch('./src/data/music.json');
             if (!response.ok) {
                 throw new Error(`Failed to load music data: ${response.status} ${response.statusText}`);
             }
@@ -170,7 +39,7 @@ export class MusicCardGenerator {
             console.log('Music data loaded successfully:', musicData);
             
             // Validate the loaded data
-            if (!this.validateMusicData(musicData)) {
+            if (!DataValidator.validateMusicData(musicData)) {
                 throw new Error('Invalid music data structure');
             }
             
@@ -188,7 +57,7 @@ export class MusicCardGenerator {
         }
         
         // Detect if user is on mobile device
-        const isMobile = this.isMobileDevice();
+        const isMobile = DeviceDetector.isMobileDevice();
         
         try {
             await this.renderArtistCards(this.favoriteArtists, 'favorite-artists-grid', isMobile);
@@ -210,55 +79,6 @@ export class MusicCardGenerator {
     }
 
     /**
-     * Validates the music data structure
-     * @param {Object} data - The music data to validate
-     * @returns {boolean} - True if data is valid
-     */
-    validateMusicData(data) {
-        if (!data || typeof data !== 'object') {
-            console.error('Music data is not an object');
-            return false;
-        }
-        
-        if (!Array.isArray(data.favoriteArtists)) {
-            console.error('favoriteArtists is not an array');
-            return false;
-        }
-        
-        if (!Array.isArray(data.favoriteSongs)) {
-            console.error('favoriteSongs is not an array');
-            return false;
-        }
-        
-        if (!Array.isArray(data.recentSongs)) {
-            console.error('recentSongs is not an array');
-            return false;
-        }
-        
-        // Validate artist structure
-        for (let i = 0; i < data.favoriteArtists.length; i++) {
-            const artist = data.favoriteArtists[i];
-            if (!artist.url || !artist.name || !artist.thumbnail) {
-                console.error(`Artist at index ${i} is missing required fields`, artist);
-                return false;
-            }
-        }
-        
-        // Validate song URL structure
-        const allSongs = [...data.favoriteSongs, ...data.recentSongs];
-        for (let i = 0; i < allSongs.length; i++) {
-            const songUrl = allSongs[i];
-            if (typeof songUrl !== 'string' || !songUrl.includes('youtube.com/watch')) {
-                console.error(`Song URL at index ${i} is invalid`, songUrl);
-                return false;
-            }
-        }
-        
-        console.log('Music data validation passed');
-        return true;
-    }
-
-    /**
      * Loads fallback data if JSON file fails to load
      */
     loadFallbackData() {
@@ -270,21 +90,13 @@ export class MusicCardGenerator {
     }
 
     /**
-     * Detect if user is on a mobile device
-     * @returns {boolean} - True if user is on mobile device
-     */
-    isMobileDevice() {
-        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    }
-
-    /**
      * Fetches metadata from the oEmbed API. Handles both videos and channels.
      * @param {string} youtubeUrl - The URL of the YouTube video or channel.
      * @returns {Promise<Object|null>} - A promise that resolves to the metadata or null on error.
      */
     async fetchMetadata(youtubeUrl) {
         // Try to get cached data first
-        const cachedData = this.getCachedMetadata(youtubeUrl);
+        const cachedData = this.cacheManager.get(youtubeUrl);
         if (cachedData) {
             return cachedData;
         }
@@ -320,7 +132,7 @@ export class MusicCardGenerator {
                 }
                 
                 // Cache the data
-                this.cacheMetadata(youtubeUrl, data);
+                this.cacheManager.set(youtubeUrl, data);
                 
                 return data;
             } catch (error) {
@@ -614,53 +426,6 @@ export class MusicCardGenerator {
             console.error(`Error rendering cards for container ${containerId}:`, error);
             // Show error message
             container.innerHTML = '<p class="text-center text-red-400">Failed to load music content.</p>';
-        }
-    }
-
-    /**
-     * Cache metadata in localStorage
-     * @param {string} url - The YouTube URL
-     * @param {Object} data - The metadata to cache
-     */
-    cacheMetadata(url, data) {
-        try {
-            const cacheKey = `${this.CACHE_PREFIX}:${url}`;
-            const cacheData = {
-                data: data,
-                timestamp: Date.now()
-            };
-            localStorage.setItem(cacheKey, JSON.stringify(cacheData));
-        } catch (error) {
-            // Silently fail if localStorage is not available or quota is exceeded
-            console.warn(`Failed to cache metadata for ${url}:`, error);
-        }
-    }
-
-    /**
-     * Get cached metadata from localStorage
-     * @param {string} url - The YouTube URL
-     * @returns {Object|null} The cached metadata or null if not available
-     */
-    getCachedMetadata(url) {
-        try {
-            const cacheKey = `${this.CACHE_PREFIX}:${url}`;
-            const cached = localStorage.getItem(cacheKey);
-            if (!cached) return null;
-            
-            const cacheData = JSON.parse(cached);
-            
-            // Check if cache is still valid
-            if (Date.now() - cacheData.timestamp > this.CACHE_DURATION) {
-                // Remove expired cache
-                localStorage.removeItem(cacheKey);
-                return null;
-            }
-            
-            return cacheData.data;
-        } catch (error) {
-            // Silently fail if parsing fails
-            console.warn(`Failed to get cached metadata for ${url}:`, error);
-            return null;
         }
     }
 }

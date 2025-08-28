@@ -1,4 +1,5 @@
 // Hobbies functionality
+import { DataValidator } from './data-validator.js'; // Import data validation utility
 
 /**
  * Class for generating and rendering hobbies cards from JSON data.
@@ -17,7 +18,7 @@ export class HobbiesGenerator {
     async init() {
         // Load hobbies data from JSON file
         try {
-            const response = await fetch('hobbies-data.json');
+            const response = await fetch('./src/data/hobbies.json');
             if (!response.ok) {
                 throw new Error(`Failed to load hobbies data: ${response.status} ${response.statusText}`);
             }
@@ -26,7 +27,7 @@ export class HobbiesGenerator {
             console.log('Hobbies data loaded successfully:', hobbiesData);
             
             // Validate the loaded data
-            if (!this.validateHobbiesData(hobbiesData)) {
+            if (!DataValidator.validateHobbiesData(hobbiesData)) {
                 throw new Error('Invalid hobbies data structure');
             }
             
@@ -44,44 +45,6 @@ export class HobbiesGenerator {
         } catch (error) {
             console.error('Error rendering hobbies:', error);
         }
-    }
-
-    /**
-     * Validates the hobbies data structure
-     * @param {Object} data - The hobbies data to validate
-     * @returns {boolean} - True if data is valid
-     */
-    validateHobbiesData(data) {
-        if (!data || typeof data !== 'object') {
-            console.error('Hobbies data is not an object');
-            return false;
-        }
-        
-        if (!Array.isArray(data.hobbies)) {
-            console.error('hobbies is not an array');
-            return false;
-        }
-        
-        // Validate hobby structure
-        for (let i = 0; i < data.hobbies.length; i++) {
-            const hobby = data.hobbies[i];
-            if (!hobby.id || !hobby.title || !hobby.icon || !Array.isArray(hobby.images)) {
-                console.error(`Hobby at index ${i} is missing required fields`, hobby);
-                return false;
-            }
-            
-            // Validate images structure
-            for (let j = 0; j < hobby.images.length; j++) {
-                const image = hobby.images[j];
-                if (!image.url || !image.alt) {
-                    console.error(`Image at index ${j} in hobby ${hobby.id} is missing required fields`, image);
-                    return false;
-                }
-            }
-        }
-        
-        console.log('Hobbies data validation passed');
-        return true;
     }
 
     /**

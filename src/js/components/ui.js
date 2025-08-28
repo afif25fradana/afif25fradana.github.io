@@ -1,4 +1,5 @@
 // UI-related functionality
+import { DeviceDetector } from './device-detector.js'; // Import device detection utility
 
 /**
  * Class for managing UI elements and interactions
@@ -192,6 +193,14 @@ export class UI {
                     mobileMenuButton.setAttribute('aria-expanded', 'false');
                 }
             });
+            
+            // On mobile devices, close menu when orientation changes
+            if (DeviceDetector.isMobileDevice()) {
+                window.addEventListener('orientationchange', () => {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuButton.setAttribute('aria-expanded', 'false');
+                });
+            }
         }
     }
 }
