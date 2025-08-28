@@ -3,6 +3,7 @@ import { GitHubFetcher } from './github.js';
 import { MusicPlayer, MusicCardGenerator } from './music.js';
 import { Starfield } from './starfield.js';
 import { UI } from './ui.js';
+import { HobbiesGenerator } from './hobbies.js'; // Import HobbiesGenerator from dedicated file
 
 document.addEventListener('DOMContentLoaded', async () => {
     // Initialize all components
@@ -11,12 +12,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     new MusicPlayer();
     const starfield = new Starfield();
     const musicCardGenerator = new MusicCardGenerator();
+    const hobbiesGenerator = new HobbiesGenerator(); // Initialize HobbiesGenerator
     
     // Fetch GitHub repositories
     githubFetcher.fetchRepos();
     
     // Render music cards
     await musicCardGenerator.init();
+
+    // Render hobbies
+    await hobbiesGenerator.init();
 
     // Hide loading overlay after all critical operations are complete
     const loadingOverlay = document.getElementById('loading-overlay');

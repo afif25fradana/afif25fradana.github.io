@@ -1,0 +1,34 @@
+{
+  "hobbies": [
+    {
+      "id": "gaming",
+      "title": "Gaming",
+      "icon": "fab fa-steam text-blue-400",
+      "images": [
+        {
+          "url": "https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755363435/Screenshot_398_zpr4tp.png",
+          "alt": "My Steam Library"
+        },
+        {
+          "url": "https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755363473/Screenshot_401_ezqjfy.png",
+          "alt": "Hades game"
+        }
+      ]
+    },
+    {
+      "id": "ricing",
+      "title": "Ricing Desktops",
+      "icon": "fab fa-linux text-gray-400",
+      "images": [
+        {
+          "url": "https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755364559/Screenshot_20250731_092322_uamet9.png",
+          "alt": "Linux Ricing"
+        },
+        {
+          "url": "https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755366186/Screenshot_404_cdwtui.png",
+          "alt": "Windows Ricing"
+        }
+      ]
+    }
+  ]
+}
