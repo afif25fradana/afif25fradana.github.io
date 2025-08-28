@@ -31,13 +31,12 @@ export class UI {
      */
     setupLoadingOverlay() {
         const loadingOverlay = document.getElementById('loading-overlay');
-        window.addEventListener('load', () => {
+        if (loadingOverlay) {
+            // Hide the loading overlay immediately when DOM is ready
             setTimeout(() => {
-                if (loadingOverlay) {
-                    loadingOverlay.classList.add('hidden');
-                }
+                loadingOverlay.classList.add('hidden');
             }, 500);
-        });
+        }
     }
 
     /**

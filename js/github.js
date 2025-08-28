@@ -173,11 +173,11 @@ export class GitHubFetcher {
             
             const title = document.createElement('h3');
             title.className = 'text-xl font-semibold text-white mb-2';
-            title.textContent = Utils.formatErrorMessage(repo.name);
+            title.textContent = repo.name;
             
             const description = document.createElement('p');
             description.className = 'text-sm mb-4';
-            description.textContent = Utils.formatErrorMessage(repo.description) || 'No description provided.';
+            description.textContent = repo.description || 'No description provided.';
             
             const topicsContainer = document.createElement('div');
             topicsContainer.className = 'flex flex-wrap gap-2 mb-4';
@@ -185,7 +185,7 @@ export class GitHubFetcher {
             if (repo.language) {
                 const languageBadge = document.createElement('span');
                 languageBadge.className = 'skill-badge';
-                languageBadge.textContent = Utils.formatErrorMessage(repo.language);
+                languageBadge.textContent = repo.language;
                 topicsContainer.appendChild(languageBadge);
             }
             
@@ -193,7 +193,7 @@ export class GitHubFetcher {
                 repo.topics.forEach(topic => {
                     const topicBadge = document.createElement('span');
                     topicBadge.className = 'skill-badge';
-                    topicBadge.textContent = Utils.formatErrorMessage(topic);
+                    topicBadge.textContent = topic;
                     topicsContainer.appendChild(topicBadge);
                 });
             }

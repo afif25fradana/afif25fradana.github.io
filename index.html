@@ -65,6 +65,7 @@
                 <li><a href="#resume" class="nav-link">Resume</a></li>
                 <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
                 <li><a href="#hobbies" class="nav-link">Hobbies</a></li>
+                <li><a href="#favorite-music" class="nav-link">Music</a></li>
                 <li><a href="#socials" class="nav-link">Contact</a></li>
             </ul>
         </nav>
@@ -204,14 +205,6 @@
             <div class="w-full max-w-7xl mx-auto">
                 <h2 class="text-3xl font-bold text-white mb-12 text-center">My Hobbies</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Music -->
-                    <div class="glass-container p-6 md:p-8 animated-element animate-fadeIn custom-delay-2">
-                        <h3 class="section-title"><i class="fas fa-music text-red-500" aria-hidden="true"></i> Music</h3>
-                        <div class="space-y-4">
-                            <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755364121/1755352189673_hqzt5g.png" alt="My Current YouTube Music Playlist" class="screenshot-img" loading="lazy">
-                            <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755364222/1732092780916_r32im9.png" alt="My All-Time Favorite Artists" class="screenshot-img" loading="lazy">
-                        </div>
-                    </div>
                     <!-- Gaming -->
                     <div class="glass-container p-6 md:p-8 animated-element animate-fadeIn custom-delay-4">
                         <h3 class="section-title"><i class="fab fa-steam text-blue-400" aria-hidden="true"></i> Gaming</h3>
@@ -222,11 +215,39 @@
                     </div>
                     <!-- Tech -->
                     <div class="glass-container p-6 md:p-8 animated-element animate-fadeIn custom-delay-6">
-                        <h3 class="section-title"><i class="fab fa-linux text-gray-400" aria-hidden="true"></i> Tech &amp; Ricing</h3>
+                        <h3 class="section-title"><i class="fab fa-linux text-gray-400" aria-hidden="true"></i>Ricing Desktops</h3>
                         <div class="space-y-4">
                             <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755364559/Screenshot_20250731_092322_uamet9.png" alt="Linux Ricing" class="screenshot-img" loading="lazy">
                             <img src="https://res.cloudinary.com/dta7ppwxj/image/upload/f_auto,q_auto,w_400/v1755366186/Screenshot_404_cdwtui.png" alt="Windows Ricing" class="screenshot-img" loading="lazy">
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAVORITE MUSIC SECTION -->
+        <section id="favorite-music" class="py-20 px-4">
+            <div class="w-full max-w-7xl mx-auto glass-container p-6 md:p-8 animated-element animate-fadeIn">
+                <h2 class="text-3xl font-bold text-white mb-6 text-center">Favorite Music</h2>
+                
+                <div class="mb-12">
+                    <h3 class="section-title mb-4"><i class="fas fa-star text-yellow-400" aria-hidden="true"></i> Favorite Artists</h3>
+                    <div id="favorite-artists-grid" class="music-grid">
+                        <!-- Music cards will be loaded here by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="mb-12">
+                    <h3 class="section-title mb-4"><i class="fas fa-heart text-red-500" aria-hidden="true"></i> Favorite Songs</h3>
+                    <div id="favorite-songs-grid" class="music-grid">
+                        <!-- Music cards will be loaded here by JavaScript -->
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="section-title mb-4"><i class="fas fa-clock text-blue-400" aria-hidden="true"></i> Recently Enjoyed</h3>
+                    <div id="recent-songs-grid" class="music-grid">
+                        <!-- Music cards will be loaded here by JavaScript -->
                     </div>
                 </div>
             </div>
