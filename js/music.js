@@ -23,6 +23,14 @@ export class MusicPlayer {
     }
 
     /**
+     * Detect if user is on a mobile device
+     * @returns {boolean} - True if user is on mobile device
+     */
+    isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    /**
      * Initialize Tone.js synthesizer with effects
      */
     initSynth() {
@@ -60,6 +68,12 @@ export class MusicPlayer {
      */
     setupEventListeners() {
         this.button.addEventListener('click', () => {
+            // On mobile devices, show a warning about audio limitations
+            if (this.isMobileDevice() && !this.isAudioContextStarted) {
+                // Check if the user is on a mobile device and hasn't started audio yet
+                console.log('On mobile devices, audio may be limited due to browser policies.');
+            }
+            
             if (!this.isAudioContextStarted) {
                 Tone.start().then(() => {
                     this.isAudioContextStarted = true;
@@ -76,6 +90,15 @@ export class MusicPlayer {
                 if (this.isPlaying) this.stopMusic();
             }
         });
+        
+        // On mobile devices, stop music when the page is not visible to save resources
+        if (this.isMobileDevice()) {
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden && this.isPlaying) {
+                    this.stopMusic();
+                }
+            });
+        }
     }
 
     /**
@@ -116,42 +139,11 @@ export class MusicPlayer {
  */
 export class MusicCardGenerator {
     constructor() {
-        // Convert all artist URLs to standard YouTube channel URLs for better oEmbed support
-        // Include artist names and real thumbnails for better control
-        this.favoriteArtists = [
-            { url: 'https://www.youtube.com/channel/UCUt2uP6O_UBJp4aBx5KjQjA', name: 'Porter Robinson', thumbnail: 'https://yt3.googleusercontent.com/1V3GGb8hMKP_9-kpCEI5mD6eFoGBeZwkIbFLGB-vxRGYSodgsq6LNEoRINcDE5OL-_UqzdVbbg=s320-c-k-c0x00ffffff-no-rj-mo' },
-            { url: 'https://www.youtube.com/channel/UCGz-eguN8tcic5kUG4s1ZgA', name: 'Tame Impala', thumbnail: 'https://yt3.googleusercontent.com/CjdWr6hZl7lqbczfbUgMjb-w1WI-LXbOtolQT_OEbKmelMQVzL8cvm5jZrvqoKP2b24GYYoD=s320-c-k-c0x00ffffff-no-rj-mo' },
-            { url: 'https://www.youtube.com/channel/UC1gXK5ZV0phthXSPLZLC9-g', name: 'David Kushner', thumbnail: 'https://yt3.googleusercontent.com/dAzw8pdl4-VzT-3MLfkZsWQzktHBCU2esoEIkeI5Xv7BudgoefIh54jgzz_YcxlBVveN5HEhx64=s320-c-k-c0x00ffffff-no-rj-mo' },
-            { url: 'https://www.youtube.com/channel/UCGNMi-3h6Tx72EfbW6f2BxQ', name: 'Bring Me the Horizon', thumbnail: 'https://yt3.googleusercontent.com/bQjkkbEvkGbQdGaqrZrDa7d2FY0gtfDV674zh0QrhgrkXwEzGCNb0tx3-doqEMvyPOWY6SH6pTo=s320-c-k-c0x00ffffff-no-rj-mo' },
-            { url: 'https://www.youtube.com/channel/UCrSBEipSJ9lwLWO05GK6dRA', name: 'Wisp', thumbnail: 'https://yt3.googleusercontent.com/NXf6NFhq84jqJxCcG_2ip_ibkLAaO_4K0GB5d_8n0JuL8Kq5GLs2jfSHLqM2mygXwMjvxG6f=s320-c-k-c0x00ffffff-no-rj-mo' },
-            { url: 'https://www.youtube.com/channel/UC5DHwv9N4OQ9AWtKr8YSefw', name: 'Ado', thumbnail: 'https://yt3.googleusercontent.com/UpUTedOaQoww4QObAylZnHN-i1qNDxX-7SXpWRTUt087c5DrUWIkL-TQT9JW3Sxc5rFNIWagE_g=s320-c-k-c0x00ffffff-no-rj-mo' },
-            { url: 'https://www.youtube.com/channel/UCSvdCVniqK4gto1-Kg04Dmg', name: 'Bad Omens', thumbnail: 'https://yt3.googleusercontent.com/KmCz1EXcjCkOXE5f5w7vlrN_Ko1JcMxd3mpR8zACtxHylM6EdLNhY1YPwcu3nQVnsp0wiMN_rA=s320-c-k-c0x00ffffff-no-rj-mo' },
-            { url: 'https://www.youtube.com/channel/UCvfXczqN3XcopEh8SAZ_DNA', name: 'iRis.EXE', thumbnail: 'https://yt3.googleusercontent.com/iJHM_DfSN_AppXtt_KF-o3d02EkZ43oWkFFlrz8rZ2CBzL9HmIwmgpdVnkeM_6K9UgzZCAscj-U=s320-c-k-c0x00ffffff-no-rj-mo' }
-        ];
-
-        // Keep song URLs as YouTube Music since they work fine
-        this.favoriteSongsLinks = [
-            'https://music.youtube.com/watch?v=CzJbz9qSsd0&si=TehFiZR90GH-QhNH', // Cheerleader
-            'https://music.youtube.com/watch?v=tEXYfT_G0W0&si=540M9AXBz9HKl_Jq', // New Person, Same Old Mistakes
-            'https://music.youtube.com/watch?v=Y1gswBe-DjM&si=2TwvmkIqynPkhi39', // Daylight
-            'https://music.youtube.com/watch?v=1-Fxb9jsOuI&si=btNxDTHNe8HdvbOb', // Suffocation
-            'https://music.youtube.com/watch?v=lzMkFIw8ETM&si=1AJNmymNtRQVkTBC', // Knock Yourself Out XD
-            'https://music.youtube.com/watch?v=7b4iCpp45gM&si=NcEerI-D6ILsd03t', // Just Pretend
-            'https://music.youtube.com/watch?v=r2mzPDG72f0&si=Yx6jZ93nyaDmP08r', // OMEN
-            'https://music.youtube.com/watch?v=Y5YCwPmRcdo&si=tifamUzbCfO6zzhS'  // sanctuary
-        ];
-
-        this.recentSongsLinks = [
-            'https://music.youtube.com/watch?v=GWoK3HULCLo&si=L9zz2jeuLLqzlRbQ', // Helium
-            'https://music.youtube.com/watch?v=0pn-hZ2lNO8&si=0k8S5Q7r_l-19cQV', // amen.
-            'https://music.youtube.com/watch?v=wPqTMRYtyMw&si=xzNh__piweLmN-gz', // SOLANA
-            'https://music.youtube.com/watch?v=0bwZQkusdd0&si=g_EzXuru2rqIBJpY', // ETA
-            'https://music.youtube.com/watch?v=OtejracPJm4&si=Yn1ssJFN2iWh1Szm', // eepY.EXE
-            'https://music.youtube.com/watch?v=3SjRcth6ko8&si=pTzN_6MOCBgDYvrY', // 桜日和とタイムマシン with 初音ミク
-            'https://music.youtube.com/watch?v=6yufjxveDSg&si=d7nvQK_f0eP_Ec_Q', // tell you straight
-            'https://music.youtube.com/watch?v=eZXKCiUMRlc&si=ecihMYCjpRb4EAbl'  // emotion engine
-        ];
-
+        // Initialize empty arrays for music data
+        this.favoriteArtists = [];
+        this.favoriteSongs = [];
+        this.recentSongs = [];
+        
         // Multiple oEmbed endpoints for better reliability
         this.oEmbedEndpoints = [
             'https://www.youtube.com/oembed?url=',  // Primary YouTube oEmbed
@@ -163,23 +155,119 @@ export class MusicCardGenerator {
      * Initializes the music card generation by rendering all categories.
      */
     async init() {
+        // Load music data from JSON file
         try {
-            await this.renderArtistCards(this.favoriteArtists, 'favorite-artists-grid');
+            const response = await fetch('music-data.json');
+            const musicData = await response.json();
+            
+            console.log('Music data loaded successfully:', musicData);
+            
+            // Validate the loaded data
+            if (!this.validateMusicData(musicData)) {
+                throw new Error('Invalid music data structure');
+            }
+            
+            this.favoriteArtists = musicData.favoriteArtists;
+            this.favoriteSongs = musicData.favoriteSongs;
+            this.recentSongs = musicData.recentSongs;
+            
+            console.log('Favorite artists count:', this.favoriteArtists.length);
+            console.log('Favorite songs count:', this.favoriteSongs.length);
+            console.log('Recent songs count:', this.recentSongs.length);
+        } catch (error) {
+            console.error('Error loading music data:', error);
+            // Fallback to empty data if JSON file fails to load
+            this.loadFallbackData();
+        }
+        
+        // Detect if user is on mobile device
+        const isMobile = this.isMobileDevice();
+        
+        try {
+            await this.renderArtistCards(this.favoriteArtists, 'favorite-artists-grid', isMobile);
         } catch (error) {
             console.error('Error rendering favorite artists:', error);
         }
         
         try {
-            await this.renderMusicCards(this.favoriteSongsLinks, 'favorite-songs-grid');
+            await this.renderMusicCards(this.favoriteSongs, 'favorite-songs-grid', isMobile);
         } catch (error) {
             console.error('Error rendering favorite songs:', error);
         }
         
         try {
-            await this.renderMusicCards(this.recentSongsLinks, 'recent-songs-grid');
+            await this.renderMusicCards(this.recentSongs, 'recent-songs-grid', isMobile);
         } catch (error) {
             console.error('Error rendering recent songs:', error);
         }
+    }
+
+    /**
+     * Validates the music data structure
+     * @param {Object} data - The music data to validate
+     * @returns {boolean} - True if data is valid
+     */
+    validateMusicData(data) {
+        if (!data || typeof data !== 'object') {
+            console.error('Music data is not an object');
+            return false;
+        }
+        
+        if (!Array.isArray(data.favoriteArtists)) {
+            console.error('favoriteArtists is not an array');
+            return false;
+        }
+        
+        if (!Array.isArray(data.favoriteSongs)) {
+            console.error('favoriteSongs is not an array');
+            return false;
+        }
+        
+        if (!Array.isArray(data.recentSongs)) {
+            console.error('recentSongs is not an array');
+            return false;
+        }
+        
+        // Validate artist structure
+        for (let i = 0; i < data.favoriteArtists.length; i++) {
+            const artist = data.favoriteArtists[i];
+            if (!artist.url || !artist.name || !artist.thumbnail) {
+                console.error(`Artist at index ${i} is missing required fields`, artist);
+                return false;
+            }
+        }
+        
+        // Validate song URL structure
+        const allSongs = [...data.favoriteSongs, ...data.recentSongs];
+        for (let i = 0; i < allSongs.length; i++) {
+            const songUrl = allSongs[i];
+            if (typeof songUrl !== 'string' || !songUrl.includes('youtube.com/watch')) {
+                console.error(`Song URL at index ${i} is invalid`, songUrl);
+                return false;
+            }
+        }
+        
+        console.log('Music data validation passed');
+        return true;
+    }
+
+    /**
+     * Loads fallback data if JSON file fails to load
+     */
+    loadFallbackData() {
+        console.warn('Using fallback data - JSON file failed to load');
+        // You can add minimal fallback data here if needed, or just show an error
+        this.favoriteArtists = [];
+        this.favoriteSongs = [];
+        this.recentSongs = [];
+    }
+
+    /**
+     * Detect if user is on a mobile device
+     * @returns {boolean} - True if user is on mobile device
+     */
+    isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
 
     /**
@@ -257,13 +345,17 @@ export class MusicCardGenerator {
         );
 
         const thumbnailWrapper = document.createElement('div');
-        thumbnailWrapper.classList.add('w-full', 'aspect-w-16', 'aspect-h-9', 'mb-4', 'rounded-lg', 'overflow-hidden', 'border', 'border-slate-700'); // Added border and rounded-lg
+        thumbnailWrapper.classList.add('thumbnail-wrapper', 'w-full', 'mb-4', 'rounded-lg', 'overflow-hidden', 'border', 'border-slate-700');
 
         const thumbnail = document.createElement('img');
         thumbnail.src = metadata.thumbnail_url || 'https://placehold.co/320x180/00000000/00000000?text=No+Thumbnail';
         thumbnail.alt = metadata.title || 'Unknown Title';
-        thumbnail.classList.add('w-full', 'h-full', 'object-cover', 'bg-black'); // Added bg-black for consistency
         thumbnail.loading = 'lazy';
+        thumbnail.width = 320;
+        thumbnail.height = 180;
+        thumbnail.style.width = '100%';
+        thumbnail.style.height = '100%';
+        thumbnail.style.objectFit = 'cover';
         
         // Add error handling for thumbnail
         thumbnail.onerror = function() {
@@ -316,14 +408,18 @@ export class MusicCardGenerator {
         );
 
         const thumbnailWrapper = document.createElement('div');
-        thumbnailWrapper.classList.add('w-full', 'aspect-w-16', 'aspect-h-9', 'mb-4', 'rounded-lg', 'overflow-hidden', 'border', 'border-slate-700'); // Changed to match music card dimensions
+        thumbnailWrapper.classList.add('thumbnail-wrapper', 'w-full', 'mb-4', 'rounded-lg', 'overflow-hidden', 'border', 'border-slate-700');
 
         const thumbnail = document.createElement('img');
         // Use the provided thumbnail or a fallback
         thumbnail.src = metadata.thumbnail_url || 'https://placehold.co/320x180/00000000/00000000?text=Channel'; // Transparent placeholder
         thumbnail.alt = metadata.title || metadata.author_name || 'Channel';
-        thumbnail.classList.add('w-full', 'h-full', 'object-contain', 'bg-black'); // Changed to object-contain to show full image
         thumbnail.loading = 'lazy';
+        thumbnail.width = 320;
+        thumbnail.height = 180;
+        thumbnail.style.width = '100%';
+        thumbnail.style.height = '100%';
+        thumbnail.style.objectFit = 'cover';
         
         // Add error handling for thumbnail
         thumbnail.onerror = function() {
@@ -354,8 +450,11 @@ export class MusicCardGenerator {
      * Renders artist cards for a given array of artists into a specified container.
      * @param {Array} artists - An array of artist objects with url, name, and thumbnail properties.
      * @param {string} containerId - The ID of the HTML element to append cards to.
+     * @param {boolean} isMobile - Whether the user is on a mobile device
      */
-    async renderArtistCards(artists, containerId) {
+    async renderArtistCards(artists, containerId, isMobile = false) {
+        console.log(`Rendering ${artists.length} artists to ${containerId}`);
+        
         const container = document.getElementById(containerId);
         if (!container) {
             console.warn(`Container with ID "${containerId}" not found.`);
@@ -365,7 +464,11 @@ export class MusicCardGenerator {
         // Clear existing content or show a loading indicator if desired
         container.innerHTML = '<div class="loading-spinner mx-auto my-8"></div>'; // Show spinner while loading
 
-        const cardPromises = artists.map(async (artist) => {
+        // For mobile, limit to 2 rows of 3 cards each (6 cards total)
+        const artistsToShow = isMobile ? artists.slice(0, 6) : artists;
+        console.log(`Showing ${artistsToShow.length} artists (mobile: ${isMobile})`);
+
+        const cardPromises = artistsToShow.map(async (artist) => {
             try {
                 // Directly create a card with the manually specified thumbnail
                 // No need to fetch metadata since we already have all the information
@@ -390,11 +493,19 @@ export class MusicCardGenerator {
         try {
             const cards = await Promise.all(cardPromises);
             container.innerHTML = ''; // Clear spinner
+            
+            // Set up mobile-specific grid layout
+            if (isMobile) {
+                container.classList.add('mobile-music-grid');
+            }
+            
             cards.forEach(card => {
                 if (card) {
                     container.appendChild(card);
                 }
             });
+            
+            console.log(`Successfully rendered ${cards.filter(c => c).length} artist cards to ${containerId}`);
         } catch (error) {
             console.error(`Error rendering artist cards for container ${containerId}:`, error);
             // Show error message
@@ -403,11 +514,14 @@ export class MusicCardGenerator {
     }
 
     /**
-     * Renders music cards for a given array of links into a specified container.
-     * @param {string[]} linksArray - An array of YouTube video or channel URLs.
+     * Renders music cards for a given array of song URLs into a specified container.
+     * @param {Array} songUrls - An array of YouTube video URLs.
      * @param {string} containerId - The ID of the HTML element to append cards to.
+     * @param {boolean} isMobile - Whether the user is on a mobile device
      */
-    async renderMusicCards(linksArray, containerId) {
+    async renderMusicCards(songUrls, containerId, isMobile = false) {
+        console.log(`Rendering ${songUrls.length} songs to ${containerId}`);
+        
         const container = document.getElementById(containerId);
         if (!container) {
             console.warn(`Container with ID "${containerId}" not found.`);
@@ -417,53 +531,61 @@ export class MusicCardGenerator {
         // Clear existing content or show a loading indicator if desired
         container.innerHTML = '<div class="loading-spinner mx-auto my-8"></div>'; // Show spinner while loading
 
-        const cardPromises = linksArray.map(async (url) => {
+        // For mobile, limit to 2 rows of 3 cards each (6 cards total)
+        const urlsToShow = isMobile ? songUrls.slice(0, 6) : songUrls;
+        console.log(`Showing ${urlsToShow.length} songs (mobile: ${isMobile})`);
+
+        const cardPromises = urlsToShow.map(async (url) => {
             try {
                 const metadata = await this.fetchMetadata(url);
                 if (metadata) {
-                    // Check if this is a channel URL
-                    if (url.includes('/channel/')) {
-                        return this.createChannelCard(metadata, url);
-                    } else {
-                        return this.createMusicCard(metadata, url);
-                    }
+                    // Create a music card with the fetched metadata
+                    return this.createMusicCard(metadata, url);
                 } else {
-                    // Create a fallback card with better information
-                    if (url.includes('/channel/')) {
-                        // Extract channel name from URL as fallback
-                        const channelMatch = url.match(/\/channel\/([\w-]+)/);
-                        const channelId = channelMatch ? channelMatch[1] : 'Unknown Channel';
-                        return this.createChannelCard({title: channelId, author_name: channelId, provider_name: 'YouTube', thumbnail_url: 'https://placehold.co/320x180/00000000/00000000?text=Channel'}, url);
-                    } else {
-                        // Extract video title from URL as fallback
-                        const videoMatch = url.match(/watch\?v=([\w-]+)/);
-                        const videoId = videoMatch ? videoMatch[1] : 'Unknown Song';
-                        return this.createMusicCard({title: videoId, author_name: 'Unknown Artist', thumbnail_url: 'https://placehold.co/320x180/00000000/00000000?text=No+Thumbnail'}, url);
-                    }
+                    // Create a fallback card
+                    const videoMatch = url.match(/watch\?v=([\w-]+)/);
+                    const videoId = videoMatch ? videoMatch[1] : 'Unknown Song';
+                    return this.createMusicCard({
+                        title: videoId,
+                        author_name: 'Unknown Artist',
+                        thumbnail_url: 'https://placehold.co/320x180/00000000/00000000?text=No+Thumbnail'
+                    }, url);
                 }
             } catch (error) {
                 console.error(`Error creating card for ${url}:`, error);
                 // Even in case of error, create a fallback card
-                if (url.includes('/channel/')) {
-                    const channelMatch = url.match(/\/channel\/([\w-]+)/);
-                    const channelId = channelMatch ? channelMatch[1] : 'Unknown Channel';
-                    return this.createChannelCard({title: channelId, author_name: channelId, provider_name: 'YouTube', thumbnail_url: 'https://placehold.co/320x180/00000000/00000000?text=Channel'}, url);
-                } else {
-                    const videoMatch = url.match(/watch\?v=([\w-]+)/);
-                    const videoId = videoMatch ? videoMatch[1] : 'Unknown Song';
-                    return this.createMusicCard({title: videoId, author_name: 'Unknown Artist', thumbnail_url: 'https://placehold.co/320x180/00000000/00000000?text=No+Thumbnail'}, url);
-                }
+                const videoMatch = url.match(/watch\?v=([\w-]+)/);
+                const videoId = videoMatch ? videoMatch[1] : 'Unknown Song';
+                return this.createMusicCard({
+                    title: videoId,
+                    author_name: 'Unknown Artist',
+                    thumbnail_url: 'https://placehold.co/320x180/00000000/00000000?text=No+Thumbnail'
+                }, url);
             }
         });
 
         try {
             const cards = await Promise.all(cardPromises);
             container.innerHTML = ''; // Clear spinner
-            cards.forEach(card => {
+            
+            // Set up mobile-specific grid layout
+            if (isMobile) {
+                container.classList.add('mobile-music-grid');
+            } else {
+                container.classList.add('music-grid');
+            }
+            
+            cards.forEach((card, index) => {
                 if (card) {
+                    // Add debugging information for the recently enjoyed section
+                    if (containerId === 'recent-songs-grid') {
+                        console.log(`Card ${index} for recently enjoyed:`, card);
+                    }
                     container.appendChild(card);
                 }
             });
+            
+            console.log(`Successfully rendered ${cards.filter(c => c).length} music cards to ${containerId}`);
         } catch (error) {
             console.error(`Error rendering cards for container ${containerId}:`, error);
             // Show error message

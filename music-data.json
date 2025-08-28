@@ -1,0 +1,64 @@
+{
+  "favoriteArtists": [
+    {
+      "url": "https://www.youtube.com/channel/UCUt2uP6O_UBJp4aBx5KjQjA",
+      "name": "Porter Robinson",
+      "thumbnail": "https://yt3.googleusercontent.com/1V3GGb8hMKP_9-kpCEI5mD6eFoGBeZwkIbFLGB-vxRGYSodgsq6LNEoRINcDE5OL-_UqzdVbbg=s320-c-k-c0x00ffffff-no-rj-mo"
+    },
+    {
+      "url": "https://www.youtube.com/channel/UCGz-eguN8tcic5kUG4s1ZgA",
+      "name": "Tame Impala",
+      "thumbnail": "https://yt3.googleusercontent.com/CjdWr6hZl7lqbczfbUgMjb-w1WI-LXbOtolQT_OEbKmelMQVzL8cvm5jZrvqoKP2b24GYYoD=s320-c-k-c0x00ffffff-no-rj-mo"
+    },
+    {
+      "url": "https://www.youtube.com/channel/UC1gXK5ZV0phthXSPLZLC9-g",
+      "name": "David Kushner",
+      "thumbnail": "https://yt3.googleusercontent.com/dAzw8pdl4-VzT-3MLfkZsWQzktHBCU2esoEIkeI5Xv7BudgoefIh54jgzz_YcxlBVveN5HEhx64=s320-c-k-c0x00ffffff-no-rj-mo"
+    },
+    {
+      "url": "https://www.youtube.com/channel/UCGNMi-3h6Tx72EfbW6f2BxQ",
+      "name": "Bring Me the Horizon",
+      "thumbnail": "https://yt3.googleusercontent.com/bQjkkbEvkGbQdGaqrZrDa7d2FY0gtfDV674zh0QrhgrkXwEzGCNb0tx3-doqEMvyPOWY6SH6pTo=s320-c-k-c0x00ffffff-no-rj-mo"
+    },
+    {
+      "url": "https://www.youtube.com/channel/UCrSBEipSJ9lwLWO05GK6dRA",
+      "name": "Wisp",
+      "thumbnail": "https://yt3.googleusercontent.com/NXf6NFhq84jqJxCcG_2ip_ibkLAaO_4K0GB5d_8n0JuL8Kq5GLs2jfSHLqM2mygXwMjvxG6f=s320-c-k-c0x00ffffff-no-rj-mo"
+    },
+    {
+      "url": "https://www.youtube.com/channel/UC5DHwv9N4OQ9AWtKr8YSefw",
+      "name": "Ado",
+      "thumbnail": "https://yt3.googleusercontent.com/UpUTedOaQoww4QObAylZnHN-i1qNDxX-7SXpWRTUt087c5DrUWIkL-TQT9JW3Sxc5rFNIWagE_g=s320-c-k-c0x00ffffff-no-rj-mo"
+    },
+    {
+      "url": "https://www.youtube.com/channel/UCSvdCVniqK4gto1-Kg04Dmg",
+      "name": "Bad Omens",
+      "thumbnail": "https://yt3.googleusercontent.com/KmCz1EXcjCkOXE5f5w7vlrN_Ko1JcMxd3mpR8zACtxHylM6EdLNhY1YPwcu3nQVnsp0wiMN_rA=s320-c-k-c0x00ffffff-no-rj-mo"
+    },
+    {
+      "url": "https://www.youtube.com/channel/UCvfXczqN3XcopEh8SAZ_DNA",
+      "name": "iRis.EXE",
+      "thumbnail": "https://yt3.googleusercontent.com/iJHM_DfSN_AppXtt_KF-o3d02EkZ43oWkFFlrz8rZ2CBzL9HmIwmgpdVnkeM_6K9UgzZCAscj-U=s320-c-k-c0x00ffffff-no-rj-mo"
+    }
+  ],
+  "favoriteSongs": [
+    "https://music.youtube.com/watch?v=CzJbz9qSsd0&si=TehFiZR90GH-QhNH",
+    "https://music.youtube.com/watch?v=tEXYfT_G0W0&si=540M9AXBz9HKl_Jq",
+    "https://music.youtube.com/watch?v=Y1gswBe-DjM&si=2TwvmkIqynPkhi39",
+    "https://music.youtube.com/watch?v=1-Fxb9jsOuI&si=btNxDTHNe8HdvbOb",
+    "https://music.youtube.com/watch?v=lzMkFIw8ETM&si=1AJNmymNtRQVkTBC",
+    "https://music.youtube.com/watch?v=7b4iCpp45gM&si=NcEerI-D6ILsd03t",
+    "https://music.youtube.com/watch?v=r2mzPDG72f0&si=Yx6jZ93nyaDmP08r",
+    "https://music.youtube.com/watch?v=Y5YCwPmRcdo&si=tifamUzbCfO6zzhS"
+  ],
+  "recentSongs": [
+    "https://music.youtube.com/watch?v=GWoK3HULCLo&si=L9zz2jeuLLqzlRbQ",
+    "https://music.youtube.com/watch?v=0pn-hZ2lNO8&si=0k8S5Q7r_l-19cQV",
+    "https://music.youtube.com/watch?v=wPqTMRYtyMw&si=xzNh__piweLmN-gz",
+    "https://music.youtube.com/watch?v=0bwZQkusdd0&si=g_EzXuru2rqIBJpY",
+    "https://music.youtube.com/watch?v=OtejracPJm4&si=Yn1ssJFN2iWh1Szm",
+    "https://music.youtube.com/watch?v=3SjRcth6ko8&si=pTzN_6MOCBgDYvrY",
+    "https://music.youtube.com/watch?v=6yufjxveDSg&si=d7nvQK_f0eP_Ec_Q",
+    "https://music.youtube.com/watch?v=eZXKCiUMRlc&si=ecihMYCjpRb4EAbl"
+  ]
+}

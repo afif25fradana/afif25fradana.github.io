@@ -15,12 +15,22 @@ export class Starfield {
         this.stars = [];
         this.shootingStars = [];
         
-        this.numStars = window.CONFIG.ANIMATION.STARFIELD.NUM_STARS || 150;
-        this.numShootingStars = window.CONFIG.ANIMATION.STARFIELD.NUM_SHOOTING_STARS || 2;
+        // Reduce number of stars and shooting stars on mobile devices for better performance
+        this.isMobile = this.isMobileDevice();
+        this.numStars = this.isMobile ? 50 : (window.CONFIG.ANIMATION.STARFIELD.NUM_STARS || 150);
+        this.numShootingStars = this.isMobile ? 1 : (window.CONFIG.ANIMATION.STARFIELD.NUM_SHOOTING_STARS || 2);
         
         if (this.canvas && this.ctx) {
             this.init();
         }
+    }
+
+    /**
+     * Detect if user is on a mobile device
+     * @returns {boolean} - True if user is on mobile device
+     */
+    isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
 
     /**
@@ -30,6 +40,17 @@ export class Starfield {
         this.resizeCanvas();
         this.setupEventListeners();
         this.draw();
+        
+        // On mobile devices, pause animation when page is not visible to save resources
+        if (this.isMobile) {
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    this.pause();
+                } else {
+                    this.resume();
+                }
+            });
+        }
     }
 
     /**
@@ -121,7 +142,14 @@ export class Starfield {
             }
         });
         
-        this.animationId = requestAnimationFrame(() => this.draw());
+        // On mobile devices, reduce frame rate to improve performance
+        if (this.isMobile) {
+            setTimeout(() => {
+                this.animationId = requestAnimationFrame(() => this.draw());
+            }, 1000 / 30); // 30 FPS on mobile
+        } else {
+            this.animationId = requestAnimationFrame(() => this.draw());
+        }
     }
 
     /**
