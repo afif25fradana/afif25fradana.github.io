@@ -33,15 +33,30 @@
     {
       "id": "photography",
       "title": "Photography",
-      "icon": "fas fa-camera text-purple-400",
+      "icon": "fas fa-camera text-green-400",
       "images": [
         {
-          "url": "https://res.cloudinary.com/dta7ppwxj/image/upload/v1756404909/e96d3b2c-f901-434a-98ab-05ecab01d3db-1_all_3532-01_rpj2ho.jpg",
+          "url": "https://res.cloudinary.com/dta7ppwxj/image/upload/v1756407887/e96d3b2c-f901-434a-98ab-05ecab01d3db-1_all_3532-01_oi4eig.webp",
           "alt": "Yogyakarta Pines Park"
         },
         {
-          "url": "https://res.cloudinary.com/dta7ppwxj/image/upload/v1756404909/IMG_20230629_170616_yy38c4.jpg",
+          "url": "https://res.cloudinary.com/dta7ppwxj/image/upload/v1756407887/IMG_20230629_170616_conecv.webp",
           "alt": "Paralayang Watugupit"
+        }
+      ]
+    },
+    {
+      "id": "mobile",
+      "title": "Mobile Games",
+      "icon": "fas fa-mobile-alt text-purple-400",
+      "images": [
+        {
+          "url": "https://res.cloudinary.com/dta7ppwxj/image/upload/v1755366051/img_share-2025-05-12_02_46_48_uks8et.png",
+          "alt": "Arknight Profile"
+        },
+        {
+          "url": "https://res.cloudinary.com/dta7ppwxj/image/upload/v1755366120/Screenshot_51_lori2s.png",
+          "alt": "Arknight Profile"
         }
       ]
     }

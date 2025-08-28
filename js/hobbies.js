@@ -185,7 +185,41 @@ export class HobbiesGenerator {
             
             const title = document.createElement('h3');
             title.className = 'section-title';
-            title.innerHTML = `<i class="${hobby.icon}" aria-hidden="true"></i> ${hobby.title}`;
+            
+            // Create icon element with proper color handling
+            const iconElement = document.createElement('i');
+            iconElement.setAttribute('aria-hidden', 'true');
+            
+            // Split icon classes and apply them
+            const iconClasses = hobby.icon.split(' ');
+            const colorClasses = [];
+            
+            iconClasses.forEach(cls => {
+                if (cls.startsWith('text-')) {
+                    colorClasses.push(cls);
+                } else {
+                    iconElement.classList.add(cls);
+                }
+            });
+            
+            // Apply color classes with higher specificity
+            if (colorClasses.length > 0) {
+                // Map Tailwind color classes to actual colors
+                const colorMap = {
+                    'text-blue-400': '#60a5fa',
+                    'text-gray-400': '#9ca3af',
+                    'text-purple-400': '#a78bfa',
+                    'text-green-400': '#4ade80'
+                };
+                
+                const colorClass = colorClasses[0];
+                if (colorMap[colorClass]) {
+                    iconElement.style.color = colorMap[colorClass];
+                }
+            }
+            
+            title.appendChild(iconElement);
+            title.appendChild(document.createTextNode(` ${hobby.title}`));
             
             const imagesContainer = document.createElement('div');
             imagesContainer.className = 'space-y-4';
