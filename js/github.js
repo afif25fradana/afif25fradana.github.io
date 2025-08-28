@@ -12,6 +12,9 @@ export class GitHubFetcher {
         this.container = document.getElementById('github-repos');
         this.retryCount = 0;
         this.maxRetries = 3;
+        // Cache settings for GitHub repository data
+        this.CACHE_KEY = 'github_repos';
+        this.CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
     }
 
     /**
@@ -21,31 +24,72 @@ export class GitHubFetcher {
     async fetchRepos() {
         if (!this.container) return;
 
-        try {
-            // Show loading state
-            this.showLoadingState();
+        // Try to get cached data first
+        const cachedData = this.getCachedRepos();
+        if (cachedData) {
+            // Clear container
+            while (this.container.firstChild) {
+                this.container.removeChild(this.container.firstChild);
+            }
             
+            if (cachedData.length === 0) {
+                this.displayNoReposMessage();
+                return;
+            }
+            
+            this.renderRepos(cachedData);
+            // Don't return yet, we'll still fetch fresh data in background
+        } else {
+            // Show loading state if no cached data
+            this.showLoadingState();
+        }
+
+        try {
             const response = await this.fetchWithRetry();
             if (!response.ok) {
                 throw new Error(`GitHub API error: ${response.statusText}`);
             }
             const repos = await response.json();
             
-            // Clear container
-            while (this.container.firstChild) {
-                this.container.removeChild(this.container.firstChild);
-            }
+            // Cache the data
+            this.cacheRepos(repos);
+            
+            // Only update UI if we didn't already render cached data
+            if (!cachedData) {
+                // Clear container
+                while (this.container.firstChild) {
+                    this.container.removeChild(this.container.firstChild);
+                }
 
-            if (repos.length === 0) {
-                this.displayNoReposMessage();
-                return;
-            }
+                if (repos.length === 0) {
+                    this.displayNoReposMessage();
+                    return;
+                }
 
-            this.renderRepos(repos);
+                this.renderRepos(repos);
+            } else if (JSON.stringify(cachedData) !== JSON.stringify(repos)) {
+                // If cached data differs from fresh data, update the UI
+                // Clear container
+                while (this.container.firstChild) {
+                    this.container.removeChild(this.container.firstChild);
+                }
+                
+                if (repos.length === 0) {
+                    this.displayNoReposMessage();
+                    return;
+                }
+                
+                this.renderRepos(repos);
+            }
 
         } catch (error) {
-            Utils.handleApiError(error, 'GitHub Repositories');
-            this.displayErrorMessage();
+            // Only show error if we didn't render cached data
+            if (!cachedData) {
+                Utils.handleApiError(error, 'GitHub Repositories');
+                this.displayErrorMessage();
+            }
+            // If we have cached data, we silently ignore the error
+            // and continue to show the cached data
         }
     }
 
@@ -223,5 +267,48 @@ export class GitHubFetcher {
         }
         
         this.container.appendChild(fragment);
+    }
+
+    /**
+     * Cache repositories data in localStorage
+     * @param {Array} repos - Array of repository objects
+     */
+    cacheRepos(repos) {
+        try {
+            const cacheData = {
+                data: repos,
+                timestamp: Date.now()
+            };
+            localStorage.setItem(this.CACHE_KEY, JSON.stringify(cacheData));
+        } catch (error) {
+            // Silently fail if localStorage is not available or quota is exceeded
+            console.warn('Failed to cache GitHub repositories:', error);
+        }
+    }
+
+    /**
+     * Get cached repositories data from localStorage
+     * @returns {Array|null} Array of repository objects or null if not available
+     */
+    getCachedRepos() {
+        try {
+            const cached = localStorage.getItem(this.CACHE_KEY);
+            if (!cached) return null;
+            
+            const cacheData = JSON.parse(cached);
+            
+            // Check if cache is still valid
+            if (Date.now() - cacheData.timestamp > this.CACHE_DURATION) {
+                // Remove expired cache
+                localStorage.removeItem(this.CACHE_KEY);
+                return null;
+            }
+            
+            return cacheData.data;
+        } catch (error) {
+            // Silently fail if parsing fails
+            console.warn('Failed to get cached GitHub repositories:', error);
+            return null;
+        }
     }
 }

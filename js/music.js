@@ -149,6 +149,10 @@ export class MusicCardGenerator {
             'https://www.youtube.com/oembed?url=',  // Primary YouTube oEmbed
             'https://noembed.com/embed?url='        // Fallback
         ];
+        
+        // Cache settings for music metadata
+        this.CACHE_PREFIX = 'music_data';
+        this.CACHE_DURATION = 15 * 60 * 1000; // 15 minutes
     }
 
     /**
@@ -158,6 +162,9 @@ export class MusicCardGenerator {
         // Load music data from JSON file
         try {
             const response = await fetch('music-data.json');
+            if (!response.ok) {
+                throw new Error(`Failed to load music data: ${response.status} ${response.statusText}`);
+            }
             const musicData = await response.json();
             
             console.log('Music data loaded successfully:', musicData);
@@ -276,11 +283,17 @@ export class MusicCardGenerator {
      * @returns {Promise<Object|null>} - A promise that resolves to the metadata or null on error.
      */
     async fetchMetadata(youtubeUrl) {
+        // Try to get cached data first
+        const cachedData = this.getCachedMetadata(youtubeUrl);
+        if (cachedData) {
+            return cachedData;
+        }
+        
         // Try multiple endpoints
         for (const endpoint of this.oEmbedEndpoints) {
             try {
                 // Special handling for YouTube channels
-                let urlToFetch = youtubeUrl;
+                const urlToFetch = youtubeUrl;
                 
                 // If this is a channel URL and we're using YouTube's oEmbed, we need to convert it
                 if (youtubeUrl.includes('/channel/') && endpoint.includes('youtube.com/oembed')) {
@@ -294,7 +307,7 @@ export class MusicCardGenerator {
                 
                 // If we get a 404 or other error, continue to next endpoint
                 if (!response.ok) {
-                    console.warn(`Failed to fetch metadata from ${endpoint} for ${youtubeUrl}: ${response.status}`);
+                    console.warn(`Failed to fetch metadata from ${endpoint} for ${youtubeUrl}: ${response.status} ${response.statusText}`);
                     continue;
                 }
                 
@@ -305,6 +318,9 @@ export class MusicCardGenerator {
                     console.warn(`Error in response from ${endpoint} for ${youtubeUrl}: ${data.error}`);
                     continue;
                 }
+                
+                // Cache the data
+                this.cacheMetadata(youtubeUrl, data);
                 
                 return data;
             } catch (error) {
@@ -464,8 +480,9 @@ export class MusicCardGenerator {
         // Clear existing content or show a loading indicator if desired
         container.innerHTML = '<div class="loading-spinner mx-auto my-8"></div>'; // Show spinner while loading
 
-        // For mobile, limit to 2 rows of 3 cards each (6 cards total)
-        const artistsToShow = isMobile ? artists.slice(0, 6) : artists;
+        // For mobile, limit to 2 rows of 2 cards each (4 cards total) for better performance
+        // This reduces the number of API calls and improves rendering speed on mobile devices
+        const artistsToShow = isMobile ? artists.slice(0, 4) : artists;
         console.log(`Showing ${artistsToShow.length} artists (mobile: ${isMobile})`);
 
         const cardPromises = artistsToShow.map(async (artist) => {
@@ -497,6 +514,10 @@ export class MusicCardGenerator {
             // Set up mobile-specific grid layout
             if (isMobile) {
                 container.classList.add('mobile-music-grid');
+                container.classList.remove('music-grid');
+            } else {
+                container.classList.add('music-grid');
+                container.classList.remove('mobile-music-grid');
             }
             
             cards.forEach(card => {
@@ -531,8 +552,9 @@ export class MusicCardGenerator {
         // Clear existing content or show a loading indicator if desired
         container.innerHTML = '<div class="loading-spinner mx-auto my-8"></div>'; // Show spinner while loading
 
-        // For mobile, limit to 2 rows of 3 cards each (6 cards total)
-        const urlsToShow = isMobile ? songUrls.slice(0, 6) : songUrls;
+        // For mobile, limit to 2 rows of 2 cards each (4 cards total) for better performance
+        // This reduces the number of API calls and improves rendering speed on mobile devices
+        const urlsToShow = isMobile ? songUrls.slice(0, 4) : songUrls;
         console.log(`Showing ${urlsToShow.length} songs (mobile: ${isMobile})`);
 
         const cardPromises = urlsToShow.map(async (url) => {
@@ -571,8 +593,10 @@ export class MusicCardGenerator {
             // Set up mobile-specific grid layout
             if (isMobile) {
                 container.classList.add('mobile-music-grid');
+                container.classList.remove('music-grid');
             } else {
                 container.classList.add('music-grid');
+                container.classList.remove('mobile-music-grid');
             }
             
             cards.forEach((card, index) => {
@@ -590,6 +614,53 @@ export class MusicCardGenerator {
             console.error(`Error rendering cards for container ${containerId}:`, error);
             // Show error message
             container.innerHTML = '<p class="text-center text-red-400">Failed to load music content.</p>';
+        }
+    }
+
+    /**
+     * Cache metadata in localStorage
+     * @param {string} url - The YouTube URL
+     * @param {Object} data - The metadata to cache
+     */
+    cacheMetadata(url, data) {
+        try {
+            const cacheKey = `${this.CACHE_PREFIX}:${url}`;
+            const cacheData = {
+                data: data,
+                timestamp: Date.now()
+            };
+            localStorage.setItem(cacheKey, JSON.stringify(cacheData));
+        } catch (error) {
+            // Silently fail if localStorage is not available or quota is exceeded
+            console.warn(`Failed to cache metadata for ${url}:`, error);
+        }
+    }
+
+    /**
+     * Get cached metadata from localStorage
+     * @param {string} url - The YouTube URL
+     * @returns {Object|null} The cached metadata or null if not available
+     */
+    getCachedMetadata(url) {
+        try {
+            const cacheKey = `${this.CACHE_PREFIX}:${url}`;
+            const cached = localStorage.getItem(cacheKey);
+            if (!cached) return null;
+            
+            const cacheData = JSON.parse(cached);
+            
+            // Check if cache is still valid
+            if (Date.now() - cacheData.timestamp > this.CACHE_DURATION) {
+                // Remove expired cache
+                localStorage.removeItem(cacheKey);
+                return null;
+            }
+            
+            return cacheData.data;
+        } catch (error) {
+            // Silently fail if parsing fails
+            console.warn(`Failed to get cached metadata for ${url}:`, error);
+            return null;
         }
     }
 }

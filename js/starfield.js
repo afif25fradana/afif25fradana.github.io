@@ -76,7 +76,9 @@ export class Starfield {
      */
     createStars() {
         this.stars = [];
-        for (let i = 0; i < this.numStars; i++) {
+        // Reduce number of stars even further on mobile for better performance
+        const starCount = this.isMobile ? Math.floor(this.numStars / 3) : this.numStars;
+        for (let i = 0; i < starCount; i++) {
             this.stars.push({
                 x: Math.random() * this.canvas.width, y: Math.random() * this.canvas.height,
                 radius: Math.random() * 1.2 + 0.3, vx: (Math.random() - 0.5) * 0.1,
@@ -91,9 +93,15 @@ export class Starfield {
      * @returns {Object} Shooting star object
      */
     createShootingStar() {
+        // Reduce shooting star size on mobile for better performance
+        const len = this.isMobile ? Math.random() * 40 + 10 : Math.random() * 80 + 20;
+        const speed = this.isMobile ? Math.random() * 4 + 3 : Math.random() * 8 + 6;
+        
         return {
-            x: Math.random() * this.canvas.width + this.canvas.width / 2, y: Math.random() * this.canvas.height / 2,
-            len: Math.random() * 80 + 20, speed: Math.random() * 8 + 6,
+            x: Math.random() * this.canvas.width + this.canvas.width / 2, 
+            y: Math.random() * this.canvas.height / 2,
+            len: len,
+            speed: speed,
             opacity: Math.random() * 0.6 + 0.2
         };
     }
@@ -114,8 +122,13 @@ export class Starfield {
     draw() {
         if (!this.ctx) return;
         
-        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        // On mobile devices, use a simpler clear operation for better performance
+        if (this.isMobile) {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        } else {
+            this.ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        }
         
         this.stars.forEach(star => {
             star.alpha += star.twinkleSpeed;
@@ -129,24 +142,27 @@ export class Starfield {
             if (star.y < 0) star.y = this.canvas.height; if (star.y > this.canvas.height) star.y = 0;
         });
 
-        this.shootingStars.forEach((star, index) => {
-            star.x -= star.speed; star.y += star.speed * 0.4;
-            const gradient = this.ctx.createLinearGradient(star.x, star.y, star.x + star.len, star.y - star.len * 0.4);
-            gradient.addColorStop(0, `rgba(255, 255, 255, ${star.opacity})`);
-            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-            this.ctx.strokeStyle = gradient; this.ctx.lineWidth = 1.5; this.ctx.lineCap = 'round';
-            this.ctx.beginPath(); this.ctx.moveTo(star.x, star.y); this.ctx.lineTo(star.x + star.len, star.y - star.len * 0.4);
-            this.ctx.stroke();
-            if (star.x < -star.len || star.y > window.innerHeight + star.len) {
-                this.shootingStars[index] = this.createShootingStar();
-            }
-        });
+        // Only draw shooting stars if not on mobile or if we have very few of them
+        if (!this.isMobile || this.shootingStars.length <= 1) {
+            this.shootingStars.forEach((star, index) => {
+                star.x -= star.speed; star.y += star.speed * 0.4;
+                const gradient = this.ctx.createLinearGradient(star.x, star.y, star.x + star.len, star.y - star.len * 0.4);
+                gradient.addColorStop(0, `rgba(255, 255, 255, ${star.opacity})`);
+                gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                this.ctx.strokeStyle = gradient; this.ctx.lineWidth = 1.5; this.ctx.lineCap = 'round';
+                this.ctx.beginPath(); this.ctx.moveTo(star.x, star.y); this.ctx.lineTo(star.x + star.len, star.y - star.len * 0.4);
+                this.ctx.stroke();
+                if (star.x < -star.len || star.y > window.innerHeight + star.len) {
+                    this.shootingStars[index] = this.createShootingStar();
+                }
+            });
+        }
         
         // On mobile devices, reduce frame rate to improve performance
         if (this.isMobile) {
             setTimeout(() => {
                 this.animationId = requestAnimationFrame(() => this.draw());
-            }, 1000 / 30); // 30 FPS on mobile
+            }, 1000 / 20); // 20 FPS on mobile for better performance
         } else {
             this.animationId = requestAnimationFrame(() => this.draw());
         }

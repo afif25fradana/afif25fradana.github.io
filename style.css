@@ -196,33 +196,45 @@ body {
 }
 
 /* Music Grid Styles */
+/* Grid layout for music cards - responsive design with mobile-specific layout */
 .music-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem; /* Equivalent to Tailwind's gap-6 */
     align-items: start; /* Ensure consistent alignment */
+    grid-auto-rows: 1fr; /* Make all rows the same height */
 }
 
-/* Mobile-specific music grid */
+/* Mobile-specific music grid - 2 columns layout for better mobile experience */
 .mobile-music-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
     align-items: start; /* Ensure consistent alignment */
+    grid-auto-rows: 1fr; /* Make all rows the same height */
 }
 
-/* Grid item sizing */
-.music-grid > * {
-    min-height: 300px; /* Minimum height for consistency */
+/* Grid item sizing - force consistent height */
+.music-grid > *, 
+.mobile-music-grid > * {
+    display: flex;
+    flex-direction: column;
+    height: auto;
 }
 
-/* Music card styling for consistent sizing */
+/* Ensure consistent card height */
 .music-card {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    flex: 1 1 auto;
+    min-height: 320px; /* Minimum height for consistency */
 }
 
+.music-card > *:last-child {
+    margin-top: auto; /* Push content to bottom */
+}
+
+/* Music card styling */
 .music-card .thumbnail-wrapper {
     aspect-ratio: 16/9;
     overflow: hidden;
@@ -249,57 +261,13 @@ body {
     transform: scale(1.05);
 }
 
-/* Specific fix for grid layout consistency */
-.music-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    align-items: start; /* This ensures rows align properly */
-    grid-auto-rows: minmax(320px, auto); /* Set minimum height for rows */
-}
-
-.mobile-music-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    align-items: start; /* This ensures rows align properly */
-    grid-auto-rows: minmax(320px, auto); /* Set minimum height for rows */
-}
-
-/* Grid item sizing - force consistent height */
-.music-grid > *, 
-.mobile-music-grid > * {
-    display: flex;
-    flex-direction: column;
-    height: auto;
-}
-
-/* Ensure consistent card height */
-.music-card {
-    display: flex;
-    flex-direction: column;
-    flex: 1 1 auto;
-    min-height: 320px; /* Minimum height for consistency */
-}
-
-.music-card > *:last-child {
-    margin-top: auto; /* Push content to bottom */
-}
-
-/* Fix for grid row alignment */
-.music-grid {
-    grid-auto-rows: 1fr; /* Make all rows the same height */
-}
-
-.mobile-music-grid {
-    grid-auto-rows: 1fr; /* Make all rows the same height */
-}
-
 /* Optimize music cards for mobile */
 @media (max-width: 768px) {
     .music-card {
         /* Reduce animations on mobile for better performance */
         transition: none;
+        /* Reduce the minimum height of cards on mobile for better fit */
+        min-height: 280px;
     }
     
     .music-card:hover {
@@ -310,15 +278,7 @@ body {
     .music-card:hover .thumbnail-wrapper img {
         transform: none;
     }
-}
-
-/* Music Card Specific Styles (already mostly handled by Tailwind classes in JS) */
-/* .music-card {
-    Custom styles if needed, but most are in Tailwind classes
-    For example, if glass-container doesn't apply backdrop-filter correctly on hover
-} */
-
-@media (max-width: 768px) {
+    
     body {
         padding-top: 100px; /* Adjust padding for smaller screens */
     }
