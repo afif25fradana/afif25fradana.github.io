@@ -29,6 +29,21 @@
           "alt": "Windows Ricing"
         }
       ]
+    },
+    {
+      "id": "photography",
+      "title": "Photography",
+      "icon": "fas fa-camera text-purple-400",
+      "images": [
+        {
+          "url": "https://res.cloudinary.com/dta7ppwxj/image/upload/v1756404909/e96d3b2c-f901-434a-98ab-05ecab01d3db-1_all_3532-01_rpj2ho.jpg",
+          "alt": "Yogyakarta Pines Park"
+        },
+        {
+          "url": "https://res.cloudinary.com/dta7ppwxj/image/upload/v1756404909/IMG_20230629_170616_yy38c4.jpg",
+          "alt": "Paralayang Watugupit"
+        }
+      ]
     }
   ]
 }
