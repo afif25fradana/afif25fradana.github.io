@@ -247,6 +247,15 @@ body {
     transform: scale(1.05);
 }
 
+/* Playlist-specific styles */
+.music-card .thumbnail-wrapper .absolute {
+    position: absolute;
+}
+
+.music-card:hover .thumbnail-wrapper .opacity-0 {
+    opacity: 1;
+}
+
 /* Optimize music cards for mobile */
 @media (max-width: 768px) {
     .music-card {

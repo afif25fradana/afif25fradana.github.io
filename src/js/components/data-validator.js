@@ -66,6 +66,12 @@ export class DataValidator {
             return false;
         }
         
+        // Validate playlist structure if it exists
+        if (data.playlists && !Array.isArray(data.playlists)) {
+            console.error('playlists is not an array');
+            return false;
+        }
+        
         // Validate artist structure
         for (let i = 0; i < data.favoriteArtists.length; i++) {
             const artist = data.favoriteArtists[i];
@@ -82,6 +88,17 @@ export class DataValidator {
             if (typeof songUrl !== 'string' || !songUrl.includes('youtube.com/watch')) {
                 console.error(`Song URL at index ${i} is invalid`, songUrl);
                 return false;
+            }
+        }
+        
+        // Validate playlist structure if it exists
+        if (data.playlists) {
+            for (let i = 0; i < data.playlists.length; i++) {
+                const playlist = data.playlists[i];
+                if (!playlist.url || !playlist.title || !playlist.thumbnail || !playlist.trackCount) {
+                    console.error(`Playlist at index ${i} is missing required fields`, playlist);
+                    return false;
+                }
             }
         }
         

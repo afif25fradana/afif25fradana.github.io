@@ -13,6 +13,7 @@ export class MusicCardGenerator {
         this.favoriteArtists = [];
         this.favoriteSongs = [];
         this.recentSongs = [];
+        this.playlists = [];
         
         // Multiple oEmbed endpoints for better reliability
         this.oEmbedEndpoints = [
@@ -46,10 +47,12 @@ export class MusicCardGenerator {
             this.favoriteArtists = musicData.favoriteArtists;
             this.favoriteSongs = musicData.favoriteSongs;
             this.recentSongs = musicData.recentSongs;
+            this.playlists = musicData.playlists || [];
             
             console.log('Favorite artists count:', this.favoriteArtists.length);
             console.log('Favorite songs count:', this.favoriteSongs.length);
             console.log('Recent songs count:', this.recentSongs.length);
+            console.log('Playlists count:', this.playlists.length);
         } catch (error) {
             console.error('Error loading music data:', error);
             // Fallback to empty data if JSON file fails to load
@@ -76,6 +79,15 @@ export class MusicCardGenerator {
         } catch (error) {
             console.error('Error rendering recent songs:', error);
         }
+        
+        // Render playlists if they exist
+        if (this.playlists.length > 0) {
+            try {
+                await this.renderPlaylistCards(this.playlists, 'playlists-grid', isMobile);
+            } catch (error) {
+                console.error('Error rendering playlists:', error);
+            }
+        }
     }
 
     /**
@@ -87,6 +99,7 @@ export class MusicCardGenerator {
         this.favoriteArtists = [];
         this.favoriteSongs = [];
         this.recentSongs = [];
+        this.playlists = [];
     }
 
     /**
@@ -176,18 +189,27 @@ export class MusicCardGenerator {
         thumbnailWrapper.classList.add('thumbnail-wrapper', 'w-full', 'mb-4', 'rounded-lg', 'overflow-hidden', 'border', 'border-slate-700');
 
         const thumbnail = document.createElement('img');
-        thumbnail.src = metadata.thumbnail_url || 'https://placehold.co/320x180/00000000/00000000?text=No+Thumbnail';
+        // Use lower resolution thumbnail (mqdefault = 320x180, scaled to 250x140)
+        let thumbnailUrl = metadata.thumbnail_url || 'https://placehold.co/250x140/00000000/00000000?text=No+Thumbnail';
+        if (thumbnailUrl.includes('ytimg.com/') && thumbnailUrl.includes('/vi/')) {
+            // Convert to mqdefault (320x180) and scale down for smaller file size
+            if (thumbnailUrl.includes('hqdefault.jpg') || thumbnailUrl.includes('sddefault.jpg') || 
+                thumbnailUrl.includes('maxresdefault.jpg')) {
+                thumbnailUrl = thumbnailUrl.replace(/\/(hqdefault|sddefault|maxresdefault)\.jpg/, '/mqdefault.jpg');
+            }
+        }
+        thumbnail.src = thumbnailUrl;
         thumbnail.alt = metadata.title || 'Unknown Title';
         thumbnail.loading = 'lazy';
-        thumbnail.width = 320;
-        thumbnail.height = 180;
+        thumbnail.width = 250;
+        thumbnail.height = 140; // 16:9 aspect ratio at 250px width
         thumbnail.style.width = '100%';
         thumbnail.style.height = '100%';
         thumbnail.style.objectFit = 'cover';
         
         // Add error handling for thumbnail
         thumbnail.onerror = function() {
-            this.src = 'https://placehold.co/320x180/00000000/00000000?text=No+Thumbnail';
+            this.src = 'https://placehold.co/250x140/00000000/00000000?text=No+Thumbnail';
             this.onerror = null; // Prevent infinite loop
         };
 
@@ -237,14 +259,22 @@ export class MusicCardGenerator {
 
         const thumbnailWrapper = document.createElement('div');
         thumbnailWrapper.classList.add('thumbnail-wrapper', 'w-full', 'mb-4', 'rounded-lg', 'overflow-hidden', 'border', 'border-slate-700');
+        // Set aspect ratio to 1:1 for channel thumbnails
+        thumbnailWrapper.style.aspectRatio = '1/1';
 
         const thumbnail = document.createElement('img');
         // Use the provided thumbnail or a fallback
-        thumbnail.src = metadata.thumbnail_url || 'https://placehold.co/320x180/00000000/00000000?text=Channel'; // Transparent placeholder
+        let thumbnailUrl = metadata.thumbnail_url || 'https://placehold.co/250x250/00000000/00000000?text=Channel'; // Square placeholder at 250x250
+        // For channel thumbnails, we'll try to use a smaller version if possible
+        if (thumbnailUrl.includes('ytimg.com/') && thumbnailUrl.includes('=s')) {
+            // Try to reduce size if it's a ytimg URL with size parameter
+            thumbnailUrl = thumbnailUrl.replace(/=s\d+/, '=s250'); // Use 250px width
+        }
+        thumbnail.src = thumbnailUrl;
         thumbnail.alt = metadata.title || metadata.author_name || 'Channel';
         thumbnail.loading = 'lazy';
-        thumbnail.width = 320;
-        thumbnail.height = 180;
+        thumbnail.width = 250;
+        thumbnail.height = 250; // Square dimensions at 250x250
         thumbnail.style.width = '100%';
         thumbnail.style.height = '100%';
         thumbnail.style.objectFit = 'cover';
@@ -252,7 +282,7 @@ export class MusicCardGenerator {
         // Add error handling for thumbnail
         thumbnail.onerror = function() {
             // If the real thumbnail fails, show a transparent placeholder
-            this.src = 'https://placehold.co/320x180/00000000/00000000?text=Channel';
+            this.src = 'https://placehold.co/250x250/00000000/00000000?text=Channel';
             this.onerror = null; // Prevent infinite loop
         };
 
@@ -426,6 +456,181 @@ export class MusicCardGenerator {
             console.error(`Error rendering cards for container ${containerId}:`, error);
             // Show error message
             container.innerHTML = '<p class="text-center text-red-400">Failed to load music content.</p>';
+        }
+    }
+    
+    /**
+     * Creates an HTML playlist card element with custom thumbnail and track count.
+     * @param {Object} playlist - The playlist data (url, title, thumbnail, trackCount).
+     * @returns {HTMLElement} - The created playlist card element.
+     */
+    createPlaylistCard(playlist) {
+        const cardLink = document.createElement('a');
+        cardLink.href = playlist.url;
+        cardLink.target = '_blank';
+        cardLink.rel = 'noopener noreferrer';
+        cardLink.classList.add(
+            'music-card',
+            'glass-container',
+            'p-4',
+            'flex',
+            'flex-col',
+            'items-center',
+            'text-center',
+            'transition-all',
+            'duration-300',
+            'hover:translate-y-[-5px]',
+            'hover:shadow-lg',
+            'hover:shadow-sky-500/20',
+            'rounded-xl',
+            'relative'
+        );
+
+        // Add playlist badge
+        const badge = document.createElement('div');
+        badge.classList.add('absolute', 'top-2', 'right-2', 'bg-purple-500', 'text-white', 'text-xs', 'font-bold', 'px-2', 'py-1', 'rounded-full', 'z-10');
+        badge.textContent = 'PLAYLIST';
+        
+        const thumbnailWrapper = document.createElement('div');
+        thumbnailWrapper.classList.add('thumbnail-wrapper', 'w-full', 'mb-4', 'rounded-lg', 'overflow-hidden', 'border', 'border-slate-700', 'relative');
+
+        const thumbnail = document.createElement('img');
+        // Use lower resolution thumbnail
+        let thumbnailUrl = playlist.thumbnail || 'https://placehold.co/250x140/00000000/00000000?text=Playlist';
+        if (thumbnailUrl.includes('ytimg.com/') && thumbnailUrl.includes('/vi/')) {
+            // Convert to mqdefault (320x180) for better quality than default
+            thumbnailUrl = thumbnailUrl.replace(/\/(default|hqdefault|sddefault|maxresdefault)\.jpg/, '/mqdefault.jpg');
+        }
+        thumbnail.src = thumbnailUrl;
+        thumbnail.alt = playlist.title || 'Unknown Playlist';
+        thumbnail.loading = 'lazy';
+        thumbnail.width = 250;
+        thumbnail.height = 140; // 16:9 aspect ratio at 250px width
+        thumbnail.style.width = '100%';
+        thumbnail.style.height = '100%';
+        thumbnail.style.objectFit = 'cover';
+        
+        // Add error handling for thumbnail
+        thumbnail.onerror = function() {
+            this.src = 'https://placehold.co/250x140/00000000/00000000?text=Playlist';
+            this.onerror = null; // Prevent infinite loop
+        };
+
+        // Add play icon overlay
+        const playOverlay = document.createElement('div');
+        playOverlay.classList.add('absolute', 'inset-0', 'flex', 'items-center', 'justify-center', 'bg-black', 'bg-opacity-30', 'opacity-0', 'hover:opacity-100', 'transition-opacity', 'duration-300');
+        const playIcon = document.createElement('i');
+        playIcon.classList.add('fas', 'fa-play-circle', 'text-white', 'text-4xl');
+        playOverlay.appendChild(playIcon);
+        
+        thumbnailWrapper.appendChild(thumbnail);
+        thumbnailWrapper.appendChild(playOverlay);
+
+        const title = document.createElement('h4');
+        title.textContent = playlist.title || 'Unknown Playlist';
+        title.classList.add('text-white', 'font-semibold', 'text-lg', 'mb-1');
+
+        // Add track count
+        const trackInfo = document.createElement('p');
+        trackInfo.classList.add('text-slate-400', 'text-sm', 'mb-1');
+        trackInfo.textContent = `${playlist.trackCount} tracks`;
+
+        // Add "Made by Afif"
+        const creatorInfo = document.createElement('p');
+        creatorInfo.classList.add('text-slate-500', 'text-xs');
+        creatorInfo.textContent = 'Made by Afif Fradana';
+
+        cardLink.appendChild(badge);
+        cardLink.appendChild(thumbnailWrapper);
+        cardLink.appendChild(title);
+        cardLink.appendChild(trackInfo);
+        cardLink.appendChild(creatorInfo);
+
+        return cardLink;
+    }
+
+    /**
+     * Renders playlist cards for a given array of playlists into a specified container.
+     * @param {Array} playlists - An array of playlist objects with url, title, thumbnail, and trackCount properties.
+     * @param {string} containerId - The ID of the HTML element to append cards to.
+     * @param {boolean} isMobile - Whether the user is on a mobile device
+     */
+    async renderPlaylistCards(playlists, containerId, isMobile = false) {
+        console.log(`Rendering ${playlists.length} playlists to ${containerId}`);
+        
+        const container = document.getElementById(containerId);
+        if (!container) {
+            console.warn(`Container with ID "${containerId}" not found.`);
+            return;
+        }
+
+        // Clear existing content or show a loading indicator if desired
+        container.innerHTML = '<div class="loading-spinner mx-auto my-8"></div>'; // Show spinner while loading
+
+        // For mobile, limit to 2 rows of 2 cards each (4 cards total) for better performance
+        const playlistsToShow = isMobile ? playlists.slice(0, 4) : playlists;
+        console.log(`Showing ${playlistsToShow.length} playlists (mobile: ${isMobile})`);
+
+        try {
+            // For each playlist, we can optionally fetch the title from oEmbed to ensure it's up to date
+            const enhancedPlaylists = await Promise.all(playlistsToShow.map(async (playlist) => {
+                try {
+                    // Try to fetch updated metadata from oEmbed
+                    const metadata = await this.fetchMetadata(playlist.url);
+                    if (metadata && metadata.title) {
+                        // Use the fetched title but keep our custom thumbnail and track count
+                        return {
+                            ...playlist,
+                            title: metadata.title
+                        };
+                    } else {
+                        // If fetch fails, use the data we have
+                        return playlist;
+                    }
+                } catch (error) {
+                    console.warn(`Failed to fetch metadata for playlist ${playlist.url}, using provided data:`, error);
+                    // If fetch fails, use the data we have
+                    return playlist;
+                }
+            }));
+
+            const cards = enhancedPlaylists.map(playlist => {
+                try {
+                    return this.createPlaylistCard(playlist);
+                } catch (error) {
+                    console.error(`Error creating card for playlist ${playlist.title}:`, error);
+                    // Create a fallback card
+                    return this.createPlaylistCard({
+                        url: playlist.url,
+                        title: playlist.title || 'Unknown Playlist',
+                        thumbnail: playlist.thumbnail || 'https://placehold.co/320x180/00000000/00000000?text=Playlist',
+                        trackCount: playlist.trackCount || 0
+                    });
+                }
+            });
+
+            container.innerHTML = ''; // Clear spinner
+            
+            // Set up mobile-specific grid layout
+            if (isMobile) {
+                container.classList.add('mobile-music-grid');
+                container.classList.remove('music-grid');
+            } else {
+                container.classList.add('music-grid');
+                container.classList.remove('mobile-music-grid');
+            }
+            
+            cards.forEach(card => {
+                if (card) {
+                    container.appendChild(card);
+                }
+            });
+            
+            console.log(`Successfully rendered ${cards.filter(c => c).length} playlist cards to ${containerId}`);
+        } catch (error) {
+            console.error(`Error rendering playlist cards for container ${containerId}:`, error);
+            // Show error message
+            container.innerHTML = '<p class="text-center text-red-400">Failed to load playlist content.</p>';
         }
     }
 }
