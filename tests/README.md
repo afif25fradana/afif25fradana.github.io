@@ -1,4 +1,4 @@
-# Tests
+# Tests FOR FUTURE ME!!!! i know youre gonna forgot idiot
 
 This directory contains unit tests for the JavaScript code in the portfolio website.
 
